@@ -1,0 +1,404 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\master ../main.lyx
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+tabs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+algorithm2e
+customHeadersFooters
+enumitem
+logicalmkup
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Libertinus Serif"
+\font_sans "default" "Avenir LT Std"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 93
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=black,  frenchlinks=true, citecolor=black, urlcolor=blue, filecolor=blue, pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type numerical
+\biblio_options entryhead=true, entrykey=false
+\biblatex_bibstyle reading
+\biblatex_citestyle alphabetic-verb
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Epilogue
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Subsection
+Original conception
+\end_layout
+
+\begin_layout Plain Layout
+The Shetris-project was initially conceived 
+\end_layout
+
+\begin_layout Plain Layout
+When composing this thesis, the initial wish of solving conquering the game
+ to truly human-level play knowledge quickly subsided.
+ The time-limit embedded in the framework of a Bachelor-Thesis dictates
+ down-scaling of the goals, as well as the span of methodologies.
+\end_layout
+
+\begin_layout Plain Layout
+Initially, this thesis project envisioned tackling a variety of Tetris implement
+ations with near expert-level
+\end_layout
+
+\begin_layout Plain Layout
+The immediate reaction after conducting a general survey of the status-quo
+ of current researches on applying reinforcement-learning on the Tetris-game
+ was mixed: on the one hand, the positive results reaffirm the possibility
+ of obtaining significant result, 
+\end_layout
+
+\begin_layout Subsection
+Meeting reality
+\end_layout
+
+\begin_layout Plain Layout
+month into the project, However, the fundamental structure of the project
+ is conceived with modularity and extendability in mind: the engine, separating
+ configuration, field and the generator, is itself segregated from further
+\end_layout
+
+\begin_layout Plain Layout
+The agent 
+\end_layout
+
+\begin_layout Subsection
+Into the future
+\end_layout
+
+\begin_layout Plain Layout
+The author views the above insufficiency as a major chance for future improvemen
+t:
+\end_layout
+
+\begin_layout Subsubsection
+Improvement in training
+\end_layout
+
+\begin_layout Enumerate
+Using SB3's vectorized training environment
+\end_layout
+
+\begin_layout Enumerate
+parallelize calculation
+\end_layout
+
+\begin_layout Subsubsection
+Higher complexity
+\end_layout
+
+\begin_layout Enumerate
+Add the MOVE-phase
+\end_layout
+
+\begin_layout Enumerate
+explore different rules of Tetris: implement more engines
+\end_layout
+
+\begin_layout Subsubsection
+Other improvements
+\end_layout
+
+\begin_layout Enumerate
+split-pane layout: Left and right: human VS player
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// shift the entire arrow
+\end_layout
+
+\begin_layout Plain Layout
+
+@<+1pc>		@<-1pc>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// bending the curve
+\end_layout
+
+\begin_layout Plain Layout
+
+@/^{1pc}/		@/_{1pc}/
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// leave-and-enter
+\end_layout
+
+\begin_layout Plain Layout
+
+@(<leave_pos>,<enter_pos>)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// arrow-type
+\end_layout
+
+\begin_layout Plain Layout
+
+@{-->>}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// for nodes
+\end_layout
+
+\begin_layout Plain Layout
+
+surround by square-box
+\end_layout
+
+\begin_layout Plain Layout
+
+*[F=]{A}
+\end_layout
+
+\begin_layout Plain Layout
+
+*+[F=]{A}
+\end_layout
+
+\begin_layout Plain Layout
+
+*++[F=]{A}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// surround by round-box
+\end_layout
+
+\begin_layout Plain Layout
+
+*[o][F=]{A}
+\end_layout
+
+\begin_layout Plain Layout
+
+*+[o][F=]{A}
+\end_layout
+
+\begin_layout Plain Layout
+
+*++[o][F=]{A}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\xymatrix{{U}\ar@<-1pc>@(l,l)@{-->>}[ddr]_{{x}}\\
+ & {X}\ar[d]^{{x}}\ar[r]|{x} & {X}\ar[d]_{{f}}\\
+ & {Y}\ar@<-1pc>@/_{1pc}/[r]^{{g}} & {Z}\\
+*[F-]{A} & *+[F-]{A} & *++[F-]{A}\\
+*[F=]{A} & *+[F=]{A} & *++[F=]{A}\\
+\save"4,1"."5,3"*+[F]\frm{}\restore & *++[o][F-]{A} & *++[o][F=]{A}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+To the supervisor of this thesis, Prof.
+ Dr.
+ J.
+ Buhmann: my deepest appreciation for the acceptance of the original idea
+ of this thesis in its earliest infancy, for the inspiring and philosophical
+ approach to the field of machine-learning as a whole, and, of course, for
+ granting the much needed extension for completion;
+\end_layout
+
+\begin_layout Standard
+To my advisors, Ivan, Ami and Eugene: my heart-felt thanks to the many extended
+ sessions of talks, inputs and ideas;
+\end_layout
+
+\begin_layout Standard
+To my family: my sincere gratitude for the unyielding support over the years;
+\end_layout
+
+\begin_layout Standard
+Finally, to J.
+ Neubauer: all my respect for his natural mastery of the game and brilliant
+ deliveries in the most competitive environments.
+ Rest in piece, 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+maestro
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

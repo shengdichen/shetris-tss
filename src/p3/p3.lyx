@@ -1,0 +1,1762 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\master ../main.lyx
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+tabs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+algorithm2e
+customHeadersFooters
+enumitem
+logicalmkup
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Libertinus Serif"
+\font_sans "default" "Avenir LT Std"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 93
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=black,  frenchlinks=true, citecolor=black, urlcolor=blue, filecolor=blue, pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type numerical
+\biblio_options entryhead=true, entrykey=false
+\biblatex_bibstyle reading
+\biblatex_citestyle alphabetic-verb
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Summary
+Training
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Library
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+stable-baselines 3
+\end_layout
+
+\begin_layout Enumerate
+underlying: pytorch
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Algorithm
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PPO
+\end_layout
+
+\begin_layout Enumerate
+A2C
+\end_layout
+
+\begin_layout Enumerate
+NOT DQN (only on discrete space)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Training routine
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+quick train
+\end_layout
+
+\begin_layout Enumerate
+train and save
+\end_layout
+
+\begin_layout Enumerate
+logging with tensor-board
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Performance Measures
+\end_layout
+
+\begin_layout Subsection
+Intuitions
+\end_layout
+
+\begin_layout Standard
+It does not take a veteran to conclude that the field on the left is in
+ considerably better shape than that on the right.
+ Indeed, the decision is quickly taken based on intuition such as the height
+ of the field and the number of existent holes in the field.
+ This section formalizes such intuitions to accurately various define performanc
+e measures 
+\begin_inset Formula $M$
+\end_inset
+
+ to gauge game-plays of Tetris.
+\end_layout
+
+\begin_layout Standard
+No extreme expertise is required to formulate intuitive heuristics of measuring
+ the game-play performance in Tetris: one aims at achieving placing the
+ pieces onto the field such that the columns are evenly distributed, not
+ stacked too high with few holes.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
+\end{bmatrix}\qquad\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+ & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+ & \fullmoon & \blacksquare & \fullmoon & \fullmoon &  & \blacksquare & \fullmoon\\
+ & \fullmoon & \blacksquare & \fullmoon &  & \blacksquare &  & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare &  &  & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare &  & \blacksquare &  & \blacksquare & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The metrics
+\end_layout
+
+\begin_layout Subsubsection
+From the field
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Thus arises the question of gauging the performance of a specific move.
+\end_layout
+
+\begin_layout Example
+Height
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+As the criteria for deciding if an episode is over correlates directly to
+ the 
+\begin_inset Quotes xld
+\end_inset
+
+height
+\begin_inset Quotes xrd
+\end_inset
+
+ of the field, an intuitive metric concerns the maximal height.
+ This is defined as:
+\end_layout
+
+\begin_layout Plain Layout
+For a column 
+\begin_inset Formula $c$
+\end_inset
+
+, the height is defined as the maximal vertical coordinate of an occupied
+ box.
+\begin_inset Formula 
+\[
+M_{H}\left(c\right)=\max\left\{ \text{Height}\right\} 
+\]
+
+\end_inset
+
+The range of this is 
+\begin_inset Formula $\left[0;\text{field-height}\right]$
+\end_inset
+
+, translating to 
+\begin_inset Formula $M_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]$
+\end_inset
+
+ for the standard field, with 
+\begin_inset Formula $0$
+\end_inset
+
+ indicating a completely free column and 
+\begin_inset Formula $20$
+\end_inset
+
+ indicating occupation of the highest box.
+ Generalization to the whole field is readily available:
+\end_layout
+
+\begin_layout Plain Layout
+Intuitively: higher 
+\begin_inset Formula $\text{H}$
+\end_inset
+
+-values are more susceptible to termination of an episode and are thus undesirab
+le.
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Several examples of 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Given the standard field-size of 
+\begin_inset Formula $20\times10$
+\end_inset
+
+, the following illustration.
+\end_layout
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\LEFTcircle & \blacksquare & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\LEFTcircle & \LEFTcircle & \blacksquare &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\vdots & \vdots & \vdots\\
+\vdots & \vdots & \vdots\\
+\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \blacksquare &  &  & \fullmoon\\
+\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \LEFTcircle & \blacksquare &  & \fullmoon\\
+\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \LEFTcircle & \LEFTcircle & \blacksquare & \fullmoon\\
+\\
+20 & 19 & 18 &  &  &  & 3 & 2 & 1 & 0
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Elevation 
+\begin_inset Formula $M_{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Example
+Elevation
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+The elevation is defined as the relative difference in height
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Holes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Intuitively, the following heuristic measures follow immediately:
+\end_layout
+
+\begin_layout Enumerate
+Low height in general
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+The training
+\end_layout
+
+\begin_layout Subsection
+Hard-coded Evolution logic
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The evolution-strategy, as introduced by 
+\begin_inset CommandInset citation
+LatexCommand autocite
+key "best-ai"
+literal "false"
+
+\end_inset
+
+, utilizes the above metrics:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Multiple training
+\end_layout
+
+\begin_layout Subsubsection
+Batch-1
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Done with:
+\end_layout
+
+\begin_layout Enumerate
+Engine:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Sequence
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+OBS:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+relative heights
+\end_layout
+
+\begin_layout Enumerate
+pid
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Reward:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+relatives
+\end_layout
+
+\begin_layout Enumerate
+absolutes
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Batch2
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Done with:
+\end_layout
+
+\begin_layout Enumerate
+Engine:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+seqence
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+obs:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+relative heights, pid
+\end_layout
+
+\begin_layout Enumerate
+height, elevation, holes
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+local2:
+\end_layout
+
+\begin_layout Enumerate
+naive negative weights:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+all 
+\begin_inset Formula $-1$
+\end_inset
+
+ for height, elevation, hole
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $+1$
+\end_inset
+
+ for line
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Getting better
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Local3; Euler3; reproduction of HK-paper
+\end_layout
+
+\begin_layout Enumerate
+obs:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+height, elevation, holes: all unpacked (many vectors)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $10$
+\end_inset
+
+ vectors, each of 
+\begin_inset Formula $20$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $9$
+\end_inset
+
+ vectors, each of 
+\begin_inset Formula $20$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $10$
+\end_inset
+
+ vectors, each of 
+\begin_inset Formula $20$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+pid
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $1$
+\end_inset
+
+ vector, each of 
+\begin_inset Formula $7$
+\end_inset
+
+ (or bag-size of choice)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+line-clears
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $1$
+\end_inset
+
+ vector, each of 
+\begin_inset Formula $5$
+\end_inset
+
+ (
+\begin_inset Formula $0$
+\end_inset
+
+ lines to 
+\begin_inset Formula $4$
+\end_inset
+
+ lines cleared)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+new cost function: extremely simplified
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+number of lines cleared
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Result:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+have some clearing: 
+\begin_inset Formula $10$
+\end_inset
+
+ lines per game
+\end_layout
+
+\begin_layout Enumerate
+training process:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $350$
+\end_inset
+
+ FPS
+\end_layout
+
+\begin_layout Enumerate
+very turbulent training: massive dipping!
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Euler4: reproduction of uvipen
+\end_layout
+
+\begin_layout Enumerate
+Obs:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+sum of height
+\end_layout
+
+\begin_layout Enumerate
+sum of elevation
+\end_layout
+
+\begin_layout Enumerate
+sum of holes
+\end_layout
+
+\begin_layout Enumerate
+pid
+\end_layout
+
+\begin_layout Enumerate
+lines cleared
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+reward
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $1+\left(wl^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $0$
+\end_inset
+
+ if game-over9
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Idea
+\end_layout
+
+\begin_layout Subsection
+Solving Tetris
+\end_layout
+
+\begin_layout Solution
+Naive-Solution
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Given the small dimension of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ as seen previously, finding the optimal 
+\begin_inset Formula $\mathbf{Q}^{*}$
+\end_inset
+
+ could be solved in a brute-force manner: iterate through all possible 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ given a specific piece 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+ and find the optimal 
+\begin_inset Formula $\mathbf{Q}^{*}$
+\end_inset
+
+ with respect to the chosen measure 
+\begin_inset Formula $C$
+\end_inset
+
+, i.e.:
+\begin_inset Formula 
+\[
+\mathbf{Q}^{*}\stackrel{\mathbb{T}}{\coloneqq}\arg\min C_{|\mathbf{Q}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+Deficiencies of the Naive-Solution
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The Naive-Solution, though simple to implement, presents various aspects
+ of possible improvement, with the two most prominent ones being:
+\end_layout
+
+\begin_layout Enumerate
+Greediness: no look-ahead possible.
+ For example, the Naive-Solution will opt for an immediately available double-cl
+ear rather than building for a future tetris-clear.
+ In essence, its greediness, while allowing local (only up to its next step
+ 
+\begin_inset Formula $n+1$
+\end_inset
+
+) optimality, prevents it from achieving it globally with respect to the
+ game-score measure 
+\begin_inset Formula $C_{3}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+Repetitiveness: different play-fields frequently display some extent of
+ commonalities, the optimal solution to which is intuitively assumed to
+ possess similarities as well
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Based purely on heuristics, might require stringent proof
+\end_layout
+
+\end_inset
+
+.
+ As an extreme examples, even for completely (horizontally) symmetric fields,
+ the tactic 
+\begin_inset Formula $\mathbb{T_{\text{new}}}$
+\end_inset
+
+ will have to be calculated from scratch, whereas apparent reuse of 
+\begin_inset Formula $\mathbb{T_{\text{old}}}$
+\end_inset
+
+ is presumably possible.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Machine-Solution
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+As of time of writing, no specifics are known pertaining to determining
+ a machine-based solution.
+ For the purpose of this specific paper, techniques from Reinforcement-Learning
+ are proposed.
+ The framework above revolving around optimizing the tactic 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+ on a chosen measure 
+\begin_inset Formula $C$
+\end_inset
+
+ under the backdrop of the discrete evolution-problem is expected to be
+ utilizable with minor tweaking if necessary.
+ Above all, it remains to be established:
+\end_layout
+
+\begin_layout Enumerate
+an appropriate measure 
+\begin_inset Formula $C$
+\end_inset
+
+ that, as mentioned previously, takes multiple sub-measures into account,
+ possibly by forming some sort of 
+\begin_inset Quotes xld
+\end_inset
+
+super-position
+\begin_inset Quotes xrd
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+an optimization-strategy on finding 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+ that does not rely on the greedy-principle and recognizes repetitive, common
+ structures among different Tetris-fields 
+\begin_inset Formula $S$
+\end_inset
+
+ for efficient calculation.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Baselines
+\end_layout
+
+\begin_layout Subsubsection
+Intuitive baselines
+\end_layout
+
+\begin_layout Definition
+Random
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Pick all three components purely randomly.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Deep-fall 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Referred to as 
+\begin_inset Quotes xld
+\end_inset
+
+Let it fall deep
+\begin_inset Quotes xrd
+\end_inset
+
+ during consultation with the supervisor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $r\coloneqq\arg\min$
+\end_inset
+
+: rotate to make the smallest height
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $x\coloneqq\arg\max y$
+\end_inset
+
+: pick the horizontal position that let's the piece drop down the most
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $y\coloneqq\max y$
+\end_inset
+
+: full-down.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The optimal 
+\begin_inset Quotes xld
+\end_inset
+
+tactic
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At each (discrete) step, the player's input is, as mentioned above, completely
+ captured by 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+.
+ A 
+\begin_inset Quotes xld
+\end_inset
+
+
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+tactic
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes xrd
+\end_inset
+
+ 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+, thus, provides such 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ given the rest of the information.
+ Formally, this is expressed as follows.
+\end_layout
+
+\begin_layout Definition
+A tactic 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left.\begin{alignedat}{1}S_{n}\\
+\mathbf{R}_{\text{clr}}\circ\mathbf{R}_{y,n}\eqqcolon\mathbf{R}_{n}\\
+\mathbf{P}_{n+1}
+\end{alignedat}
+\right\} \stackrel{\mathbb{T}}{\longrightarrow}\mathbf{Q}_{n+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+The domain of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+For any given 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+, its corresponding domain of 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ is obviously countable.
+ Indeed, as seen in Appendix-2, its dimension is at most 
+\begin_inset Formula $34$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The optimal tactic 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+An optimal tactic 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+ shall provide the 
+\begin_inset Formula $\mathbf{Q}_{n+1}$
+\end_inset
+
+ that is optimal with respect to a specific 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+measure
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $C$
+\end_inset
+
+, a variety of which is conceivable.
+ Some of the more representative ones are listed as follows.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Measures for evaluating 
+\begin_inset Formula $\mathbb{T}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $C_{1}\coloneqq$
+\end_inset
+
+ (number of unoccupied squares)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+probably the most naive definition of a score,
+\end_layout
+
+\begin_layout Enumerate
+easy to implement: 
+\begin_inset Formula $C_{1}\coloneqq\text{\#}\left(S_{i,j}\equiv0\right)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $C_{2}\coloneqq$
+\end_inset
+
+ (the number of 
+\begin_inset Quotes xld
+\end_inset
+
+accessible
+\begin_inset Quotes xrd
+\end_inset
+
+ squares)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+more involved: builds upon the previous, naive 
+\begin_inset Formula $C_{1}$
+\end_inset
+
+ while also taking into account those unoccupied squares with occupied squares
+ above them,
+\end_layout
+
+\begin_layout Enumerate
+must also take into consideration advanced moves such as 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+tucks
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+spins
+\end_layout
+
+\end_inset
+
+: the enabling of such maneuvers renders seemingly inaccessible squares
+ accessible
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://tetris.wiki/T-Spin
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $C_{3}\coloneqq$
+\end_inset
+
+ the game-score
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+recently regularized by a detailed guideline on Tetris-wiki
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://tetris.wiki/Scoring
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+as an excerpt, points scored from line-clears induced by 
+\begin_inset Formula $1$
+\end_inset
+
+ line (single), 
+\begin_inset Formula $2$
+\end_inset
+
+ lines (double), 
+\begin_inset Formula $3$
+\end_inset
+
+ lines (triple) and 
+\begin_inset Formula $4$
+\end_inset
+
+ lines (
+\begin_inset Quotes xld
+\end_inset
+
+tetris
+\begin_inset Quotes xrd
+\end_inset
+
+) are in the proportion of 
+\begin_inset Formula $1:3:5:8$
+\end_inset
+
+.
+ Implicitly, a 
+\begin_inset Quotes xld
+\end_inset
+
+tetris
+\begin_inset Quotes xrd
+\end_inset
+
+-clear, i.e., a 
+\begin_inset Formula $4$
+\end_inset
+
+-line-clear, is, for example, worth twice as much as 
+\begin_inset Formula $4$
+\end_inset
+
+ separate single-clears and 
+\begin_inset Formula $\nicefrac{1}{3}$
+\end_inset
+
+ more than 
+\begin_inset Formula $2$
+\end_inset
+
+ separate double-clears.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+The final score 
+\begin_inset Formula $C$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Though 
+\begin_inset Formula $C_{3}$
+\end_inset
+
+ seems to be the apparently more advanced scoring measure, the other two
+ are nevertheless required as tie-breakers, in case different control-input
+ 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ evaluates to the same score.
+ One might imagine the final measure 
+\begin_inset Formula $C$
+\end_inset
+
+ as the aggregate of various 
+\begin_inset Formula $C_{i}$
+\end_inset
+
+, where the exact manner of such an aggregation requires further analysis.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Training Process
+\end_layout
+
+\begin_layout Definition
+The biggest ideas during training
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Save the result!
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Since super-computers might terminate longer-acting processes, the optimal
+ regiment for prolonged period of training is to repeat a small chunk of
+ training-runs, record the result after every chunk, and continue from this
+ chunk-result later on
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+How to save the result
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+stable-baseline
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+raw-save model
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "basic_training"
+target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#basic-usage-training-saving-loading"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+save the policy and evaluate it individually from the model
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+save the (huge) reply-buffer 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+tensorboard: more advanced model saving
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://stable-baselines3.readthedocs.io/en/master/guide/tensorboard.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+What we do apart from raw-training during training
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Of course, we need to train stuff
+\end_layout
+
+\begin_layout Enumerate
+call-backs
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+not even a call-back, just do periodic eval during testing
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Create the model, the training environment
+\end_layout
+
+\begin_layout Plain Layout
+
+# and the test environment (for evaluation)
+\end_layout
+
+\begin_layout Plain Layout
+
+model = SAC('MlpPolicy', 'Pendulum-v1', verbose=1,
+\end_layout
+
+\begin_layout Plain Layout
+
+            learning_rate=1e-3, create_eval_env=True)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Evaluate the model every 1000 steps on 5 test episodes
+\end_layout
+
+\begin_layout Plain Layout
+
+# and save the evaluation to the "logs/" folder
+\end_layout
+
+\begin_layout Plain Layout
+
+model.learn(6000, eval_freq=1000, n_eval_episodes=5, eval_log_path="./logs/")
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+existing call-backs
+\end_layout
+
+\begin_layout Enumerate
+self-implemented call-backs
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+save best
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#using-callback-monitoring-training"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Training
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Save the model
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+use the resulting model to play
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+After some period of training
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+we save the current 
+\begin_inset Quotes xld
+\end_inset
+
+model
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+make a video of current play
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

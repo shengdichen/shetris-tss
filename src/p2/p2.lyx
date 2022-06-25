@@ -1,0 +1,3001 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\master ../main.lyx
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+tabs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+algorithm2e
+customHeadersFooters
+enumitem
+logicalmkup
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Libertinus Serif"
+\font_sans "default" "Avenir LT Std"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 93
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=black,  frenchlinks=true, citecolor=black, urlcolor=blue, filecolor=blue, pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type numerical
+\biblio_options entryhead=true, entrykey=false
+\biblatex_bibstyle reading
+\biblatex_citestyle alphabetic-verb
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Implementation
+\end_layout
+
+\begin_layout Subsection
+General notices
+\end_layout
+
+\begin_layout Standard
+Despite its ubiquitousness, the term 
+\begin_inset Quotes xld
+\end_inset
+
+Tetris
+\begin_inset Quotes xrd
+\end_inset
+
+ alone by no means offers a stringent set of definitions for implementation
+ and execution of the game.
+ Indeed, from the moment of its original conception, the Tetris-game has
+ evolved into a myriad of variations, each implementing a separate set of
+ derivative components from the visual effects to the specific rules.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Some-established-implementations"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ displays several historic implementations of the Tetris game.
+\end_layout
+
+\begin_layout Standard
+Such diversity in platforms, style and rules complicates uniformity in the
+ analysis of the game itself.
+ Fortunately, the community-maintained 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tetris.wiki
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-wiki"
+literal "false"
+
+\end_inset
+
+ of public-domain offers a centralized collection of comprehensive information
+ concerning the Tetris-game, which shall serve as the main source for this
+ chapter.
+\end_layout
+
+\begin_layout Note
+Citations from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tetris.wiki
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Due to its vast topic coverage of, citations therefrom are inserted as foot-note
+ to the referenced sub-page instead of the more traditional style of within-text
+ display.
+ The reader shall note that the Creative Commons 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+CC BY-NC-SA 3.0
+\end_layout
+
+\end_inset
+
+ license is deployed site-wide, which applies to all pictorial illustrations
+ grabbed from the site used in this thesis.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The knowledge of the diversity of the 
+\begin_inset Quotes xld
+\end_inset
+
+Tetris
+\begin_inset Quotes xrd
+\end_inset
+
+ game decisively influenced the implementation of Shetris.
+ This section provides several notes on the specific rules chosen by Shetris.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Various rules of the line-clear operation
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://tetris.wiki/Line_clear
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/tetris/field/nes.gif
+	height 4cm
+
+\end_inset
+
+
+\begin_inset Formula $\qquad$
+\end_inset
+
+
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/tetris/field/tgm.gif
+	height 4cm
+
+\end_inset
+
+
+\begin_inset Formula $\qquad$
+\end_inset
+
+
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/tetris/field/gameboy.png
+	height 4cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Some-established-implementations"
+
+\end_inset
+
+Several established implementations of the Tetris-game.
+ From left to right:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Tetris for NES, Nintendo"
+target "https://tetris.wiki/Tetris_(NES,_Nintendo)"
+literal "false"
+
+\end_inset
+
+ (1989); 
+\begin_inset CommandInset href
+LatexCommand href
+name "Tetris The Grand Master"
+target "https://tetris.wiki/Tetris_The_Grand_Master"
+literal "false"
+
+\end_inset
+
+ (1998); 
+\begin_inset CommandInset href
+LatexCommand href
+name "Tetris for Game Boy"
+target "https://tetris.wiki/Tetris_(Game_Boy)"
+literal "false"
+
+\end_inset
+
+ (1989)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Fundamental terminologies
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+terminologies
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The general idea of a Tetris-game hardly needs introduction.
+ This folk-lore description of a Tetris-game captures its general spirit:
+\end_layout
+
+\begin_layout Quote
+At the very beginning,
+\begin_inset Newline newline
+\end_inset
+
+a board of empty boxes emerges.
+\end_layout
+
+\begin_layout Quote
+Then pieces begin falling,
+\begin_inset Newline newline
+\end_inset
+
+and one rotates and moves them, one at a time.
+\end_layout
+
+\begin_layout Quote
+If luck or skill shall so allow, some rows are complete, when the bottom
+ is reached;
+\begin_inset Newline newline
+\end_inset
+
+and thus these rows are cleared, the height reduced and a new piece provided.
+\end_layout
+
+\begin_layout Quote
+Finally, the top of field no longer contains the fresh piece, and the game
+ duly calls quit;
+\begin_inset Newline newline
+\end_inset
+
+unless the insatiated soul resets everything, just to start again.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+While intuitively explanatory, further details are required for a stringent
+ definition of the game.
+ For example, the size Several basic terms of the Tetris-game necessary
+ to commence the discussion on the implementation are introduced below.
+\end_layout
+
+\begin_layout Definition
+The 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+piece-Identity
+\end_layout
+
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Piece - Tetris.wiki"
+target "https://tetris.wiki/Piece"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+A 
+\begin_inset Quotes xld
+\end_inset
+
+piece
+\begin_inset Quotes xrd
+\end_inset
+
+ is defined as a collection of 
+\begin_inset Quotes xld
+\end_inset
+
+blocks
+\begin_inset Quotes xrd
+\end_inset
+
+.
+ Commonly referred to as 
+\begin_inset Quotes xld
+\end_inset
+
+Tetromino
+\begin_inset Quotes xrd
+\end_inset
+
+ and 
+\begin_inset Quotes xld
+\end_inset
+
+Tetrimino
+\begin_inset Quotes xrd
+\end_inset
+
+, seven of which are stipulated by the official guideline:
+\begin_inset Formula 
+\[
+\begin{bmatrix}\blacksquare & \blacksquare\\
+\blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare & \blacksquare & \blacksquare\end{bmatrix}\quad\begin{bmatrix} & \blacksquare & \blacksquare\\
+\blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare\\
+ & \blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix} &  & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix} & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+\begin{gathered}\underbrace{\begin{bmatrix}\blacksquare & \blacksquare\\
+\blacksquare & \blacksquare
+\end{bmatrix}}_{\texttt{pid=0}}\\
+\begin{bmatrix}\blacksquare & \blacksquare & \blacksquare & \blacksquare\end{bmatrix}\quad\begin{bmatrix} & \blacksquare & \blacksquare\\
+\blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare\\
+ & \blacksquare & \blacksquare
+\end{bmatrix}\\
+\begin{bmatrix} &  & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}\quad\begin{bmatrix} & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare
+\end{bmatrix}
+\end{gathered}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Beyond four blocks
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+The term 
+\begin_inset Quotes xld
+\end_inset
+
+piece
+\begin_inset Quotes xrd
+\end_inset
+
+ is preferred for generality potential to shapes beyond the aforementioned
+ 
+\begin_inset Formula $4$
+\end_inset
+
+-box limitation.
+ Indeed, researches such as 
+\begin_inset CommandInset citation
+LatexCommand autocite
+key "demaine-n-mino"
+literal "false"
+
+\end_inset
+
+ have studied such exotic variations, and 
+\begin_inset CommandInset citation
+LatexCommand autocite
+key "tetris-rl-survey,reduced-tetris"
+literal "false"
+
+\end_inset
+
+ demonstrate reinforcement-learning applied to the Tetris-game.
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ as indicated in the above enumeration underscores the implementation in
+ Shetris.
+ Given the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\in\left\{ 0,1,\cdots6\right\} $
+\end_inset
+
+, the specific type of the piece is uniquely identified, however, the possibilit
+y of rotation leads to variations within a given piece.
+ Though seemingly straight-forward, the execution of this movement has seen
+ numerous implementations over the years.
+ Instead of delving into the details of the differences among these, the
+ author presents the rotational mechanism of Shetris as the Super-Rotation-Syste
+m as enforced by the Tetris-Guideline and refers the interested reader to
+ the summary page of Tetris-Wiki
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Category:Rotation_systems"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ for in-depth investigation of other variants.
+\end_layout
+
+\begin_layout Definition
+Super-Rotational-System (SRS)
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Super_Rotation_System"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Key elements from the Super-Rotation-System are enlisted below:
+\end_layout
+
+\begin_layout Itemize
+Every piece can be rotated in the counter-clockwise and the clockwise sense
+\end_layout
+
+\begin_layout Itemize
+Every 
+\begin_inset Formula $4$
+\end_inset
+
+ rotational inputs in the same direction yields the original position.
+\end_layout
+
+\begin_layout Itemize
+Every piece has one default rotational state.
+\end_layout
+
+\begin_layout Standard
+In Shetris, the rotational configuration 
+\begin_inset Formula $r$
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rot
+\end_layout
+
+\end_inset
+
+ of a piece is simply an integer value:
+\begin_inset Formula 
+\[
+\left\{ \begin{alignedat}{1}r & \in\left\{ 0,1,2,3\right\} \\
+\texttt{rot} & \in\texttt{range(4)}
+\end{alignedat}
+\right.
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $0$
+\end_inset
+
+ denoting the default rotational state.
+ Conforming to conventions in mathematics, every counter-clockwise rotation
+ increments this value by 
+\begin_inset Formula $+1$
+\end_inset
+
+, while every clockwise rotation translates to a decrement of 
+\begin_inset Formula $-1$
+\end_inset
+
+.
+ The modulus-similar nature of the rotational state is illustrated as follows:
+\begin_inset Formula 
+\[
+\xymatrix{ & *++[F-]{r=1}\ar@<-1pc>@/_{1pc}/[dl]_{{\leftturn}}\\
+*++[F-]{r=2}\ar@<-1pc>@/_{1pc}/[dr]_{{\leftturn}} &  & *++[F-]{r=0}\ar@<-1pc>@/_{1pc}/[ul]_{{\leftturn}}\\
+ & *++[F-]{r=3}\ar@<-1pc>@/_{1pc}/[ur]_{{\leftturn}}
+}
+\qquad\qquad\xymatrix{ & *++[F-]{r=1}\ar@<+1pc>@/^{1pc}/[dr]^{{\rightturn}}\\
+*++[F-]{r=2}\ar@<+1pc>@/^{1pc}/[ur]^{{\rightturn}} &  & *++[F-]{r=0}\ar@<+1pc>@/^{1pc}/[dl]^{{\rightturn}}\\
+ & *++[F-]{r=3}\ar@<+1pc>@/^{1pc}/[ul]^{{\rightturn}}
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the following, the full rotational 
+\end_layout
+
+\begin_layout Definition
+Rotation of all pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The O-piece
+\begin_inset Formula 
+\[
+\texttt{pid}=0\coloneqq\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The I-piece
+\begin_inset Formula 
+\[
+\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}}_{\texttt{"S"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\underbrace{\begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}}_{\texttt{"Z"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}}_{\texttt{"L"}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}}_{\texttt{"J"}}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}}_{\texttt{"T"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As soon as the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ and its 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rot
+\end_layout
+
+\end_inset
+
+ is known, the 
+\begin_inset Quotes xld
+\end_inset
+
+shape
+\begin_inset Quotes xrd
+\end_inset
+
+ of the current piece is uniquely identified.
+ The final step involves the vertical and horizontal positioning.
+ A prerequisite is the 
+\begin_inset Quotes xld
+\end_inset
+
+board
+\begin_inset Quotes xrd
+\end_inset
+
+, where the piece is eventually placed: this notion is formalized below:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Definition
+The field
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Playfield"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+The previously mentioned 
+\begin_inset Quotes xld
+\end_inset
+
+board
+\begin_inset Quotes xrd
+\end_inset
+
+ is officially termed the 
+\begin_inset Quotes xld
+\end_inset
+
+field
+\begin_inset Quotes xrd
+\end_inset
+
+.
+ The official size is 
+\begin_inset Formula $20\times10$
+\end_inset
+
+, i.e., the field is to encompass 
+\begin_inset Formula $20$
+\end_inset
+
+ rows and 
+\begin_inset Formula $10$
+\end_inset
+
+ columns.
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Implementation in Shetris
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+In Shetris, the field is represented by a 
+\begin_inset Formula $20\times10$
+\end_inset
+
+ (two-dimensional) array of boolean entries of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+.
+ This field-array, along with the size for ease of access, is abstracted
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Field
+\end_layout
+
+\end_inset
+
+ class as seen in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Constructor-for-Field"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class Field:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, field: np.ndarray):
+\end_layout
+
+\begin_layout Plain Layout
+
+        self._field = field
+\end_layout
+
+\begin_layout Plain Layout
+
+        self._size = field.shape
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Constructor-for-Field"
+
+\end_inset
+
+Constructor for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Field
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Common Operations of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Field
+\end_layout
+
+\end_inset
+
+ class include calculating full-rows, clearing and shifting rows, and ultimately
+, performing the line-clear operation.
+ Naturally, these are all member functions of the field.
+ The interested reader is referred to the source-code for implementations
+ of such key members.
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+class Field:
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Some-examplary-operations"
+
+\end_inset
+
+Some examplary operations of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Field
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Index ordering
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The field-array follows the indexing convention of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+ (and various other numerical libraries): 
+\end_layout
+
+\begin_layout Itemize
+the positive direction of the first axis proceeds downwards vertically
+\end_layout
+
+\begin_layout Itemize
+and that of the second axis points rightwards horizontally.
+ 
+\end_layout
+
+\begin_layout Standard
+While this requires some accustoming-to compared to the traditional Cartesian
+ system, the abstraction is not only necessary for smooth deployment of
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+, but also guarantees that the value first axis continuously increases as
+ a piece falls downwards.
+\end_layout
+
+\begin_layout Standard
+At this point, the position, or 
+\begin_inset Quotes xld
+\end_inset
+
+coordinate
+\begin_inset Quotes xrd
+\end_inset
+
+ of every box of the field is provided as the following schematics
+\begin_inset Formula 
+\[
+\begin{bmatrix}\left(0,0\right) & \left(1,0\right) & \cdots & \left(9,0\right)\\
+\left(1,0\right) & \left(1,1\right) &  & \fullmoon\\
+\vdots\\
+\vdots\\
+\vdots &  & \ddots\\
+\left(19,0\right) &  &  & \left(19,9\right)
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The coordinates of a piece
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+With the notion of the coordinate of a box as introduced above, it thus
+ follows the coordinates of a specific piece.
+ The observation is
+\begin_inset Formula 
+\[
+\begin{bmatrix}\left(+0,+0\right) & \left(+1,+0\right) & \cdots & \fullmoon\\
+\left(+1,+0\right) & \left(+1,+1\right) &  & \fullmoon\\
+\vdots & \fullmoon & \ddots & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+The advantage of such storage is that the vertical and horizontal shifting
+ of any piece is almost trivial:
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above relative-coordinates are implemented in the purely static, factory-sty
+le 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RelCoord
+\end_layout
+
+\end_inset
+
+ class in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Fetching-relative-coordinates"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# src/engine/placement/srs/coord.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class RelCoord:
+\end_layout
+
+\begin_layout Plain Layout
+
+    _rel_coords = np.array(
+\end_layout
+
+\begin_layout Plain Layout
+
+        (
+\end_layout
+
+\begin_layout Plain Layout
+
+            # O
+\end_layout
+
+\begin_layout Plain Layout
+
+            (
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+0, +1), (+1, +1), (+0, +2), (+1, +2)),
+\end_layout
+
+\begin_layout Plain Layout
+
+				...
+\end_layout
+
+\begin_layout Plain Layout
+
+            ),
+\end_layout
+
+\begin_layout Plain Layout
+
+            # I
+\end_layout
+
+\begin_layout Plain Layout
+
+            (
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+1, +0), (+1, +1), (+1, +2), (+1, +3)),
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+0, +1), (+1, +1), (+2, +1), (+3, +1)),
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+2, +0), (+2, +1), (+2, +2), (+2, +3)),
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+0, +2), (+1, +2), (+2, +2), (+3, +2)),
+\end_layout
+
+\begin_layout Plain Layout
+
+            ),
+\end_layout
+
+\begin_layout Plain Layout
+
+            # S
+\end_layout
+
+\begin_layout Plain Layout
+
+            (
+\end_layout
+
+\begin_layout Plain Layout
+
+                ((+1, +0), (+0, +1), (+1, +1), (+0, +2)),
+\end_layout
+
+\begin_layout Plain Layout
+
+				...
+\end_layout
+
+\begin_layout Plain Layout
+
+            ),
+\end_layout
+
+\begin_layout Plain Layout
+
+           ...
+\end_layout
+
+\begin_layout Plain Layout
+
+        )
+\end_layout
+
+\begin_layout Plain Layout
+
+    )
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_rel_coord(pid: int, rot: int) -> np.ndarray:
+\end_layout
+
+\begin_layout Plain Layout
+
+        return RelCoord._rel_coords[pid][rot]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Fetching-relative-coordinates"
+
+\end_inset
+
+Fetching relative coordinates
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}\times & \times\\
+\times & \circ & \circ & \fullmoon\blacksquare\bigcirc\\
+\times & \circ & \circ & \ocircle\ocircle\blacksquare\bigcirc\\
+\times &  &  & \fullmoon\newmoon\blacksquare\varbigcirc
+\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Overview
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Enumerate
+The core game-logic is abstracted in the 
+\begin_inset Quotes xld
+\end_inset
+
+engine
+\begin_inset Quotes xrd
+\end_inset
+
+, composed of two major constituents: the piece-generator that spawns new
+ pieces, the 
+\begin_inset Quotes xld
+\end_inset
+
+placement
+\begin_inset Quotes xrd
+\end_inset
+
+ sub-engine that decides and the piece generator.
+ As explained in later chapters, the 
+\begin_inset Quotes xld
+\end_inset
+
+engine
+\begin_inset Quotes xrd
+\end_inset
+
+ provides the evolution logic;
+\end_layout
+
+\begin_layout Enumerate
+Multiple modes 
+\end_layout
+
+\begin_layout Plain Layout
+Visualization is possible either from the terminal in the traditional text-style
+, or via a graphic interface.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The Engine
+\end_layout
+
+\begin_layout Subsubsection
+Placement
+\end_layout
+
+\begin_layout Standard
+The placement
+\end_layout
+
+\begin_layout Subsubsection
+Generator
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The generator, as previously stated, produces the pids, i.e., the piece-ids.
+ The 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Tetris-Guideline
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This can be summarized as follows:
+\end_layout
+
+\begin_layout Subsection
+The movements
+\end_layout
+
+\begin_layout Standard
+The engine defined above not only defines multiple essential components
+ of the Tetris-game, it also critically provides the state of the system.
+ Indeed, the conception of the 
+\begin_inset Quotes xld
+\end_inset
+
+Engine
+\begin_inset Quotes xrd
+\end_inset
+
+ provides the abstraction of the state 
+\begin_inset Formula $x$
+\end_inset
+
+ of the system that is one Tetris-game.
+ This thus includes:
+\end_layout
+
+\begin_layout Enumerate
+the current field 
+\begin_inset Formula $x_{F}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+the current piece 
+\begin_inset Formula $x_{P}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+the state of the generator
+\end_layout
+
+\begin_layout Standard
+Note that the state 
+\begin_inset Formula $x$
+\end_inset
+
+ is most likely only partially observable: at the very least, for example,
+ the reservoir of the generator is not available to the agent.
+\end_layout
+
+\begin_layout Standard
+With the static state 
+\begin_inset Formula $x$
+\end_inset
+
+ of the system provided, the next step is to formulate the evolution mechanism.
+ The discrete nature of the Tetris-game seems apparent, but much rigor is
+ still necessary to formulate the evolution.
+ This section formulates such mechanisms 
+\begin_inset Formula $f$
+\end_inset
+
+ that provides
+\begin_inset Formula 
+\[
+x_{t+1}\eqqcolon f\left(x_{t},\cdots\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Movements of Tetris guideline
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Tetris guideline dictates multiple 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Movements in Shetris
+\end_layout
+
+\begin_layout Standard
+The partial observation
+\end_layout
+
+\begin_layout Definition
+Partial observation
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The agent possesses information to
+\begin_inset Formula 
+\[
+\overrightarrow{x}\coloneqq\left[\begin{alignedat}{1}x_{F}\\
+x_{P}
+\end{alignedat}
+\right]
+\]
+
+\end_inset
+
+Note that the state of the generator is not entirely unrepresented: the
+ current piece implicitly contains the current 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+This is abstracted in the following rule-set:
+\end_layout
+
+\begin_layout Definition
+Inputs
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+For every piece, one rotation and one horizontal displacement is allowed.
+\begin_inset Formula 
+\[
+\tilde{x}^{P}=u_{x}\rightarrow u_{r}\rightarrow x_{t}^{P}
+\]
+
+\end_inset
+
+Once this is performed, the piece is out of control of the agent, and would
+ be subjected to a drop and line-clear.
+ 
+\begin_inset Formula 
+\[
+x_{t+1}^{F}=f\left(u_{x}\rightarrow u_{r}\rightarrow x_{t+1}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Further notes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Implementing Tetris
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Extra remarks on the raw matrix
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Due to the row-major indexing tradition of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+, we define the following ordering and directions of axes:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://numpy.org/doc/stable/user/absolute_beginners.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+On the GUI list
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Similar to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+np
+\end_layout
+
+\end_inset
+
+ storing order, the raw lists are saved raw major, thus, the same indexing
+ directions are used
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The SRS
+\end_layout
+
+\begin_layout Subsection
+The engine
+\end_layout
+
+\begin_layout Subsubsection
+Collision checks
+\end_layout
+
+\begin_layout Subsubsection
+SRS-Rotations
+\end_layout
+
+\begin_layout Subsubsection
+Gravity
+\end_layout
+
+\begin_layout Subsection
+Extra Implementations
+\end_layout
+
+\begin_layout Definition
+Visualization: Graphical or Terminal UI
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Straight-forward: State 
+\begin_inset Formula $S$
+\end_inset
+
+ to a UI-representation,
+\end_layout
+
+\begin_layout Enumerate
+Probably more difficult: UI-representation to State 
+\begin_inset Formula $S$
+\end_inset
+
+, which would be useful for 
+\begin_inset Quotes xld
+\end_inset
+
+scanning in
+\begin_inset Quotes xrd
+\end_inset
+
+ external video-recordings of game-plays,
+\end_layout
+
+\begin_layout Enumerate
+Nice-to-have: allow pane-by-pane display of the same sequence of Tetris-pieces:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+one for interactive human game-play,
+\end_layout
+
+\begin_layout Enumerate
+one for showcasing the machine-solution.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Multiple flavors of Tetirs
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+A wide range of variants of Tetris
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://tetris.wiki/List_of_official_Tetris_games
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ exist, each with its own idiosyncrasies.
+ By defining new implementations for 
+\begin_inset Formula $\mathbf{R}\coloneqq\mathbf{R}_{\text{clr}}\circ\mathbf{R}_{y}$
+\end_inset
+
+, not only can such spin-offs be represented, but also the already-mentioned
+ advanced maneuvers such as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
+
+-spins.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Starting the game
+\end_layout
+
+\begin_layout Definition
+The game
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Init
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+create matrix
+\end_layout
+
+\begin_layout Enumerate
+if GUI: create the big field
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+while game is not over: main loop
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+main loop
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Gen piece
+\end_layout
+
+\begin_layout Enumerate
+moves
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+moves
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Moves is a sequence of atomic-moves
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Horizontal
+\end_layout
+
+\begin_layout Enumerate
+Vertical
+\end_layout
+
+\begin_layout Enumerate
+Rotation
+\end_layout
+
+\begin_layout Standard
+i.e., to execute a 
+\begin_inset Quotes xld
+\end_inset
+
+moves
+\begin_inset Quotes xrd
+\end_inset
+
+, we execute each all he atomic-moves, one by one
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+How an atomic-move is executed
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+generate tentative-position
+\end_layout
+
+\begin_layout Enumerate
+check collision
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if collided:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if this move is a rotation
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+if not collided: move-success
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+if move-success: use the tentative position
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Moves, sequence-mode
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The 
+\begin_inset Quotes xld
+\end_inset
+
+moves
+\begin_inset Quotes xrd
+\end_inset
+
+ are provided one atomic at a time
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+as soon as an atomic-fails, we just try another one
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Moves, one-shot
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+This is the way the computer plays it
+\end_layout
+
+\begin_layout Enumerate
+the moves is given as a big-lump:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+e.g., the move is 
+\begin_inset Formula $\left(4,3,1\right)$
+\end_inset
+
+; which means to move down by 
+\begin_inset Formula $4$
+\end_inset
+
+, right by 
+\begin_inset Formula $3$
+\end_inset
+
+ and rotate by 
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Two major differences exist
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The order among all atomic-moves is lost: we could never reconstruct a sequence
+ of atomic-moves from a one-shot; however, we can very well compress a sequence
+ of atomic-moves into a one-shot
+\end_layout
+
+\begin_layout Enumerate
+due to this, a one-shot fails as a unit: since we cannot know the order
+ of the sequence, we cannot know how 
+\begin_inset Quotes xld
+\end_inset
+
+far
+\begin_inset Quotes xrd
+\end_inset
+
+ along a hypothetical sequence of moves one is before the move fail happens;
+ thus, we cannot accept a part of a one-shot; thus, a one-shot fails as
+ a whole
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Modeling the Game
+\end_layout
+
+\begin_layout Subsection
+Control theory
+\end_layout
+
+\begin_layout Subsubsection
+overview
+\end_layout
+
+\begin_layout Definition
+Defining the Tetris-game
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The system-state 
+\begin_inset Formula $x\coloneqq$
+\end_inset
+
+ the whole field;
+\begin_inset Formula 
+\[
+x\in\texttt{bool}^{20\times10}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The control-input 
+\begin_inset Formula $u\coloneqq$
+\end_inset
+
+ moves;
+\end_layout
+
+\begin_layout Enumerate
+The system-dynamics 
+\begin_inset Formula $f\coloneqq$
+\end_inset
+
+ collision engine.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the following, these components are explained in detail.
+\end_layout
+
+\begin_layout Subsubsection
+State 
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Claim
+Several obvious properties
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The system-state 
+\begin_inset Formula $x$
+\end_inset
+
+ is fully observable
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+what matrix pair 
+\begin_inset Formula $\left(A,?\right)$
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+ The system if fully controllable
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Representation of the (visible) play-field of Tetris
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The entire 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+field
+\end_layout
+
+\end_inset
+
+ of a Tetris-game, typically composed of 
+\begin_inset Formula $20\times10$
+\end_inset
+
+ (height and width respectively) 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+squares
+\end_layout
+
+\end_inset
+
+, could be expressed as a boolean state-matrix 
+\begin_inset Formula $S$
+\end_inset
+
+ of equal size, where each of its 
+\begin_inset Formula $200$
+\end_inset
+
+ entries is intuitively defined as: 
+\begin_inset Formula 
+\[
+S_{\forall i,\forall j}\coloneqq\begin{cases}
+0\left(\mathtt{FALSE}\right) & \text{, if square is not occupied by any Tetris-piece}\\
+1\left(\mathtt{TRUE}\right) & \text{, otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several immediate justifications for this representation are:
+\end_layout
+
+\begin_layout Enumerate
+Apparent connection to linear algebra,
+\end_layout
+
+\begin_layout Enumerate
+Applicability of sparse linear-operations, since a mature game-play shall
+ have mostly 
+\begin_inset Formula $0$
+\end_inset
+
+-entries under the above representation,
+\end_layout
+
+\begin_layout Enumerate
+Easy-to-navigate space of boolean-values.
+\end_layout
+
+\begin_layout Subsubsection
+Control-Inputs 
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Player's influence
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+At any time-point 
+\begin_inset Formula $n$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{Q_{n}}$
+\end_inset
+
+ is the only 
+\begin_inset Quotes xld
+\end_inset
+
+input
+\begin_inset Quotes xrd
+\end_inset
+
+ available to the player.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+A 
+\begin_inset Quotes xld
+\end_inset
+
+move
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In analogy to the chess game, a 
+\begin_inset Quotes xld
+\end_inset
+
+move
+\begin_inset Quotes xrd
+\end_inset
+
+ could be is defined as the composition 
+\begin_inset Formula $\mathbf{Q}\circ\mathbf{P}$
+\end_inset
+
+.
+ As an example, 
+\begin_inset Formula $T_{2,+90^{\circ}}$
+\end_inset
+
+ denotes a 
+\begin_inset Formula $\mathbf{P}_{n}=T\text{-piece}$
+\end_inset
+
+ horizontally shifted by 
+\begin_inset Formula $\mathbf{Q}_{x,n}=2$
+\end_inset
+
+ and rotated by 
+\begin_inset Formula $\mathbf{Q}_{\text{rot},n}\coloneqq90^{\circ}.$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+System-Dynamics 
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Thus, after the 
+\begin_inset Formula $n^{\text{th}}$
+\end_inset
+
+ Tetris-piece has been placed, a corresponding matrix 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+ can be directly generated to represent the state of the field.
+ This apparently discrete model prompts the following definition of an entire
+ Tetris-game.
+\end_layout
+
+\begin_layout Definition
+Tetris as discrete-evolution
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+A Tetris-game can be readily modeled as a discrete evolution-problem:
+\begin_inset Formula 
+\[
+S_{n+1}\coloneqq\left(\mathbf{O}_{n+1}\right)\rightarrow S_{n}
+\]
+
+\end_inset
+
+where the Operator 
+\begin_inset Formula $\mathbf{O}_{n+1}$
+\end_inset
+
+ denotes the evolution-mechanism, a composition of multiple sub-level operators:
+\begin_inset Formula 
+\[
+\mathbf{O}_{n+1}\coloneqq\mathbf{R}_{n}\circ\mathbf{Q}_{n+1}\circ\mathbf{P}_{n+1}
+\]
+
+\end_inset
+
+Note that the order of composition follows from right to left, similar to
+ matrix-matrix multiplication.
+ These sub-level operators are defined next.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Components of the Evolution 
+\begin_inset Formula $\mathbf{O}_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{P}_{n}\coloneqq$
+\end_inset
+
+ piece-operator, i.e., evaluates to one of the 
+\begin_inset Formula $7$
+\end_inset
+
+ pieces seen in Appendix-1, where rotation-symmetric counter-parts are counted
+ as a new piece, which is the case for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+L
+\end_layout
+
+\end_inset
+
+-piece and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+z
+\end_layout
+
+\end_inset
+
+-pieces;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{Q}_{n}\coloneqq$
+\end_inset
+
+ control-operator denoting player's input, a composition of:
+\begin_inset Formula 
+\[
+\mathbf{Q}_{n}\coloneqq\mathbf{Q}_{x,n}\circ\mathbf{Q}_{\text{rot},n}
+\]
+
+\end_inset
+
+where:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{Q}_{x,n}\coloneqq$
+\end_inset
+
+ horizontal-shift-operator (at most 
+\begin_inset Formula $10$
+\end_inset
+
+ distinct values),
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{Q}_{\text{rot},n}\coloneqq$
+\end_inset
+
+ rotation-operator (at most 
+\begin_inset Formula $4$
+\end_inset
+
+ distinct values);
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{R}_{n}\coloneqq$
+\end_inset
+
+ rule-operator, a composition of:
+\begin_inset Formula 
+\[
+\mathbf{R}_{n}\coloneqq\mathbf{R}_{\text{clr}}\circ\mathbf{R}_{y,n}
+\]
+
+\end_inset
+
+where:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{R}_{\text{clr}}\coloneqq$
+\end_inset
+
+ line-clear-operator (constant for all evolution-step, thus no time-index
+ 
+\begin_inset Formula $n$
+\end_inset
+
+): whenever sum of a line is 
+\begin_inset Formula $10$
+\end_inset
+
+, i.e., every square has 
+\begin_inset Formula $1$
+\end_inset
+
+ indicating its occupancy, its entries are reset to all 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ In essence, the 
+\begin_inset Formula $\mod10$
+\end_inset
+
+ operation is performed,
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{R}_{y,n}\coloneqq$
+\end_inset
+
+ vertical-placement-operator, i.e., outputs which vertical height a piece
+ 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+ in its configuration given by the control-input 
+\begin_inset Formula $\mathbf{Q}$
+\end_inset
+
+ will end up 
+\begin_inset Quotes xld
+\end_inset
+
+fallen down to
+\begin_inset Quotes xrd
+\end_inset
+
+ in the current play-field 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+.
+ Disregarding more involved player-inputs such as tucks and spins, it can
+ be intuitively understood as the representation of the maximal height of
+ an occupied square of all columns.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Summary
+\end_layout
+
+\begin_layout Definition
+One game of Tetris
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The discrete-evolution of a Tetris-game is captured with:
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}S_{n+1}\coloneqq & \left(\mathbf{O}_{n+1}\right)\rightarrow S_{n}\\
+\coloneqq & \left(\mathbf{R}_{n}\circ\mathbf{Q}_{n+1}\circ\mathbf{P}_{n+1}\right)\rightarrow S_{n}
+\end{alignedat}
+\]
+
+\end_inset
+
+in other words, the next state of the game-field 
+\begin_inset Formula $S_{n+1}$
+\end_inset
+
+ is found as the current state 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+ evolved with 
+\begin_inset Formula $\mathbf{O}_{n+1}$
+\end_inset
+
+, which translates to the chaining of three operators: the Tetris-piece
+ 
+\begin_inset Formula $\mathbf{P}_{n+1}$
+\end_inset
+
+, followed by the user's control-input 
+\begin_inset Formula $\mathbf{Q}_{n+1}$
+\end_inset
+
+ and finalized by the rule 
+\begin_inset Formula $\mathbf{R}_{n}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Intricacy on time-index
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The uneven indexing of 
+\begin_inset Formula $n$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbf{R}_{n}$
+\end_inset
+
+ versus that of 
+\begin_inset Formula $n+1$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathbf{Q}_{n+1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{P}_{n+1}$
+\end_inset
+
+ is by design: One shall consciously observe that:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{R}_{n}$
+\end_inset
+
+, notably its component 
+\begin_inset Formula $\mathbf{R}_{y,n}$
+\end_inset
+
+ that colloquially determines the vertical 
+\begin_inset Quotes xld
+\end_inset
+
+landscape
+\begin_inset Quotes xrd
+\end_inset
+
+, is completely determined with 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+, i.e., known at current step 
+\begin_inset Formula $n$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\mathbf{Q}_{n+1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{P}_{n+1}$
+\end_inset
+
+ is known only 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+after
+\end_layout
+
+\end_inset
+
+ the new piece 
+\begin_inset Formula $\mathbf{P}_{n+1}$
+\end_inset
+
+ becomes available, thus requires information at the 
+\begin_inset Quotes xld
+\end_inset
+
+next
+\begin_inset Quotes xrd
+\end_inset
+
+ step.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Making it a gym
+\end_layout
+
+\begin_layout Subsubsection
+Observation
+\end_layout
+
+\begin_layout Subsubsection
+Input
+\end_layout
+
+\begin_layout Subsubsection
+Rewards
+\end_layout
+
+\begin_layout Subsubsection
+Game-over
+\end_layout
+
+\begin_layout Section
+Wrapping in Gym
+\end_layout
+
+\end_body
+\end_document

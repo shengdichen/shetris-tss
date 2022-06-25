@@ -1,0 +1,648 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+tabs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+algorithm2e
+customHeadersFooters
+enumitem
+logicalmkup
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Libertinus Serif"
+\font_sans "default" "Avenir LT Std"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 93
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing other 1.09
+\use_hyperref true
+\pdf_title "Mastering Tetris with Reinforcement-Learning"
+\pdf_author "Shengdi »shenchen« Chen"
+\pdf_subject "BSc-Thesis by Shengdi »shenchen« Chen, supervised by Prof. Dr. J. Buhmann"
+\pdf_keywords "Reinforcement-Learning, Tetris"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered true
+\pdf_bookmarksopen true
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle false
+\pdf_quoted_options "linkcolor=black,  frenchlinks=true, citecolor=black, urlcolor=blue, filecolor=blue, pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type numerical
+\biblio_options entryhead=true, entrykey=false
+\biblatex_bibstyle reading
+\biblatex_citestyle alphabetic-verb
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Mastering Tetris
+\begin_inset Newline newline
+\end_inset
+
+with Reinforcement-Learning
+\end_layout
+
+\begin_layout Author
+Shengdi 
+\begin_inset Quotes xld
+\end_inset
+
+shenchen
+\begin_inset Quotes xrd
+\end_inset
+
+ Chen
+\end_layout
+
+\begin_layout Abstract
+This Bachelor-Thesis
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+shenchen
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset space \textvisiblespace{}
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+AT
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset space \textvisiblespace{}
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ethz
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset space \textvisiblespace{}
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+DOT
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset space \textvisiblespace{}
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ch | 17-943-358
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, conducted under the supervision of Prof.
+ Dr.
+ J.
+ Buhmann, explores various techniques to solving the classic video-game
+ Tetris.
+ A fully extensible implementation of the Tetris-game is implemented, complying
+ with essential elements of the game's official standard.
+ Designed with the purpose of full accessibility for modification, this
+ implementation is fully accessible for non-conforming modifications, and
+ offers interaction possibilities with both human interaction and machine
+ inputs.
+\end_layout
+
+\begin_layout Abstract
+Solutions from heuristics-driven evolutionary-algorithms and deep reinforcement-
+learning are explored and studied using various reward mechanisms.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+A Survey of the Status-Quo
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p1/p1.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Definition
+Summary
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Justification of 
+\end_layout
+
+\begin_layout Enumerate
+Adaptation to gym
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+The Birth of an Agent
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p2/p2.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Summary
+The game (one episode)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Pre-Episode setup
+\end_layout
+
+\begin_layout Enumerate
+Run the episode
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+init (reset of gym)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+create the engine
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+one step (step of gym)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PRE-phase (before a piece is fully visible on screen)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+generate pid
+\end_layout
+
+\begin_layout Enumerate
+PRE move
+\end_layout
+
+\begin_layout Enumerate
+Check game-over (handled by entry)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+move-phase (user's moves)
+\end_layout
+
+\begin_layout Enumerate
+FREEZE-phase
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Summary
+P2
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Implementation of the Shetris-game
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+the engine
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+placement
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+piece
+\end_layout
+
+\begin_layout Enumerate
+field
+\end_layout
+
+\begin_layout Enumerate
+mover (SRS)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+bag based piece-generator
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+sequence
+\end_layout
+
+\begin_layout Enumerate
+shuffle
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+the front (how things are shown)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+what should not be handled by front
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+doing line-clears (other game logics)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+text-based (just print true as 1; false as 0)
+\end_layout
+
+\begin_layout Enumerate
+tk-based
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+built-in GUI of python
+\end_layout
+
+\begin_layout Enumerate
+simple coloring
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+the interaction-manager (how specific moves are obtained)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+output: always a move-format
+\end_layout
+
+\begin_layout Enumerate
+from human
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+terminal
+\end_layout
+
+\begin_layout Enumerate
+WASD
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+from gym
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+the entry-application
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+defines all rules other than the legality of moves
+\end_layout
+
+\begin_layout Enumerate
+defines three phases
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PRE
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Adaptation to gym
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+lots of helper scripts (check API, view spaces)
+\end_layout
+
+\begin_layout Enumerate
+the spaces
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+The Growing of its Consciousness
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p3/p3.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Summary
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+The Presentation of the Results
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p4/p4.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+The Outlook of this Project
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p5/p5.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintAll"
+bibfiles "bib/main,bib/tetris,bib/rl"
+
+\end_inset
+
+
+\begin_inset CommandInset nomencl_print
+LatexCommand printnomenclature
+set_width "auto"
+
+\end_inset
+
+
+\begin_inset CommandInset index_print
+LatexCommand printindex
+type "idx"
+name "Index"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
