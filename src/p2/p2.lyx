@@ -417,27 +417,7 @@ While intuitively explanatory, further details are required for a stringent
 \end_layout
 
 \begin_layout Definition
-The 
-\begin_inset Flex Noun
-status open
-
-\begin_layout Plain Layout
-piece-Identity
-\end_layout
-
-\end_inset
-
-
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-
+The identity of a piece
 \begin_inset Foot
 status open
 
@@ -513,43 +493,28 @@ Tetrimino
 
 \end_inset
 
+From left to right, they are internally identified with the variable 
+\begin_inset Flex Code
+status open
 
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ of values from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $6$
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-\begin{gathered}\underbrace{\begin{bmatrix}\blacksquare & \blacksquare\\
-\blacksquare & \blacksquare
-\end{bmatrix}}_{\texttt{pid=0}}\\
-\begin{bmatrix}\blacksquare & \blacksquare & \blacksquare & \blacksquare\end{bmatrix}\quad\begin{bmatrix} & \blacksquare & \blacksquare\\
-\blacksquare & \blacksquare
-\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare\\
- & \blacksquare & \blacksquare
-\end{bmatrix}\\
-\begin{bmatrix} &  & \blacksquare\\
-\blacksquare & \blacksquare & \blacksquare
-\end{bmatrix}\quad\begin{bmatrix}\blacksquare\\
-\blacksquare & \blacksquare & \blacksquare
-\end{bmatrix}\quad\begin{bmatrix} & \blacksquare\\
-\blacksquare & \blacksquare & \blacksquare
-\end{bmatrix}
-\end{gathered}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
@@ -571,32 +536,70 @@ piece
 \begin_inset Quotes xrd
 \end_inset
 
- is preferred for generality potential to shapes beyond the aforementioned
- 
+ is preferred over 
+\begin_inset Quotes xld
+\end_inset
+
+Tetrimino
+\begin_inset Quotes xrd
+\end_inset
+
+ or 
+\begin_inset Quotes xld
+\end_inset
+
+Tetromino
+\begin_inset Quotes xrd
+\end_inset
+
+ for generality potential to shapes beyond the aforementioned 
 \begin_inset Formula $4$
 \end_inset
 
 -box limitation.
  Indeed, researches such as 
 \begin_inset CommandInset citation
-LatexCommand autocite
+LatexCommand cite
 key "demaine-n-mino"
 literal "false"
 
 \end_inset
 
- have studied such exotic variations, and 
+ have studied exotic variations such as Trominoes (
+\begin_inset Formula $3$
+\end_inset
+
+ blocks per piece) and Pentominoes (
+\begin_inset Formula $5$
+\end_inset
+
+-blocks per piece); and 
 \begin_inset CommandInset citation
-LatexCommand autocite
+LatexCommand cite
 key "tetris-rl-survey,reduced-tetris"
 literal "false"
 
 \end_inset
 
- demonstrate reinforcement-learning applied to the Tetris-game.
+ demonstrate reinforcement-learning applied to the Tetris-game with other
+ styles of modified pieces.
 \end_layout
 
 \end_deeper
+\begin_layout Remark
+Though 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
@@ -769,19 +772,31 @@ with
 \end_layout
 
 \begin_layout Standard
-In the following, the full rotational 
+In the following, the full specific for the rotational system is presented.
 \end_layout
 
 \begin_layout Definition
 Rotation of all pieces
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Rotation-of-all-pieces"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-The O-piece
+\begin_layout Standard
+The O-piece has the same configuration for any of the rotational values
+ 
+\begin_inset Formula $r\in\left\{ 0,1,2,3\right\} $
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-\texttt{pid}=0\coloneqq\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
@@ -793,152 +808,166 @@ The O-piece
 
 \end_layout
 
-\begin_layout Enumerate
-The I-piece
+\begin_layout Standard
+Assuming no positional shifts in the vertical or the horizontal direction,
+ all other pieces, every rotational value corresponds to one distinct configurat
+ion of the piece.
+ Their respective configurations at 
+\begin_inset Formula $r=0$
+\end_inset
+
+ to 
+\begin_inset Formula $4$
+\end_inset
+
+ are enlisted below:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
-\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\begin{alignedat}{4} & \overbrace{\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}}^{r=0} & \stackrel[\rightturn]{\leftturn}{\rightleftharpoons} & \overbrace{\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"I"}}}^{r=1} & \stackrel[\rightturn]{\leftturn}{\rightleftharpoons} & \overbrace{\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\end{bmatrix}}^{r=2} & \stackrel[\rightturn]{\leftturn}{\rightleftharpoons} & \overbrace{\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon
+\end{bmatrix}}^{r=3}\\
+ & \underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}}_{\texttt{"S"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"S"}} &  & \begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\underbrace{\begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}\\
+ & \underbrace{\begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}}_{\texttt{"Z"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"Z"}} &  & \begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\end{bmatrix}\\
+ & \begin{bmatrix}\fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}}_{\texttt{"L"}}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"L"}}\\
+ & \begin{bmatrix}\blacksquare & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \underbrace{\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}}_{\texttt{"J"}}\quad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"J"}} &  & \begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}\\
+ & \begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}\quad\underbrace{\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\end{bmatrix} &  & \underbrace{\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}}_{\texttt{"T"}}\quad\begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}}_{\texttt{"T"}} &  & \begin{bmatrix}\fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
 \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \fullmoon & \fullmoon
 \end{bmatrix}
+\end{alignedat}
 \]
 
 \end_inset
 
+Note that this is by no means a misconception: the 
+\begin_inset Flex Code
+status open
 
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+-piece, for example, registers different configuration in the two horizontally
+ 
+\begin_inset Formula $\left(r\in\left\{ 0,2\right\} \right)$
+\end_inset
+
+ and vertically 
+\begin_inset Formula $\left(r\in\left\{ 1,3\right\} \right)$
+\end_inset
+
+ 
+\begin_inset Quotes xld
+\end_inset
+
+flat
+\begin_inset Quotes xrd
+\end_inset
+
+ placements.
 \end_layout
 
 \end_deeper

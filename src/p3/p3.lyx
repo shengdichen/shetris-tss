@@ -196,19 +196,8 @@ e measures
 \end_inset
 
  to gauge game-plays of Tetris.
-\end_layout
-
-\begin_layout Standard
-No extreme expertise is required to formulate intuitive heuristics of measuring
- the game-play performance in Tetris: one aims at achieving placing the
- pieces onto the field such that the columns are evenly distributed, not
- stacked too high with few holes.
- 
-\end_layout
-
-\begin_layout Standard
-
 \size scriptsize
+
 \begin_inset Formula 
 \[
 \begin{bmatrix}\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
@@ -220,14 +209,14 @@ No extreme expertise is required to formulate intuitive heuristics of measuring
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
-\end{bmatrix}\qquad\begin{bmatrix}\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}\qquad\qquad\qquad\begin{bmatrix}\fullmoon & \fullmoon &  &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
 \fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
- & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
- & \fullmoon & \blacksquare & \fullmoon & \fullmoon &  & \blacksquare & \fullmoon\\
- & \fullmoon & \blacksquare & \fullmoon &  & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare &  &  & \blacksquare & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare &  & \blacksquare &  & \blacksquare & \fullmoon\\
+ & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+ & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+ & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon\\
 \blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
 \end{bmatrix}
 \]
@@ -237,12 +226,23 @@ No extreme expertise is required to formulate intuitive heuristics of measuring
 
 \end_layout
 
+\begin_layout Standard
+No extreme expertise is required to formulate intuitive heuristics of measuring
+ the game-play performance in Tetris: one aims at achieving placing the
+ pieces onto the field such that the columns are evenly distributed, not
+ stacked too high with few holes.
+\end_layout
+
 \begin_layout Subsection
 The metrics
 \end_layout
 
 \begin_layout Subsubsection
-From the field
+Height 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -253,8 +253,129 @@ status open
 Thus arises the question of gauging the performance of a specific move.
 \end_layout
 
-\begin_layout Example
-Height
+\begin_layout Definition
+Height 
+\begin_inset Formula $M_{H}\left(c\right)$
+\end_inset
+
+ of a column 
+\begin_inset Formula $c$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+The height 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+ is intuitively defined for one single column 
+\begin_inset Formula $c$
+\end_inset
+
+ as the maximal vertical coordinate of an occupied box.
+\end_layout
+
+\begin_layout Plain Layout
+Thus, the range of 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+ is:
+\begin_inset Formula 
+\[
+M_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
+\]
+
+\end_inset
+
+translating to 
+\begin_inset Formula 
+\[
+M_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
+\]
+
+\end_inset
+
+for the standard field.
+\end_layout
+
+\begin_layout Plain Layout
+Observe the following corner cases:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $M_{H}\equiv0$
+\end_inset
+
+ indicates a completely free column;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $M_{H}\equiv20$
+\end_inset
+
+ shows occupation of the highest box.
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Generalization to the whole field is readily available:
+\end_layout
+
+\begin_layout Definition
+Height 
+\begin_inset Formula $M_{H}\left(f\right)$
+\end_inset
+
+ of a field 
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+In the raw unprocessed fashion, the height of a field is a vector of length:
+\begin_inset Formula 
+\[
+M_{H}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{H}\left(c_{0}\right)\\
+M_{H}\left(c_{1}\right)\\
+\vdots\\
+M_{H}\left(c_{9}\right)
+\end{alignedat}
+\right]\in\left[\texttt{range}\left(20\right)\right]^{10}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Note on desirable 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -269,45 +390,7 @@ height
 \end_inset
 
  of the field, an intuitive metric concerns the maximal height.
- This is defined as:
-\end_layout
-
-\begin_layout Plain Layout
-For a column 
-\begin_inset Formula $c$
-\end_inset
-
-, the height is defined as the maximal vertical coordinate of an occupied
- box.
-\begin_inset Formula 
-\[
-M_{H}\left(c\right)=\max\left\{ \text{Height}\right\} 
-\]
-
-\end_inset
-
-The range of this is 
-\begin_inset Formula $\left[0;\text{field-height}\right]$
-\end_inset
-
-, translating to 
-\begin_inset Formula $M_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]$
-\end_inset
-
- for the standard field, with 
-\begin_inset Formula $0$
-\end_inset
-
- indicating a completely free column and 
-\begin_inset Formula $20$
-\end_inset
-
- indicating occupation of the highest box.
- Generalization to the whole field is readily available:
-\end_layout
-
-\begin_layout Plain Layout
-Intuitively: higher 
+ Intuitively: higher 
 \begin_inset Formula $\text{H}$
 \end_inset
 
@@ -331,7 +414,8 @@ Several examples of
 
 \end_layout
 
-\begin_layout Example
+\begin_deeper
+\begin_layout Plain Layout
 Given the standard field-size of 
 \begin_inset Formula $20\times10$
 \end_inset
@@ -344,16 +428,15 @@ Given the standard field-size of
 \size scriptsize
 \begin_inset Formula 
 \[
-\begin{bmatrix}\blacksquare & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\LEFTcircle & \blacksquare & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\LEFTcircle & \LEFTcircle & \blacksquare &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\vdots & \vdots & \vdots\\
-\vdots & \vdots & \vdots\\
-\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \blacksquare &  &  & \fullmoon\\
-\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \LEFTcircle & \blacksquare &  & \fullmoon\\
-\LEFTcircle & \LEFTcircle & \LEFTcircle &  & \cdots &  & \LEFTcircle & \LEFTcircle & \blacksquare & \fullmoon\\
-\\
+\begin{bmatrix} & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare &  & \blacksquare &  & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
 20 & 19 & 18 &  &  &  & 3 & 2 & 1 & 0
 \end{bmatrix}
 \]
@@ -363,6 +446,7 @@ Given the standard field-size of
 
 \end_layout
 
+\end_deeper
 \end_inset
 
 
@@ -386,7 +470,37 @@ Elevation
 
 \begin_deeper
 \begin_layout Plain Layout
-The elevation is defined as the relative difference in height
+The elevation is defined as the difference in height between two adjacent
+ columns.
+ Implicitly, given the standard field of 
+\begin_inset Formula $10$
+\end_inset
+
+ columns, there are 
+\begin_inset Formula $9$
+\end_inset
+
+ such elevation values.
+\size scriptsize
+
+\begin_inset Formula 
+\[
+\begin{bmatrix} & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+ &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare &  & \blacksquare &  & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
+20 & 19 & 18 &  &  &  & 3 & 2 & 1 & 0
+\end{bmatrix}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -397,19 +511,6 @@ The elevation is defined as the relative difference in height
 
 \begin_layout Subsubsection
 Holes
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -444,7 +545,7 @@ status open
 \begin_layout Plain Layout
 The evolution-strategy, as introduced by 
 \begin_inset CommandInset citation
-LatexCommand autocite
+LatexCommand cite
 key "best-ai"
 literal "false"
 
