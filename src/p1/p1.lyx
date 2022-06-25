@@ -1,0 +1,662 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\master ../main.lyx
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+tabs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+algorithm2e
+customHeadersFooters
+enumitem
+logicalmkup
+todonotes
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Libertinus Serif"
+\font_sans "default" "Avenir LT Std"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 93
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format pdf5
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\pdf_quoted_options "linkcolor=black,  frenchlinks=true, citecolor=black, urlcolor=blue, filecolor=blue, pdfpagelayout=OneColumn, pdfnewwindow=true, pdfstartview=XYZ, plainpages=false"
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine biblatex
+\cite_engine_type numerical
+\biblio_options entryhead=true, entrykey=false
+\biblatex_bibstyle reading
+\biblatex_citestyle alphabetic-verb
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Synopsis
+\end_layout
+
+\begin_layout Standard
+The administrative details of this thesis can be retrieved under the course-cata
+logue under the aforementioned registration number.
+ The total execution time is estimated at approximately 
+\begin_inset Formula $3$
+\end_inset
+
+ months of full-time work, including the drafting of the thesis and the
+ composing of the source-code.
+\end_layout
+
+\begin_layout Section
+Technicalities
+\end_layout
+
+\begin_layout Standard
+A summary of the technical details of this thesis is presented as follows.
+\end_layout
+
+\begin_layout Subsection
+Programming
+\end_layout
+
+\begin_layout Standard
+The main source-code package can be decomposed into two separate sub-packages.
+ The first pacakge 
+\end_layout
+
+\begin_layout Subsubsection
+General usages
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The programming is performed with the Python language.
+ Despite the dynamic-typing nature of the language, the source-code utilizes
+ extensive type-hinting.
+ Python versions no earlier than 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python 3.9
+\end_layout
+
+\end_inset
+
+ is required
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Python's Typing Module, version requirement"
+target "https://docs.python.org/3/library/typing.html#module-contents"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Required packages
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The framework for the problem-environment conform to the framework of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ developed by OpenAI
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gym"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+The reference reinforcement-learning algorithms, for example, the Deep-Q-Network
+ (
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+DQN
+\end_layout
+
+\end_inset
+
+) and the Proximal-Policy-Optimization (
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+PPO
+\end_layout
+
+\end_inset
+
+) algorithm 
+\begin_inset CommandInset citation
+LatexCommand autocite
+key "PPO"
+literal "false"
+
+\end_inset
+
+, are provided by stable-baselines 3
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stable-baselines"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Miscellaneous
+\end_layout
+
+\begin_layout Subsubsection
+Formatting and Typesetting
+\end_layout
+
+\begin_layout Standard
+This paper is compiled by the Lua\SpecialChar TeX
+ typesetting-engine featuring the open-source
+ font-packages of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Libertinus
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source-Code-Pro
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Tracking and Control
+\end_layout
+
+\begin_layout Standard
+This Project is internally code-named 
+\begin_inset Quotes xld
+\end_inset
+
+Shetris
+\begin_inset Quotes xrd
+\end_inset
+
+, an amalgamation of the name of its author and the underlying game to solve.
+\end_layout
+
+\begin_layout Standard
+This particular thesis documents the conception, the implementation and
+ the results achieved in The entire project consists of two fundamental
+ parts: t
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The Shetris-Project is under extensive version control by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+git
+\end_layout
+
+\end_inset
+
+: three lower-level repositories are created: the first documents the 
+\begin_inset Quotes xld
+\end_inset
+
+engine
+\begin_inset Quotes xrd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+This thesis documents the results obtained until version 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+V?
+\end_layout
+
+\end_inset
+
+, marked with the signed 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+git-tag
+\end_layout
+
+\end_inset
+
+ of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+#tag-number
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Related Researches
+\end_layout
+
+\begin_layout Standard
+The purpose of applying techniques from Reinforcement-Learning to the specific
+ game of Tetris tangents upon two very specific domains, both boasting of
+ a broad range of established researches.
+ Notable examples are enumerated below.
+\end_layout
+
+\begin_layout Subsection
+On the game of Tetris
+\end_layout
+
+\begin_layout Standard
+The immensely popular game of Tetris, with its original publishing dating
+ back decades, has since witnessed a wide range of variations on implementations
+ and adaptations.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Currently available on over <??> electronic platforms in over <~100> variations,
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+well studied by experts.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Korygan, tetris-wiki
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A separate wiki has been introduced, this is referenced on a massive scale
+ for implementing the Tetris game.
+\end_layout
+
+\begin_layout Subsection
+Theoretical results
+\end_layout
+
+\begin_layout Standard
+Purely theoretical researches have demonstrated the difficulty of optimally
+ solving 
+\begin_inset Quotes xld
+\end_inset
+
+the Tetris-problem
+\begin_inset Quotes xrd
+\end_inset
+
+ with 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "demaine_np,demaine_n_mino"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://erikdemaine.org/papers/Tetris_TR2002/; https://arxiv.org/abs/cs/0210020
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results with Reinforcement-Learning
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Reinforcement-Learning has been shown to achieve human level-performance
+ in classical gaming environments
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Nature paper
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Concerning this thesis, recent algorithmic breakthroughs for DQN, PPO
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PPO"
+literal "false"
+
+\end_inset
+
+ and 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Algorithms of RL
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Concerning this thesis, recent algorithmic breakthroughs for DQN, PPO
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PPO"
+literal "false"
+
+\end_inset
+
+ and
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Reinforcement-Learning on Tetris
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Specific to the game of Tetris, the repository of 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://github.com/uvipen/Tetris-deep-Q-learning-pytorch/blob/master/src/tetris.py
+\end_layout
+
+\end_inset
+
+ already exhibits respectable results for Tetris.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several attempts have been made to study and optimize the Tetris game.
+ Several notation establishments previously include one paper using dynamic
+ programming 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+dynamic prog paper
+\end_layout
+
+\end_inset
+
+ and one theoretical analysis.
+ But they all suffer from one or more critical drawbacks:
+\end_layout
+
+\begin_layout Enumerate
+One is made with raw NES, raw field: very long training: at the beginning,
+ random jittering all the time
+\end_layout
+
+\begin_layout Enumerate
+raw movement 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+paper in HK: does this count?
+\end_layout
+
+\end_inset
+
+, namely the GitHub repo (very easy to get started)
+\end_layout
+
+\begin_layout Enumerate
+raw data-source (scanning the whole field)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+do we have a paper?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But probably the biggest drawback of using existing tetris implementations
+ is the lack of:
+\end_layout
+
+\begin_layout Enumerate
+training
+\end_layout
+
+\begin_layout Enumerate
+testing
+\end_layout
+
+\begin_layout Enumerate
+viewing
+\end_layout
+
+\begin_layout Standard
+possibilities.
+ It is thus necessary to implement our own Tetris game for truly granular
+ control.
+\end_layout
+
+\begin_layout Section
+Justifications of Decisions
+\end_layout
+
+\begin_layout Subsection
+The unpleasantness
+\end_layout
+
+\begin_layout Enumerate
+f
+\end_layout
+
+\end_body
+\end_document
