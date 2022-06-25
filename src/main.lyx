@@ -74,8 +74,7 @@ todonotes
 \use_package undertilde 1
 \cite_engine biblatex
 \cite_engine_type numerical
-\biblio_options entryhead=true, entrykey=false
-\biblatex_bibstyle reading
+\biblatex_bibstyle nature
 \biblatex_citestyle alphabetic-verb
 \use_bibtopic false
 \use_indices false
@@ -225,9 +224,10 @@ ch | 17-943-358
 \end_layout
 
 \begin_layout Abstract
-Solutions from heuristics-driven evolutionary-algorithms and deep reinforcement-
-learning are explored and studied using various reward mechanisms.
- 
+Adapted to accept inputs from machine-based agents, the resultant environment
+ is Solutions from heuristics-driven evolutionary-algorithms and deep reinforcem
+ent-learning are explored and studied using various observation-mechanisms
+ and reward-dynamics.
 \end_layout
 
 \begin_layout Standard
@@ -268,33 +268,6 @@ filename "p1/p1.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Definition
-Summary
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Justification of 
-\end_layout
-
-\begin_layout Enumerate
-Adaptation to gym
-\end_layout
-
-\end_deeper
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Newpage newpage
 \end_inset
 
@@ -557,19 +530,6 @@ filename "p3/p3.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Summary
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -622,7 +582,7 @@ filename "p5/p5.lyx"
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintAll"
-bibfiles "bib/main,bib/tetris,bib/rl"
+bibfiles "bib/tetris,bib/rl,bib/code"
 
 \end_inset
 

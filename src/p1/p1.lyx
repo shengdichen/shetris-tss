@@ -141,7 +141,61 @@ Programming
 
 \begin_layout Standard
 The main source-code package can be decomposed into two separate sub-packages.
- The first pacakge 
+ The first package implements a full-fledged Tetris-game, designed with
+ modularity and extendability.
+ The second package performs analysis, training and testing on the said
+ Tetris-game.
+\end_layout
+
+\begin_layout Standard
+Both the game source-code library is structured with
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+shetris/
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- game/
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- src/
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- ...
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- ...
+\end_layout
+
+\begin_layout Plain Layout
+
+|   |-- ...
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- train/
+\end_layout
+
+\begin_layout Plain Layout
+
+|-- tss/
+\end_layout
+
+\end_inset
+
+with
 \end_layout
 
 \begin_layout Subsubsection
@@ -246,7 +300,7 @@ PPO
 
 ) algorithm 
 \begin_inset CommandInset citation
-LatexCommand autocite
+LatexCommand cite
 key "PPO"
 literal "false"
 
@@ -300,6 +354,50 @@ Source-Code-Pro
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+The source-code is consistently processed by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+black
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/psf/black
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+-formatter and thus implicitly conforms to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+PEP8
+\end_layout
+
+\end_inset
+
+ standard.
 \end_layout
 
 \begin_layout Subsubsection
