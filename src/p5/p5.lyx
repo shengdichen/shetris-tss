@@ -113,6 +113,445 @@ todonotes
 \begin_body
 
 \begin_layout Section
+Executive Summary
+\end_layout
+
+\begin_layout Subsection
+The gist
+\end_layout
+
+\begin_layout Subsection
+Time-lines
+\end_layout
+
+\begin_layout Standard
+The initial 
+\begin_inset Formula $3.5$
+\end_inset
+
+ weeks were spent collecting initial ideas of mathematically formulating
+ the problem
+\end_layout
+
+\begin_layout Standard
+Another week was spent 
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Activities
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time-Stamps
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Formulate Tetris mathematically
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Survey 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Implement 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+'s game module
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Adaptation to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+; initial training with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Engineer further Observation/Reward pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Implementation of Evolution-Algorithm; DQN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Collection of results; compose thesis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+Two elements surpassed the duration of initial planning:
+\end_layout
+
+\begin_layout Itemize
+despite knowledge of the interface structure for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ while implementing 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, the process of its adaptation to 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+probably the most difficult decision was the one on implementing the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ game in the first place.
+ Despite the suggestion by the project's supervisor to utilize the existing
+ environment, the decision was made after following thorough analysis of
+ the status-quo.
+ It is the author's sincere hope that the thesis-work as reported in the
+ previous chapters shall serve convince the reader that 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Future Work
+\end_layout
+
+\begin_layout Subsection
+Into the future
+\end_layout
+
+\begin_layout Standard
+The author views the above insufficiency as a major chance for future improvemen
+t:
+\end_layout
+
+\begin_layout Subsubsection
+Improvement in training
+\end_layout
+
+\begin_layout Standard
+The training process could be further stream-lined.
+ In particular, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ offers utilities to convert an existing environment to vectorized ones
+ for massively parallel training.
+ Due to 
+\end_layout
+
+\begin_layout Enumerate
+Using SB3's vectorized training environment
+\end_layout
+
+\begin_layout Enumerate
+parallelize calculation
+\end_layout
+
+\begin_layout Subsubsection
+Higher complexity
+\end_layout
+
+\begin_layout Enumerate
+Add the MOVE-phase
+\end_layout
+
+\begin_layout Enumerate
+explore different rules of Tetris: implement more engines
+\end_layout
+
+\begin_layout Subsubsection
+Other improvements
+\end_layout
+
+\begin_layout Enumerate
+split-pane layout: Left and right: human VS player
+\end_layout
+
+\begin_layout Section
 Epilogue
 \end_layout
 
@@ -125,7 +564,36 @@ Original conception
 \end_layout
 
 \begin_layout Plain Layout
-The Shetris-project was initially conceived 
+The
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+-project was initially conceived when the author was struggling for the
+ number one spot on the Haunted-mode of Tetris-Ultimate
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Tetris_Ultimate"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ on PlayStation, where pieces become invisible after initial appearance
+ at the top of the game-field.
 \end_layout
 
 \begin_layout Plain Layout
@@ -162,191 +630,8 @@ The agent
 \end_layout
 
 \begin_layout Subsection
-Into the future
+Mixed sentiments
 \end_layout
-
-\begin_layout Plain Layout
-The author views the above insufficiency as a major chance for future improvemen
-t:
-\end_layout
-
-\begin_layout Subsubsection
-Improvement in training
-\end_layout
-
-\begin_layout Enumerate
-Using SB3's vectorized training environment
-\end_layout
-
-\begin_layout Enumerate
-parallelize calculation
-\end_layout
-
-\begin_layout Subsubsection
-Higher complexity
-\end_layout
-
-\begin_layout Enumerate
-Add the MOVE-phase
-\end_layout
-
-\begin_layout Enumerate
-explore different rules of Tetris: implement more engines
-\end_layout
-
-\begin_layout Subsubsection
-Other improvements
-\end_layout
-
-\begin_layout Enumerate
-split-pane layout: Left and right: human VS player
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-// shift the entire arrow
-\end_layout
-
-\begin_layout Plain Layout
-
-@<+1pc>		@<-1pc>
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-// bending the curve
-\end_layout
-
-\begin_layout Plain Layout
-
-@/^{1pc}/		@/_{1pc}/
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-// leave-and-enter
-\end_layout
-
-\begin_layout Plain Layout
-
-@(<leave_pos>,<enter_pos>)
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-// arrow-type
-\end_layout
-
-\begin_layout Plain Layout
-
-@{-->>}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-// for nodes
-\end_layout
-
-\begin_layout Plain Layout
-
-surround by square-box
-\end_layout
-
-\begin_layout Plain Layout
-
-*[F=]{A}
-\end_layout
-
-\begin_layout Plain Layout
-
-*+[F=]{A}
-\end_layout
-
-\begin_layout Plain Layout
-
-*++[F=]{A}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-// surround by round-box
-\end_layout
-
-\begin_layout Plain Layout
-
-*[o][F=]{A}
-\end_layout
-
-\begin_layout Plain Layout
-
-*+[o][F=]{A}
-\end_layout
-
-\begin_layout Plain Layout
-
-*++[o][F=]{A}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\xymatrix{{U}\ar@<-1pc>@(l,l)@{-->>}[ddr]_{{x}}\\
- & {X}\ar[d]^{{x}}\ar[r]|{x} & {X}\ar[d]_{{f}}\\
- & {Y}\ar@<-1pc>@/_{1pc}/[r]^{{g}} & {Z}\\
-*[F-]{A} & *+[F-]{A} & *++[F-]{A}\\
-*[F=]{A} & *+[F=]{A} & *++[F=]{A}\\
-\save"4,1"."5,3"*+[F]\frm{}\restore & *++[o][F-]{A} & *++[o][F=]{A}
-}
-\]
 
 \end_inset
 

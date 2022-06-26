@@ -132,9 +132,7 @@ Tetris
  alone by no means offers a stringent set of definitions for implementation
  and execution of the game.
  Indeed, from the moment of its original conception, the Tetris-game has
- evolved into a myriad of variations, each implementing a separate set of
- derivative components from the visual effects to the specific rules.
- Figure 
+ evolved into a myriad of variations, Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Some-established-implementations"
@@ -145,6 +143,10 @@ noprefix "false"
 \end_inset
 
  displays several historic implementations of the Tetris game.
+ It is readily apparent that every game release implements a separate set
+ of derivative components from the visual effects to the specific rules,
+ leading to game-play diversity and difficulty of standardization at the
+ same time.
 \end_layout
 
 \begin_layout Standard
@@ -169,8 +171,18 @@ literal "false"
 \end_inset
 
  of public-domain offers a centralized collection of comprehensive information
- concerning the Tetris-game, which shall serve as the main source for this
- chapter.
+ concerning the Tetris-game.
+ The most critical article therein is arguably the Tetris-Guideline
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Tetris_Guideline"
+literal "false"
+
+\end_inset
+
+, documenting an official set of recommended implementation for commonly
+ seen moving parts of a Tetris implementation.
+ 0The which shall serve as the main source for this chapter.
 \end_layout
 
 \begin_layout Note
@@ -360,12 +372,8 @@ terminologies
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
 The general idea of a Tetris-game hardly needs introduction.
- This folk-lore description of a Tetris-game captures its general spirit:
+ This curt folk-lore more or less captures the general public's impression:
 \end_layout
 
 \begin_layout Quote
@@ -385,7 +393,7 @@ and one rotates and moves them, one at a time.
 \end_layout
 
 \begin_layout Quote
-If luck or skill shall so allow, some rows are complete, when the bottom
+If luck or skill shall so allow, some rows become complete, when the bottom
  is reached;
 \begin_inset Newline newline
 \end_inset
@@ -402,18 +410,23 @@ Finally, the top of field no longer contains the fresh piece, and the game
 unless the insatiated soul resets everything, just to start again.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
 \begin_layout Plain Layout
 While intuitively explanatory, further details are required for a stringent
  definition of the game.
- For example, the size Several basic terms of the Tetris-game necessary
- to commence the discussion on the implementation are introduced below.
+ In particular, .
+ Several basic terms of the Tetris-game necessary to commence the discussion
+ on the implementation are introduced below.
 \end_layout
 
 \begin_layout Definition
@@ -432,6 +445,13 @@ literal "false"
 
 
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:The-identity-of-a-piece"
 
 \end_inset
 
@@ -476,9 +496,9 @@ Tetrimino
 , seven of which are stipulated by the official guideline:
 \begin_inset Formula 
 \[
-\begin{bmatrix}\blacksquare & \blacksquare\\
+\underbrace{\begin{bmatrix}\blacksquare & \blacksquare\\
 \blacksquare & \blacksquare
-\end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare & \blacksquare & \blacksquare\end{bmatrix}\quad\begin{bmatrix} & \blacksquare & \blacksquare\\
+\end{bmatrix}}_{\texttt{"O"}}\quad\begin{bmatrix}\blacksquare & \blacksquare & \blacksquare & \blacksquare\end{bmatrix}\quad\begin{bmatrix} & \blacksquare & \blacksquare\\
 \blacksquare & \blacksquare
 \end{bmatrix}\quad\begin{bmatrix}\blacksquare & \blacksquare\\
  & \blacksquare & \blacksquare
@@ -493,7 +513,8 @@ Tetrimino
 
 \end_inset
 
-From left to right, they are internally identified with the variable 
+In Shetris, From left to right, they are internally identified with the
+ variable 
 \begin_inset Flex Code
 status open
 
@@ -585,8 +606,7 @@ literal "false"
  styles of modified pieces.
 \end_layout
 
-\end_deeper
-\begin_layout Remark
+\begin_layout Plain Layout
 Though 
 \begin_inset Flex Noun
 status open
@@ -597,9 +617,29 @@ Shetris
 
 \end_inset
 
+ currently includes only the 
+\begin_inset Formula $7$
+\end_inset
 
+ official 
+\begin_inset Formula $4$
+\end_inset
+
+-block pieces as mentioned in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-identity-of-a-piece"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, extension to other piece-shapes are easily realizable.
+ 
 \end_layout
 
+\end_deeper
 \begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
@@ -968,6 +1008,7 @@ flat
 \end_inset
 
  placements.
+ The importance of 
 \end_layout
 
 \end_deeper
@@ -1337,7 +1378,7 @@ coordinate
 \begin_inset Formula 
 \[
 \begin{bmatrix}\left(0,0\right) & \left(1,0\right) & \cdots & \left(9,0\right)\\
-\left(1,0\right) & \left(1,1\right) &  & \fullmoon\\
+\left(1,0\right) & \left(1,1\right)\\
 \vdots\\
 \vdots\\
 \vdots &  & \ddots\\
@@ -1680,7 +1721,17 @@ Generator
 status open
 
 \begin_layout Plain Layout
-The generator, as previously stated, produces the pids, i.e., the piece-ids.
+The generator (not to be confused with the language facility of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+), as previously stated, produces the pids, i.e., the piece-ids.
  The 
 \begin_inset Flex Noun
 status open
@@ -1691,9 +1742,73 @@ Tetris-Guideline
 
 \end_inset
 
- 
+ stipulates the usage of the 
+\begin_inset Quotes xld
+\end_inset
+
+
+\begin_inset Formula $7$
+\end_inset
+
+-bag
+\begin_inset Quotes xrd
+\end_inset
+
+ generation algorithm, which is specified below:
 \end_layout
 
+\begin_layout Definition
+\begin_inset Formula $7$
+\end_inset
+
+-bag generator
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+From the first generated 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+, every 
+\begin_inset Formula $7$
+\end_inset
+
+ consecutive pieces is a (random) permutation of all the 
+\begin_inset Formula $7$
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+-values.
+ In the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ convention, 
+\end_layout
+
+\end_deeper
 \end_inset
 
 

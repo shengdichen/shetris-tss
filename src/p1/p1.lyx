@@ -748,12 +748,135 @@ possibilities.
 Justifications of Decisions
 \end_layout
 
+\begin_layout Standard
+The cursory mentioning above of the implementation of a separate Tetris-game
+ is 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+de facto
+\end_layout
+
+\end_inset
+
+ the result of much analysis.
+ 
+\end_layout
+
 \begin_layout Subsection
 The unpleasantness
 \end_layout
 
 \begin_layout Enumerate
-f
+Few existing solutions of Tetris with Reinforcement-Learning follow a standardiz
+ed frame-work for describing the game.
+ Indeed, though both 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "uvipen,tetris-nuno"
+literal "false"
+
+\end_inset
+
+ achieve respectable results for agent-training, the environment itself
+ is designed as the heart wishes by the author.
+\end_layout
+
+\begin_layout Enumerate
+Insufficient modularity: the game-logic and the environment's observation
+ or action should be isolated : this allows modification of the training
+ process by varying observation, action and reward, which can be thought
+ of as the tuning of hyper-parameters on a more untraditional, more elevated
+ level than that of the learning-algorithm.
+\end_layout
+
+\begin_layout Enumerate
+Non-extendability and modifiability of the engine itself: the generator,
+ for example, as seen in later chapters, critically influences the entire
+ train-test pipeline.
+ Building upon the previous argument, components within the game-logic must
+ themselves also be segregated into separate modules.
+\end_layout
+
+\begin_layout Enumerate
+The few 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ compliant environments leave much to be desired as well.
+ Apart from the same argument of inadequate management of source code, examples
+ such as 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the NES environment: put in the link
+\end_layout
+
+\end_inset
+
+ directly use the ROM of the game on the NES platform.
+ While this would make for spectacular results, the difficulty of extracting
+ information from the said ROM is almost insurmountable
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ROM-hack website for NES
+\end_layout
+
+\end_inset
+
+: it seems almost impossible to extract the amount of required data for
+ conducting training under real-life resource bounds.
+ The failure to successfully train models on raw data with minimal ROM-hacking
+ is well documented in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+HK paper
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The enumeration above is not exhaustive: some are based purely on tried
+ and true principles from traditional software engineering; others on real-life
+ constraints on resource and time of computing.
+\end_layout
+
+\begin_layout Standard
+The immediate
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In fact, the actual time taken for this decision is far from being 
+\begin_inset Quotes xld
+\end_inset
+
+immediate
+\begin_inset Quotes xrd
+\end_inset
+
+.
+ See Chapter V for details.
+\end_layout
+
+\end_inset
+
+ realization was the necessity to implement the project from 
 \end_layout
 
 \end_body
