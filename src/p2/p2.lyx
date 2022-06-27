@@ -1374,7 +1374,7 @@ coordinate
 \begin_inset Quotes xrd
 \end_inset
 
- of every box of the field is provided as the following schematics
+ of every box of the field is provided as the following schematics:
 \begin_inset Formula 
 \[
 \begin{bmatrix}\left(0,0\right) & \left(1,0\right) & \cdots & \left(9,0\right)\\
@@ -1717,10 +1717,6 @@ Generator
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
 The generator (not to be confused with the language facility of 
 \begin_inset Flex Code
 status open
@@ -1765,7 +1761,7 @@ Tetris-Guideline
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
+\begin_layout Standard
 From the first generated 
 \begin_inset Flex Code
 status open
@@ -1795,7 +1791,31 @@ pid
 \end_inset
 
 -values.
- In the 
+ 
+\begin_inset Formula 
+\[
+\overbrace{\;\texttt{perm(7)}\,}\quad|\quad\underbrace{\;\texttt{perm(7)\,}}_{\text{2}^{\text{nd}}\text{bag}}\quad|\quad\cdots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Note
+Implementation in 
 \begin_inset Flex Noun
 status open
 
@@ -1805,17 +1825,201 @@ Shetris
 
 \end_inset
 
- convention, 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+
+\color greyedouttext
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+
+\color inherit
+'s library method 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+permutation()
+\end_layout
+
+\end_inset
+
+ is used instead of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+random
+\end_layout
+
+\end_inset
+
+ package of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+python
+\end_layout
+
+\end_inset
+
+'s standard library.
+ This decision is based on two arguments:
+\end_layout
+
+\begin_layout Plain Layout
+On the one hand, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+'s latest 
+\begin_inset Quotes xld
+\end_inset
+
+in-house
+\begin_inset Quotes xrd
+\end_inset
+
+ random-number-generator (RNG) of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+np.random.default_rng()
+\end_layout
+
+\end_inset
+
+ is cleanly default constructed with potent seeding without argument specificati
+on.
+ The advantage of this is seen when multiple iterations of the game are
+ played: instead of having to provide a different seed after every iteration
+ at caller's whim, simply creating another object composing of this facility
+ suffices as initialization of the RNG.
+\end_layout
+
+\begin_layout Plain Layout
+On the other hand, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+permutation()
+\end_layout
+
+\end_inset
+
+ returns 
+\color greyedouttext
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+
+\color inherit
+'s 
+\color greyedouttext
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ndarray
+\end_layout
+
+\end_inset
+
+, which can be further processed naturally by the caller if more than one
+ piece-id is required per call: this constitutes the well-known previewing
+ of pieces.
+ Considering the fact that the caller is likely an observing agent as described
+ in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+
+\color greyedouttext
+Add cross-ref
+\end_layout
+
+\end_inset
+
+ and would likely require the observation in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ndarray
+\end_layout
+
+\end_inset
+
+ anyway, this saves the 
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Beyond the 
+\begin_inset Formula $7$
+\end_inset
+
+-bag algorithm
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+The generator of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ reaches beyond the standard 
+\begin_inset Formula $7$
+\end_inset
+
+-bag system: in particular, the randomized bag-based algorithm accepts any
+ 
 \end_layout
 
 \end_deeper
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-This can be summarized as follows:
 \end_layout
 
 \begin_layout Subsection
@@ -2007,6 +2211,413 @@ x_{t+1}^{F}=f\left(u_{x}\rightarrow u_{r}\rightarrow x_{t+1}\right)
 
 \begin_layout Subsection
 Further notes
+\end_layout
+
+\begin_layout Standard
+The above walk-through only touches upon key components of the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ implementation essential to upcoming presentations in this thesis.
+ The interested reader is referred to the source-code library for deeper
+ immersion in the unabridged listings of the source-code.
+\end_layout
+
+\begin_layout Section
+Adaptation to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Interface Overview
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ library as developed by OpenAI
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gym"
+literal "false"
+
+\end_inset
+
+ stipulates a standardized framework for the description of a closed system
+ accessible via interaction with a decision-making agent, which is best
+ understood using formulations from classical control-theory as defined
+ in established literature such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bertsekas_1995"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Evolution-dynamics
+\end_layout
+
+\begin_layout Standard
+Of interest is a system evolving with some time-stepping scheme 
+\begin_inset Formula $t\in\left\{ t_{0},t_{1},t_{2}\cdots\right\} $
+\end_inset
+
+ represented by its internal 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+state
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $y\in\left\{ y_{0},y_{1},y_{2}\cdots\right\} $
+\end_inset
+
+ of some state-space 
+\begin_inset Formula $y_{\forall t}\in\mathcal{Y}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+An agent perceives the state of the system with 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+observation
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x\in\left\{ x_{0},x_{1},x_{2}\cdots\right\} $
+\end_inset
+
+ of some observation-space 
+\begin_inset Formula $x_{\forall t}\in\mathcal{X}$
+\end_inset
+
+ and decides upon 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+action
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+cf.
+ control-input 
+\begin_inset Formula $u$
+\end_inset
+
+ in control-theory
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $a\in\left\{ a_{0},a_{1},a_{2}\cdots\right\} $
+\end_inset
+
+ of some action-space 
+\begin_inset Formula $a_{\forall t}\in\mathcal{A}$
+\end_inset
+
+ to apply to the system, which then evolves with its internal evolution-dynamics
+ 
+\begin_inset Formula $f\left(\cdots\right)$
+\end_inset
+
+, inducing a reward value 
+\begin_inset Formula $r\in\left\{ r_{0},r_{1},r_{2}\cdots\right\} $
+\end_inset
+
+ of (one-dimensional) real number 
+\begin_inset Formula $r_{\forall t}\in\mathbb{R}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Microscopically, the evolution of the system from 
+\begin_inset Formula $y_{\star}$
+\end_inset
+
+ to 
+\begin_inset Formula $y_{\star+1}$
+\end_inset
+
+ is captured with the following illustration:
+\begin_inset Formula 
+\[
+\xymatrix{ &  &  & {f\left(\cdots\right)}\ar[d]\\
+*++[o][F-]{y_{\star}}\ar@{-->}[dd]_{{\text{1. Observe}}}\ar[rrrr] &  &  &  & *++[o][F-]{y_{\star+1}}\ar@/^{2pc}/[ddl]^{{\text{4. reward}}} & \qquad\text{[System Internals]}\\
+\\
+*+[F-]{x_{\star}}\ar[rr]_{{\text{2. decide}}} &  & *+[F-]{a_{\star}}\ar[uu]_{{\text{3. apply}}} & *+[F-]{r_{\star}} &  & \qquad\text{[Agent Perception]}\\
+\\
+\\
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With The following sections specify the implementation of the components
+ to realize the evolution as described above.
+\end_layout
+
+\begin_layout Remark
+Intricacy on observing
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The illustration above implicitly simplifies the process of obtaining the
+ observation 
+\begin_inset Formula $x_{\star}$
+\end_inset
+
+.
+ Full generality as studied in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original,Q-learning-original"
+literal "false"
+
+\end_inset
+
+ allows dependencies with all previous 
+\begin_inset Quotes xld
+\end_inset
+
+experiences
+\begin_inset Quotes xrd
+\end_inset
+
+, in particular, all previous observations and actions.
+\end_layout
+
+\begin_layout Standard
+This simplification is justified for the adaptation of dynamics of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, as is shown in the following section.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Implementation details
+\end_layout
+
+\begin_layout Subsubsection
+The dynamics
+\end_layout
+
+\begin_layout Standard
+Conforming to its purpose, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+engine
+\end_layout
+
+\end_inset
+
+ provides the entire interaction point to the underlying game-logic.
+ In terms of the environment-framework of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+engine
+\end_layout
+
+\end_inset
+
+ stands as the system itself.
+ In particular:
+\end_layout
+
+\begin_layout Itemize
+the state snapshots 
+\begin_inset Formula $y_{\star}$
+\end_inset
+
+ is provided by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+placement
+\end_layout
+
+\end_inset
+
+-package and the current piece-id;
+\end_layout
+
+\begin_layout Itemize
+the evolution dynamics 
+\begin_inset Formula $f$
+\end_inset
+
+ is provided by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+move
+\end_layout
+
+\end_inset
+
+-package, which, above all, defines various operations
+\end_layout
+
+\begin_layout Itemize
+Thus, the system itself In particular, the state of the system
+\end_layout
+
+\begin_layout Subsubsection
+Reward
+\end_layout
+
+\begin_layout Definition
+The reward function
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Unfinished business
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The author implemented several reward function based on intuition.
+\end_layout
+
+\end_deeper
+\begin_layout Subsubsection
+Action-space
+\end_layout
+
+\begin_layout Standard
+The action-space in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is defined as one rotation and one (horizontal) movement.
+ This conforms with existing attempts at agent-design for Tetris: 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-best-ai,tetris-nuno,uvipen"
+literal "false"
+
+\end_inset
+
+.
+ In essence, this is provided with
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// enter source code
+\end_layout
+
+\begin_layout Plain Layout
+
+gym.space.Spaces.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+f
 \end_layout
 
 \begin_layout Standard
@@ -3115,26 +3726,6 @@ next
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-Making it a gym
-\end_layout
-
-\begin_layout Subsubsection
-Observation
-\end_layout
-
-\begin_layout Subsubsection
-Input
-\end_layout
-
-\begin_layout Subsubsection
-Rewards
-\end_layout
-
-\begin_layout Subsubsection
-Game-over
 \end_layout
 
 \begin_layout Section

@@ -2036,11 +2036,274 @@ Collection of results; compose thesis
 \end_layout
 
 \begin_layout Section
-Self-Coded Deep Q-Network
+Deep Q-Network
 \end_layout
 
 \begin_layout Subsection
 Conceptual overview
+\end_layout
+
+\begin_layout Standard
+Deep Q-Learning is deployed to train the agent for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+.
+ A theoretical summary to the technique is provided below.
+ The interested reader is referred to publications such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Q-learning-original,DQN-original,dqn-nature"
+literal "false"
+
+\end_inset
+
+ for more details.
+\end_layout
+
+\begin_layout Subsubsection
+Decision Policy
+\end_layout
+
+\begin_layout Standard
+The underlying mathematical formulation of Q-Learning targets an optimization
+ problem much similar to that of the cost-to-go minimization from classical
+ control-theory
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bertsekas_1995"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Based on the introduction to the evolution-model in section 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add cross-Ref
+\end_layout
+
+\end_inset
+
+, some further theoretical quantities are readily definable.
+ The decision-making of the agent is governed by policy 
+\begin_inset Formula $\pi$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+x_{\star}\overset{\pi}{\longrightarrow}a_{\star}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Q-Values
+\end_layout
+
+\begin_layout Definition
+Reward-to-go
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+At any time-step 
+\begin_inset Formula $t_{k}$
+\end_inset
+
+, the 
+\begin_inset Quotes xld
+\end_inset
+
+reward-to-go
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This term does not seem to be utilized in standard literature, but the correspon
+dence to the 
+\begin_inset Quotes xld
+\end_inset
+
+cost-to-go
+\begin_inset Quotes xrd
+\end_inset
+
+ of control-theory begs its usage.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Quotes xrd
+\end_inset
+
+, also known as the 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+return
+\end_layout
+
+\end_inset
+
+, is defined as the summation of all future rewards until the ending of
+ the system evolution at 
+\begin_inset Formula $t_{T}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+R_{t_{k}:t_{T}}\coloneqq\mathop{\sum_{t\in\left[t_{k};t_{T}\right]}\gamma^{t-t_{k}}r_{t}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Optimal 
+\begin_inset Formula $Q$
+\end_inset
+
+-Values
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+With the 
+\begin_inset Formula $Q$
+\end_inset
+
+-value defined as the expected reward-to-go of performing the immediate
+ action 
+\begin_inset Formula $a_{t}$
+\end_inset
+
+ given the current observation 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ and followed by the deployment of some policy 
+\begin_inset Formula $\pi$
+\end_inset
+
+ for all future actions until end of evolution 
+\begin_inset Formula $a_{t_{k+1}:t_{T}}$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+Q_{t_{k}:t_{T}}\coloneqq\mathbb{E}\left[R_{t_{k}:t_{T}}|x_{t},a_{t},\pi\right]
+\]
+
+\end_inset
+
+The optimal 
+\begin_inset Formula $Q$
+\end_inset
+
+-Value is achieved with the optimal, maximizing policy 
+\begin_inset Formula $\pi^{*}$
+\end_inset
+
+ such that:
+\begin_inset Formula 
+\[
+\pi^{*}\coloneqq\underset{\pi}{\arg\max}\left\{ Q_{t_{k}:t_{T}}\right\} 
+\]
+
+\end_inset
+
+which is subjected to the Bellman's optimality-principle and the (discrete)
+ Bellman-Equation, as shown in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Q-learning-original,DQN-original"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Connection with classical control
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The informed reader might perceive the striking similarity to the 
+\begin_inset Quotes xld
+\end_inset
+
+cost-to-go
+\begin_inset Quotes xrd
+\end_inset
+
+ 
+\begin_inset Formula $J_{k:T}$
+\end_inset
+
+ of classical control.
+ Indeed, with the flipped optimization and newly coined terminologies, connectio
+ns to established setups and theorems in control-theory can be readily establish
+ed.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Here, the optimization-target at any time-step 
+\begin_inset Formula $t_{k}$
+\end_inset
+
+ is
+\end_layout
+
+\begin_layout Subsubsection
+Deep Q-Learning
 \end_layout
 
 \begin_layout Standard
@@ -2063,6 +2326,74 @@ literal "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+Deep Q-Learning approximates the (potentially) complex mapping of the optimal
+ action-value function 
+\begin_inset Formula $Q^{*}$
+\end_inset
+
+ is approximated with the deep-network:
+\begin_inset Formula 
+\[
+Q\left(x,a;\theta\right)\colonapprox Q^{*}
+\]
+
+\end_inset
+
+ parameterized with 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ Furthermore, a replay-memory of length 
+\begin_inset Formula $N$
+\end_inset
+
+ chosen 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+a priori
+\end_layout
+
+\end_inset
+
+ is used to hold the 
+\begin_inset Quotes xld
+\end_inset
+
+experience
+\begin_inset Quotes xrd
+\end_inset
+
+ of the agent of every evolution-step for later random mini-batch sampling.
+\end_layout
+
+\begin_layout Standard
+The usage of such experience replay distinguishes Deep Q-Learning from the
+ original Q-learning algorithm described above and the Temporal Difference
+ (TD) algorithm
+\begin_inset CommandInset citation
+LatexCommand cite
+key "TD-gammon"
+literal "false"
+
+\end_inset
+
+.
+ In particular, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original"
+literal "false"
+
+\end_inset
+
+ cites higher sample efficiency and increasing potential for variance explanatio
+n due to randomness when sampling from the experience replay.
  Indeed, in the seminal publication of 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2075,57 +2406,28 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The underlying mathematical formulation therein targets the optimization
- problem much similar to the cost-to-go minimization from classical control-theo
-ry
+Without delving further into the definition of the Deep Q-Networks, of which
+ literature abound, the author simply enlists several of the essential the
+ hyper-parameters.
+ These are surveyed from reference implementations such as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "bertsekas_1995"
+key "sb3"
 literal "false"
 
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Standard
-However, the objective for the Deep Q-Learning is flipped to maximize the
- reward-to-go until the ending of the system at time 
-\begin_inset Formula $T$
-\end_inset
-
-of maximizing the discounted cost-to-go
-\begin_inset Formula 
-\[
-\pi^{*}\coloneqq\underset{\pi}{\arg\max}\left\{ R_{T}\right\} 
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $R_{t_{k}:t_{T}}$
-\end_inset
-
- is defined as the discounted cost-to-go
-\begin_inset Formula 
-\[
-R_{t_{k}:t_{T}}\coloneqq\mathop{\sum_{t\in\left[t_{k};t_{T}\right]}\gamma^{t-t_{k}}r_{t}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-with discounting-factor of 
-\begin_inset Formula $\gamma$
-\end_inset
-
-.
- Without delving further into the definition of the Deep Q-Networks, of
- which literature abound, the author simply enlists the hyper-parameters
- as used in the implementation.
+, and are thus also used in the implementation.
 \end_layout
 
 \begin_layout Itemize
@@ -2133,7 +2435,7 @@ Initial exploration
 \begin_inset Formula $\epsilon\equiv1$
 \end_inset
 
-
+;
 \end_layout
 
 \begin_layout Itemize
@@ -2141,14 +2443,18 @@ discount-factor
 \begin_inset Formula $\gamma=0.99$
 \end_inset
 
-
+;
 \end_layout
 
 \begin_layout Itemize
+size of the replay memory 
+\begin_inset Formula $N=30'000$
+\end_inset
 
+.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Implementation details
 \end_layout
 
@@ -2197,7 +2503,36 @@ literal "false"
 
 \end_inset
 
-, 
+, a Deep Q-Network with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pytorch
+\end_layout
+
+\end_inset
+
+ is implemented.
+\end_layout
+
+\begin_layout Standard
+The necessary adaptations for utilizing this network for the now available
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ environment are enlisted below:
+\end_layout
+
+\begin_layout Subsubsection
+Custom 
 \end_layout
 
 \begin_layout Section
