@@ -2531,6 +2531,34 @@ gym
  environment are enlisted below:
 \end_layout
 
+\begin_layout Enumerate
+All pairs of (action, observation)-pairs must be created
+\end_layout
+
+\begin_layout Enumerate
+The observation must be returned of the type 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+torch.Tensor
+\end_layout
+
+\end_inset
+
+ instead of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsubsection
 Custom 
 \end_layout

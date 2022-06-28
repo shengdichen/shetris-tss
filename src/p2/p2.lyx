@@ -1061,10 +1061,6 @@ board
 , where the piece is eventually placed: this notion is formalized below:
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
 \begin_layout Definition
 The field
 \begin_inset Foot
@@ -1087,7 +1083,7 @@ literal "false"
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 The previously mentioned 
 \begin_inset Quotes xld
 \end_inset
@@ -1117,33 +1113,100 @@ field
 \begin_inset Formula $10$
 \end_inset
 
- columns.
+ columns of 
+\begin_inset Quotes xld
+\end_inset
+
+blocks
+\begin_inset Quotes xrd
+\end_inset
+
+.
+ At any time, each block is deterministically in one of the binary-state:
+ occupied or unoccupied.
+ Modeling the two states as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+True
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+
+ respectively, one might readily view the field as a two-dimensional set
+ of boolean values
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x\in\left\{ 0,1\right\} ^{\text{\#rows}\times\text{\#columnss}}\equiv\texttt{bool}^{\text{\#rows}\times\text{\#columnss}}
+\]
+
+\end_inset
+
+which translates to 
+\begin_inset Formula $x\in\texttt{bool}^{20\times10}$
+\end_inset
+
+ for the standard field as described previously.
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
-Implementation in Shetris
+\begin_layout Note
+Implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+In 
+\begin_inset Flex Noun
+status open
+
 \begin_layout Plain Layout
-In Shetris, the field is represented by a 
+Shetris
+\end_layout
+
+\end_inset
+
+, the field is represented by a 
 \begin_inset Formula $20\times10$
 \end_inset
 
- (two-dimensional) array of boolean entries of 
+ (two-dimensional) array of boolean entries of the matrix-type 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-numpy
+numpy.ndarray
 \end_layout
 
 \end_inset
@@ -1254,14 +1317,14 @@ Field
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset listings
 lstparams "language=Python"
 inline false
@@ -1298,11 +1361,6 @@ status open
 
 \begin_layout Plain Layout
 Field
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -1399,28 +1457,83 @@ coordinate
 
 \end_layout
 
+\begin_layout Standard
+With the notion of the coordinates of the blocks of the field as introduced
+ above, it thus follows the natural extension to the coordinates of a specific
+ piece.
+ In preparation for this, the notion of relative-coordinates is first introduced
+:
+\end_layout
+
 \begin_layout Definition
-The coordinates of a piece
+The relative-coordinates of a piece
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-With the notion of the coordinate of a box as introduced above, it thus
- follows the coordinates of a specific piece.
- The observation is
-\begin_inset Formula 
-\[
-\begin{bmatrix}\left(+0,+0\right) & \left(+1,+0\right) & \cdots & \fullmoon\\
-\left(+1,+0\right) & \left(+1,+1\right) &  & \fullmoon\\
-\vdots & \fullmoon & \ddots & \fullmoon\\
-\fullmoon & \fullmoon & \fullmoon & \fullmoon
-\end{bmatrix}
-\]
+\begin_layout Standard
+When viewing the schematic illustration in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Rotation-of-all-pieces"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-The advantage of such storage is that the vertical and horizontal shifting
- of any piece is almost trivial:
+, the reader might challenge the necessity of the extra padding by the unoccupie
+d blocks around every piece and the thus the necessity of surrounding all
+ 
+\begin_inset Formula $7$
+\end_inset
+
+ pieces by the 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ square of blocks.
+\end_layout
+
+\begin_layout Standard
+The justification of this stems from the notion of relative-coordinates,
+ in the sense that given a piece and some rotational configuration, the
+ relative coordinates of its blocks (
+\begin_inset Formula $4$
+\end_inset
+
+ of them for a Tetrimino) is constant.
+\end_layout
+
+\begin_layout Standard
+By choosing the surrounding square of 
+\begin_inset Formula $4\times4$
+\end_inset
+
+, one guarantees that all 
+\begin_inset Formula $7$
+\end_inset
+
+ standard pieces are contained in a uniform structure.
+ The reader shall also note that this is the construction of the minimal
+ size: indeed, decreasing its height or width leads to incapability to fully
+ surround the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+-piece.
 \end_layout
 
 \end_deeper
@@ -1432,8 +1545,200 @@ The advantage of such storage is that the vertical and horizontal shifting
 \end_layout
 
 \begin_layout Standard
-The above relative-coordinates are implemented in the purely static, factory-sty
-le 
+its relative The key insight is that every rotational configuration of every
+ piece is of the same shape in a 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ square-of-blocks.
+\end_layout
+
+\begin_layout Standard
+In other words, given the values of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rot
+\end_layout
+
+\end_inset
+
+ and the position of this 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ square, the absolute-coordinates of a piece is immediately constructable.
+ It remains thus to unify oneself on the convention of identifying the position
+ of this square.
+ The particular implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is formalized below:
+\end_layout
+
+\begin_layout Definition
+Construction of absolute-coordinates in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The block in the upper-most and left-most position is used to identify a
+ 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ square-of-blocks.
+ The following illustration shows the the coordinates of all blocks contained
+ in the 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ square relative to the reference-block (of relative coordinate
+\begin_inset Formula $\left(+0,+0\right)$
+\end_inset
+
+) marked by 
+\begin_inset Formula $\star$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{bmatrix}\star & \left(+1,+0\right) & \left(+2,+0\right) & \left(+3,+0\right)\\
+\left(+1,+0\right) & \left(+1,+1\right) & \cdots & \cdots\\
+\left(+2,+0\right) & \vdots & \ddots\\
+\left(+3,+0\right) & \vdots &  & \left(+3,+3\right)
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Choice of the reference-block 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+It shall be pointed out that the reference-block can be chosen as arbitrarily:
+ one might as well have chosen some block situated more towards the center,
+ or even the one in the lower-right corner.
+ The choice as made above is based on the indexing-condition as described
+ previously: in this way, the relative-coordinates in both index-axes within
+ a square-block is guaranteed to be always non-negative, and conforming
+ to the standard 
+\begin_inset Formula $0$
+\end_inset
+
+-indexing, spanning the 
+\begin_inset Formula $4$
+\end_inset
+
+ integer-values from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $3$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, the relative-coordinates of every 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+(piece, rotation)
+\end_layout
+
+\end_inset
+
+-pair is stored as 
+\begin_inset Quotes xld
+\end_inset
+
+class-members
+\begin_inset Quotes xrd
+\end_inset
+
+ of the class 
 \begin_inset Flex Code
 status open
 
@@ -1443,17 +1748,7 @@ RelCoord
 
 \end_inset
 
- class in 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lis:Fetching-relative-coordinates"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
+, a snippet of which is shown below:
 \begin_inset listings
 inline false
 status open
@@ -1588,6 +1883,87 @@ class RelCoord:
 
 \begin_layout Plain Layout
 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:relative-coordinates-data"
+
+\end_inset
+
+Data of relative-coordinates
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The storage order of the relative coordinates is defined as follows:
+\end_layout
+
+\begin_layout Itemize
+the primary index is the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the secondary index is the rotational configuration 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rot
+\end_layout
+
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# src/engine/placement/srs/coord.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class RelCoord:
+\end_layout
+
+\begin_layout Plain Layout
+
+    _rel_coords = ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
     @staticmethod
 \end_layout
 
@@ -1612,7 +1988,7 @@ class RelCoord:
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "lis:Fetching-relative-coordinates"
+name "lis:get-relative-coordinates"
 
 \end_inset
 
@@ -1626,9 +2002,194 @@ Fetching relative coordinates
 
 \end_inset
 
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+static
+\end_layout
+
+\end_inset
+
+ nature of this method and the class-wide setting of the variable 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+_rel_coords
+\end_layout
+
+\end_inset
+
+ frees the class 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RelCoord
+\end_layout
+
+\end_inset
+
+ from the necessity of tracking any instance-variables: the caller only
+ needs to pass in the arguments when invoking the method to find the relative-co
+ordinates, without constructing instances or keeping track of internal values.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
 
 \end_layout
 
+\begin_layout Definition
+Moving Pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The advantage of managing the coordinates using the piece-rotation stored
+ in the format of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+ is seen with the dynamic requirement for constructing the absolute-coordinates
+ under movement inputs.
+ Specifically, shifting a piece (both vertically and horizontally) is almost
+ trivial: as the relative-coordinates obtained by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:get-relative-coordinates"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+, any such moving operation translates to an addition to or a subtraction
+ from the relative-coordinates.
+\end_layout
+
+\begin_layout Standard
+On the other hand, inputs made to modify the rotational configuration necessitat
+es a re-read from the relative-coordinates data.
+ This, however, is justifiable, as changes made in rotations should be a
+ lot scarcer than those in positions, which is intuitively understandable
+ by considering the following example:
+\end_layout
+
+\begin_layout Standard
+Consider the standard field with the height of 
+\begin_inset Formula $20$
+\end_inset
+
+ blocks, a piece would have to move vertically downwards, i.e., 
+\begin_inset Quotes xld
+\end_inset
+
+fall
+\begin_inset Quotes xrd
+\end_inset
+
+, for around 
+\begin_inset Formula $10$
+\end_inset
+
+ blocks if the field is occupied to half the vertical height, whereas the
+ rotational inputs should never exceed 
+\begin_inset Formula $4$
+\end_inset
+
+ considering the modulus-by-
+\begin_inset Formula $4$
+\end_inset
+
+ property of rotation.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above relative-coordinates are implemented in the purely static, factory-sty
+le 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RelCoord
+\end_layout
+
+\end_inset
+
+ class in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:get-relative-coordinates"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Comparison to other implementations
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Existing implementations tend to prefer storing the relative-coordinates
+ in the built-in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+list
+\end_layout
+
+\end_inset
+
+-facility of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+python
+\end_layout
+
+\end_inset
+
+, which necessitates manually written 
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Formula 
 \[
@@ -1794,7 +2355,7 @@ pid
  
 \begin_inset Formula 
 \[
-\overbrace{\;\texttt{perm(7)}\,}\quad|\quad\underbrace{\;\texttt{perm(7)\,}}_{\text{2}^{\text{nd}}\text{bag}}\quad|\quad\cdots
+\overbrace{\;\texttt{perm(7)}\,}^{1^{\text{st}}\text{bag}}\quad|\quad\underbrace{\;\texttt{perm(7)\,}}_{\text{2}^{\text{nd}}\text{bag}}\quad|\quad\cdots
 \]
 
 \end_inset
@@ -1809,10 +2370,6 @@ pid
 
 
 \end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
 
 \begin_layout Note
 Implementation in 
@@ -1829,9 +2386,7 @@ Shetris
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
-
-\color greyedouttext
+\begin_layout Standard
 \begin_inset Flex Code
 status open
 
@@ -1841,8 +2396,6 @@ numpy
 
 \end_inset
 
-
-\color inherit
 's library method 
 \begin_inset Flex Code
 status open
@@ -1877,7 +2430,7 @@ python
  This decision is based on two arguments:
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 On the one hand, 
 \begin_inset Flex Code
 status open
@@ -1914,7 +2467,7 @@ on.
  suffices as initialization of the RNG.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 On the other hand, 
 \begin_inset Flex Code
 status open
@@ -1926,8 +2479,6 @@ permutation()
 \end_inset
 
  returns 
-\color greyedouttext
-
 \begin_inset Flex Code
 status open
 
@@ -1937,11 +2488,7 @@ numpy
 
 \end_inset
 
-
-\color inherit
 's 
-\color greyedouttext
-
 \begin_inset Flex Code
 status open
 
@@ -1981,7 +2528,7 @@ ndarray
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -1997,7 +2544,7 @@ Beyond the
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 The generator of 
 \begin_inset Flex Noun
 status open
@@ -2017,11 +2564,6 @@ Shetris
 \end_layout
 
 \end_deeper
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 The movements
 \end_layout
@@ -2410,7 +2952,18 @@ With The following sections specify the implementation of the components
 \end_layout
 
 \begin_layout Remark
-Intricacy on observing
+Intricacies in observing 
+\begin_inset Formula $x$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "rem:Intricacies-in-observing-x"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -2440,8 +2993,58 @@ experiences
 , in particular, all previous observations and actions.
 \end_layout
 
+\end_deeper
 \begin_layout Standard
-This simplification is justified for the adaptation of dynamics of 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Implication of previous observations
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Continuing upon the Remark 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:Intricacies-in-observing-x"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the reader shall note that the consideration of including past observations
+ can be safely discarded for the observation as described above, as all
+ the components of the observation only rely on the current state 
+\begin_inset Formula $y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the field-related analysis observations after the movement
+\end_layout
+
+\begin_layout Itemize
+the number of lines cleared after the action
+\end_layout
+
+\begin_layout Itemize
+the next piece-id
+\end_layout
+
+\begin_layout Standard
+The observation While the placement of pieces onto the field is indeed
+\end_layout
+
+\begin_layout Standard
+The schematic simplification utilized above is justified for the adaptation
+ of dynamics of 
 \begin_inset Flex Noun
 status open
 
@@ -2451,7 +3054,86 @@ Shetris
 
 \end_inset
 
-, as is shown in the following section.
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Implication of evolution
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Note that using a standard 
+\begin_inset Formula $\star$
+\end_inset
+
+-bag based algorithm, both shuffled and sequential, the past observations
+ of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ offers clues to future generations.
+ As an example, with the standard 
+\begin_inset Formula $7$
+\end_inset
+
+-bag shuffled generator, the knowledge of the first 
+\begin_inset Formula $6$
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+s of one bag iteration directly provides the 
+\begin_inset Formula $7^{\text{th}}$
+\end_inset
+
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+It should thus be pointed out that the statement of non-relevance for past
+ states of the system for the determining the evolution as made in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-rl-survey"
+literal "false"
+
+\end_inset
+
+ is erroneous.
 \end_layout
 
 \end_deeper
@@ -2463,11 +3145,34 @@ Shetris
 \end_layout
 
 \begin_layout Subsection
-Implementation details
+Formulation as Markov Decision Process
+\end_layout
+
+\begin_layout Standard
+This section provides the description of the formulation in Markov Decision
+ Process (MDP) as described in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bellman_1957,bertsekas_1995"
+literal "false"
+
+\end_inset
+
+, for the Tetris-game, proceeding to focusing on the specifics of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ game-rules.
 \end_layout
 
 \begin_layout Subsubsection
-The dynamics
+The state and the dynamics
 \end_layout
 
 \begin_layout Standard
@@ -2506,22 +3211,79 @@ engine
  In particular:
 \end_layout
 
-\begin_layout Itemize
-the state snapshots 
+\begin_layout Definition
+State 
 \begin_inset Formula $y_{\star}$
 \end_inset
 
- is provided by the 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The state 
+\begin_inset Formula $y_{\star}$
+\end_inset
+
+ can be decomposed into:
+\end_layout
+
+\begin_layout Itemize
+the state of the current piece information, provided by the 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-placement
+piece
 \end_layout
 
 \end_inset
 
--package and the current piece-id;
+ and the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+generator
+\end_layout
+
+\end_inset
+
+ modules
+\end_layout
+
+\begin_layout Itemize
+the state of the field, as provided by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+field
+\end_layout
+
+\end_inset
+
+-module
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With the state 
+\begin_inset Formula $y$
+\end_inset
+
+ defined, one proceeds to defining the evolution-
+\end_layout
+
+\begin_layout Definition
+The Evolution
 \end_layout
 
 \begin_layout Itemize
@@ -2539,11 +3301,46 @@ move
 
 \end_inset
 
--package, which, above all, defines various operations
+-package and the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+get_pids(...)
 \end_layout
 
-\begin_layout Itemize
-Thus, the system itself In particular, the state of the system
+\end_inset
+
+ method of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+generator
+\end_layout
+
+\end_inset
+
+-module
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The action
+\end_layout
+
+\begin_layout Standard
+The action 
+\begin_inset Formula $a$
+\end_inset
+
+ of a 
 \end_layout
 
 \begin_layout Subsubsection
@@ -3085,22 +3882,6 @@ Defining the Tetris-game
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-The system-state 
-\begin_inset Formula $x\coloneqq$
-\end_inset
-
- the whole field;
-\begin_inset Formula 
-\[
-x\in\texttt{bool}^{20\times10}
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Enumerate
 The control-input 
 \begin_inset Formula $u\coloneqq$
