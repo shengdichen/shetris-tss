@@ -120,6 +120,98 @@ Executive Summary
 The gist
 \end_layout
 
+\begin_layout Definition
+The whole thesis
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+To begin with, a fully extendable Tetris-engine is written completely from
+ scratch.
+ The engine is agnostic to the source of input and the rule-set, allowing
+ the source to be both human and machine.
+ The extendability is further seen in the flexible choice of front-ends.
+ As a bare-minimum, text-based feedback is provided to the calling terminal.
+ The field size and the piece-id generator are other variable components.
+\end_layout
+
+\begin_layout Enumerate
+This thesis considers an online version of the Tetris-game.
+ Specifically, no piece preview is available.
+ The episode is defined as the the action 
+\begin_inset Formula $a$
+\end_inset
+
+ allowed for the acting agent for every piece.
+ Three separate solutions are 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+implement the game engine
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+gym
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+implement the four core functions
+\end_layout
+
+\begin_layout Enumerate
+register
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+sb3
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+train
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+train a while
+\end_layout
+
+\begin_layout Enumerate
+record a short game
+\end_layout
+
+\begin_layout Enumerate
+break after some amount of steps
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+test
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+test on games (full random, random)
+\end_layout
+
+\begin_layout Enumerate
+test on atomics (given a field, and specific next pieces)
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Time-lines
 \end_layout

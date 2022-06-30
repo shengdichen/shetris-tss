@@ -367,27 +367,15 @@ black
 
 \end_inset
 
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://github.com/psf/black
-\end_layout
+-formatter 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "black"
+literal "false"
 
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
--formatter and thus implicitly conforms to the 
+ and thus implicitly conforms to the 
 \begin_inset Flex Code
 status open
 

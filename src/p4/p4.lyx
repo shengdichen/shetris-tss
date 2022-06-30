@@ -120,12 +120,255 @@ The Results
 Analysis Framework
 \end_layout
 
+\begin_layout Standard
+Despite the vast capability of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ for modifications, this thesis studies the behavior of acting agents under
+ mostly standard-conforming conditions.
+ In particular:
+\end_layout
+
+\begin_layout Itemize
+The field is always chosen to be of the standard-size, i.e., 
+\begin_inset Formula $20$
+\end_inset
+
+ blocks in height and 
+\begin_inset Formula $10$
+\end_inset
+
+ blocks in width
+\end_layout
+
+\begin_layout Itemize
+the piece-id generator
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The hard-coded nature of the solution based on evolution-algorithm leads
+ to the fact that no training is required.
+ On the other hand, it proves to serve as the measure of a decent agent,
+ as later demonstrated.
+ This section introduces the setup required for the solution with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+ and manually encoded 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+dqn
+\end_layout
+
+\end_inset
+
+ solution, which do require training.
+\end_layout
+
 \begin_layout Subsubsection
 Setup
 \end_layout
 
-\begin_layout Enumerate
-Models by 
+\begin_layout Standard
+All training is performed on the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Euler
+\end_layout
+
+\end_inset
+
+ scientific compute cluster with the common access-clearance of ETH members.
+ Given the version requirement for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+ of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+3.10.*
+\end_layout
+
+\end_inset
+
+, the newer generation of software-stack
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+target "https://scicomp.ethz.ch/wiki/New_SPACK_software_stack_on_Euler"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ of Euler must be explicitly loaded
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In the older software-stack, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python-2
+\end_layout
+
+\end_inset
+
+ is linked to calling 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+$ python
+\end_layout
+
+\end_inset
+
+ on a (log-in) node, and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+$ python3
+\end_layout
+
+\end_inset
+
+ executes version 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+, followed by manually calling the module-loading commands.
+ The excerpt of shell-commands accomplish the module-setup such that the
+ version requirement of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+ is fulfilled.
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ env2lmod
+\end_layout
+
+\begin_layout Plain Layout
+
+$ module load gcc/8.2.0; module load python_gpu/3.10.4
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# confirm python version
+\end_layout
+
+\begin_layout Plain Layout
+
+$ python --version
+\end_layout
+
+\begin_layout Plain Layout
+
+Python 3.10.4
+\end_layout
+
+\end_inset
+
+With the required python interpreter, the extra packages as listed in the
+ introductory chapter of the thesis are installed.
+ With 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pipenv
+\end_layout
+
+\end_inset
+
+, the process of generating a testing virtual-environment along with dependency
+ installation is fully automated:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+$ pipenv run
+\end_layout
+
+\begin_layout Plain Layout
+
+$ pipenv install
+\end_layout
+
+\end_inset
+
+With the virtual-environment 
 \end_layout
 
 \begin_layout Subsection
@@ -135,6 +378,619 @@ status open
 
 \begin_layout Plain Layout
 sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Necessary setups
+\end_layout
+
+\begin_layout Enumerate
+For the observation-factory of the reporter, any extra configurations through
+ keyword-arguments are allowed.
+ In particular, the return type could either be 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+ or pytorch's 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+torch.Tensor
+\end_layout
+
+\end_inset
+
+;
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/shetris/env/reporter/reporter.py
+\end_layout
+
+\begin_layout Plain Layout
+
+class Reporter:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, engine: Engine):
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.obs_factory = ObsStandard(
+\end_layout
+
+\begin_layout Plain Layout
+
+            self.engine,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_compact_field=<modify this>,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_pid=<modify this>,
+\end_layout
+
+\begin_layout Plain Layout
+
+            # set to False only for manual DQN-training
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_np=True,
+\end_layout
+
+\begin_layout Plain Layout
+
+        )
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...	
+\end_layout
+
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="5">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Exp-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations (always in numpy)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Steps
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+location
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PPO
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact; with pid (True, True)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+M + 5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact; without pid (True, False)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;19\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full; with pid (False, True)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5M + 5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris02
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;4\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full; without pid (False, False)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris03
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Implementation of Evolution-Algorithm; DQN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Collection of results; compose thesis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For parallel training, must rename the output directory, otherwise, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+ with output into the same directory.
+ This is achieved by modifying
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/result/info.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class ShetrisInfo(InfoProvider):
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_algpol() -> Tuple[Type[BaseAlgorithm], Type[BasePolicy]]:
+\end_layout
+
+\begin_layout Plain Layout
+
+        return AlgPolFactory.get_ppo()
+\end_layout
+
+\begin_layout Plain Layout
+
+        # return AlgPolFactory.get_dqn()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_rel_dirs() -> Tuple[str, str]:
+\end_layout
+
+\begin_layout Plain Layout
+
+        base = "./shetris<add_modifier>/"
+\end_layout
+
+\begin_layout Plain Layout
+
+        tensorboard = os.path.join(base, InfoProvider.tensorboard_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+        saveload = os.path.join(base, InfoProvider.saveload_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        return tensorboard, saveload
 \end_layout
 
 \end_inset
@@ -580,13 +1436,102 @@ Collection of results; compose thesis
 Solution by Evolution Algorithm
 \end_layout
 
+\begin_layout Enumerate
+For the observation-factory
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+the compact-field must be used
+\end_layout
+
+\begin_layout Enumerate
+the pid must not be included
+\end_layout
+
+\begin_layout Enumerate
+the return type must be 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+in particular, the observation-factory is thus limited to:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+        self.obs_factory = ObsStandard(
+\end_layout
+
+\begin_layout Plain Layout
+
+            self.engine,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_compact_field=True,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_pid=False,
+\end_layout
+
+\begin_layout Plain Layout
+
+            # set to False only for manual DQN-training
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_np=False
+\end_layout
+
+\begin_layout Plain Layout
+
+        )
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 The Evolution-Algorithm
 \end_layout
 
 \begin_layout Standard
 The Evolution-Algorithm performed extremely well.
- Testing on the standard 
+ Testing on the standard shuffled 
+\begin_inset Formula $7$
+\end_inset
+
+-bag generator, the agent performs over 
 \begin_inset Tabular
 <lyxtabular version="3" rows="8" columns="5">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
@@ -609,7 +1554,7 @@ Generator
 \begin_inset Text
 
 \begin_layout Plain Layout
-Number of Pieces
+#pieces
 \end_layout
 
 \end_inset
@@ -665,7 +1610,7 @@ Sequencer(7)
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $>10'000$
+\begin_inset Formula $>1'000$
 \end_inset
 
 
@@ -771,9 +1716,6 @@ Shuffler(7)
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left[0;19\right]$
-\end_inset
-
 
 \end_layout
 
@@ -783,67 +1725,6 @@ Shuffler(7)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Holes 
-\begin_inset Formula $M_{H}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;4\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Lines-cleared 
-\begin_inset Formula $M_{C}$
-\end_inset
-
 
 \end_layout
 
@@ -891,15 +1772,6 @@ Lines-cleared
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -918,9 +1790,6 @@ pid
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
 
 \end_layout
 
@@ -950,7 +1819,54 @@ pid
 \begin_inset Text
 
 \begin_layout Plain Layout
-Implementation of Evolution-Algorithm; DQN
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -997,7 +1913,7 @@ Implementation of Evolution-Algorithm; DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
-Collection of results; compose thesis
+
 \end_layout
 
 \end_inset
@@ -1037,78 +1953,587 @@ Collection of results; compose thesis
 
 \end_layout
 
+\begin_layout Subsection
+DQN
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="5">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Exp-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+First layer size
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations (always in Tensor: last is false)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Steps
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+location
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact; with pid (True, True)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $5$
+\end_inset
+
+M + 5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact; without pid (True, False)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris01
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10+9+10+1+1=31$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full; with pid (False, True)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5M + 5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris02
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10+9+10+1=30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full; without pid (False, False)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+shetris03
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Implementation of Evolution-Algorithm; DQN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Collection of results; compose thesis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# modify shetris/env/reporter/reporter.py
+\end_layout
+
+\begin_layout Plain Layout
+
+-> the constructor
+\end_layout
+
+\begin_layout Plain Layout
+
+	TRUE, TRUE
+\end_layout
+
+\begin_layout Plain Layout
+
+	TRUE, FALSE
+\end_layout
+
+\begin_layout Plain Layout
+
+	FALSE, TRUE
+\end_layout
+
+\begin_layout Plain Layout
+
+	FALSE, FALSE
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# modify util/dqn/model.py: change the path
+\end_layout
+
+\begin_layout Plain Layout
+
+#	script_path = ...
+ + 
+\begin_inset Quotes xld
+\end_inset
+
+result/shetris<CHANGE_THIS>/
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# modify util/dqn/network.py
+\end_layout
+
+\begin_layout Plain Layout
+
+# 	self.conv1 = nn.Sequential(nn.Linear( <CHANGE_THIS_VALUE>...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 The whole pipeline
 \end_layout
 
+\begin_layout Subsection
+Key analysis metrics
+\end_layout
+
+\begin_layout Standard
+When viewing the results, several key analysis-metrics are required to obtain
+ a general overview.
+ To begin with, the episode-length already provides powerful indication
+ of the performance:
+\begin_inset Formula 
+\[
+\text{Length}_{\text{Episode}}\equiv\text{\#pieces}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Definition
-The whole thesis
+Intuitive metrics
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-prep
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-implement the game engine
+When playing purely randomly, one observes the average length of episode
 \end_layout
 
 \end_deeper
-\begin_layout Enumerate
-gym
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-implement the four core functions
+\begin_layout Subsection
+General framework
 \end_layout
 
-\begin_layout Enumerate
-register
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-sb3
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-train
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-train a while
+\begin_layout Standard
+The following framework is established for the general training and testing
 \end_layout
 
 \begin_layout Enumerate
-record a short game
+The standard field of 
+\begin_inset Formula $20\times10$
+\end_inset
+
+ is used
 \end_layout
 
 \begin_layout Enumerate
-break after some amount of steps
+During training, the standard, shuffled 
+\begin_inset Formula $7$
+\end_inset
+
+-bag generator is used; multiple flavors of generators are used for testing
 \end_layout
 
-\end_deeper
-\begin_layout Enumerate
-test
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-test on games (full random, random)
-\end_layout
-
-\begin_layout Enumerate
-test on atomics (given a field, and specific next pieces)
-\end_layout
-
-\end_deeper
-\end_deeper
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset

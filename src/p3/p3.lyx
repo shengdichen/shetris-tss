@@ -2347,7 +2347,14 @@ Q\left(x,a;\theta\right)\colonapprox Q^{*}
 \end_inset
 
 .
- Furthermore, a replay-memory of length 
+\end_layout
+
+\begin_layout Subsubsection
+Replay-buffer
+\end_layout
+
+\begin_layout Standard
+Furthermore, a replay-memory of length 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2405,55 +2412,83 @@ literal "false"
 , outstanding results were achieved with such constructions.
 \end_layout
 
-\begin_layout Standard
-Without delving further into the definition of the Deep Q-Networks, of which
- literature abound, the author simply enlists several of the essential the
- hyper-parameters.
- These are surveyed from reference implementations such as 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-sb3
+\begin_layout Subsection
+Whole pipeline
 \end_layout
 
-\end_inset
-
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "sb3"
-literal "false"
-
-\end_inset
-
-, and are thus also used in the implementation.
+\begin_layout Enumerate
+Pre-build the replay-buffer
 \end_layout
 
-\begin_layout Itemize
-Initial exploration 
-\begin_inset Formula $\epsilon\equiv1$
-\end_inset
-
-;
+\begin_deeper
+\begin_layout Enumerate
+keep running episodes
 \end_layout
 
-\begin_layout Itemize
-discount-factor 
-\begin_inset Formula $\gamma=0.99$
-\end_inset
-
-;
+\begin_deeper
+\begin_layout Enumerate
+every step: decide on the (action, observation)-pair
 \end_layout
 
-\begin_layout Itemize
-size of the replay memory 
-\begin_inset Formula $N=30'000$
-\end_inset
-
-.
+\begin_layout Enumerate
+record every step
 \end_layout
 
+\end_deeper
+\begin_layout Enumerate
+keep running episodes until the number of steps recorded reaches a threshold
+ (
+\begin_inset Formula $\nicefrac{1}{10}$
+\end_inset
+
+ in our implementation) of the total size of replay-buffer
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+in our case, 
+\begin_inset Formula $30'000$
+\end_inset
+
+ is the replay-buffer total size
+\end_layout
+
+\begin_layout Enumerate
+thus, 
+\begin_inset Formula $3'000$
+\end_inset
+
+ steps are pre-recorded
+\end_layout
+
+\begin_layout Enumerate
+this is roughly 
+\begin_inset Formula $150$
+\end_inset
+
+ episodes run in the pre-recording mode
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Any any step (for both phases), use 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-algorithm to determine if:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+explore, i.e., pick new action
+\end_layout
+
+\begin_layout Enumerate
+reuse, use best prediction
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Implementation details
 \end_layout
@@ -2517,6 +2552,79 @@ pytorch
 \end_layout
 
 \begin_layout Standard
+Without delving further into the definition of the Deep Q-Networks, of which
+ literature abound, the author simply enlists several of the essential the
+ hyper-parameters.
+ These are surveyed from reference implementations such as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sb3"
+literal "false"
+
+\end_inset
+
+, and are thus also used in the implementation.
+\end_layout
+
+\begin_layout Itemize
+Initial exploration 
+\begin_inset Formula $\epsilon\equiv1$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+discount-factor 
+\begin_inset Formula $\gamma=0.99$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+size of the replay memory 
+\begin_inset Formula $N=30'000$
+\end_inset
+
+; and is initialized to 
+\begin_inset Quotes xld
+\end_inset
+
+pre
+\begin_inset Quotes xrd
+\end_inset
+
+ fill to one-tenth of its capcity, i.e., 
+\begin_inset Formula $3'000$
+\end_inset
+
+ steps are recorded;
+\end_layout
+
+\begin_layout Itemize
+in total, 
+\begin_inset Formula $10'000$
+\end_inset
+
+ episodes are recorded in total.
+\end_layout
+
+\begin_layout Subsubsection
+Necessary adaptations
+\end_layout
+
+\begin_layout Standard
 The necessary adaptations for utilizing this network for the now available
  
 \begin_inset Flex Code
@@ -2532,7 +2640,213 @@ gym
 \end_layout
 
 \begin_layout Enumerate
-All pairs of (action, observation)-pairs must be created
+The observation, which should be drawn from the entire history of state
+ 
+\begin_inset Formula $y$
+\end_inset
+
+ and action 
+\begin_inset Formula $a$
+\end_inset
+
+, is, as explained before, only dependent only the current state 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ In particular, the state-observation, the number of lines cleared and the
+ piece-id, are all only dependent on one state snapshot, the state after
+ applying the action.
+\end_layout
+
+\begin_layout Enumerate
+All pairs of (action, observation)-pairs must be created, in particular,
+ given the specific movement setup of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+, the rotational configurations of every piece can be reduced: in particular,
+ the 
+\begin_inset Quotes qld
+\end_inset
+
+O
+\begin_inset Quotes qrd
+\end_inset
+
+-piece has 
+\begin_inset Formula $1$
+\end_inset
+
+ rotational-config, then 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+comes pid 1, 2, 3 with 2 configs and the last three of 4 configs.
+\end_layout
+
+\end_inset
+
+ Note that this monotonously increasing amount of rotational configurations
+ with respect to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ is not a coincidence: in fact, this is the sorting criteria when the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+s are sorted to begin with.
+ Thus, much 
+\begin_inset Quotes xld
+\end_inset
+
+wasteful
+\begin_inset Quotes xrd
+\end_inset
+
+ configurations can be saved: in particular, the O-piece only needs to be
+ inspected for its only rotational configuration instead of 
+\begin_inset Formula $4$
+\end_inset
+
+, effectively shrinking the action-space to 
+\begin_inset Formula $\nicefrac{1}{4}$
+\end_inset
+
+.
+ The reporter in the module 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+shetris/env/reporter/combi.py
+\end_layout
+
+\end_inset
+
+ implements the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+_Helper
+\end_layout
+
+\end_inset
+
+-class with 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/shetris/env/reporter/combi.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class _Helper:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def do_for_all_actions(self, get_job_func: Callable) -> None
+\end_layout
+
+\begin_layout Plain Layout
+
+    ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ executes a function returned by the passed in variable 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+get_job_func
+\end_layout
+
+\end_inset
+
+ on the reduced action-space.
+ Another critical usage of this 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+_Helper
+\end_layout
+
+\end_inset
+
+-class is for the implementation of the Genetic-Algorithm based solution
+ seen in the next chapter.
+\end_layout
+
+\begin_layout Enumerate
+The fixed size limitation of the replay-buffer, which in itself is intentional
+ as explained in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original"
+literal "false"
+
+\end_inset
+
+, requires writing at both ends: insertion at the end and deletion at the
+ beginning.
+ The excellent choice for such operations is provided by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+'s standard library 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+collections.deque
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
