@@ -5,6 +5,15 @@
 \save_transient_properties true
 \origin unavailable
 \textclass amsart
+\begin_preamble
+% \renewcommand{\headrulewidth}{0.7pt}
+
+%\usepackage[%
+%	skip=0pt plus7pt minus7pt,%
+%	tocskip=10pt plus1pt minu1pt,%
+%	indent=13pt,%
+%]{parskip}
+\end_preamble
 \use_default_options true
 \begin_removed_modules
 theorems-ams
@@ -123,23 +132,23 @@ with Reinforcement-Learning
 \end_layout
 
 \begin_layout Author
-Shengdi 
-\begin_inset Quotes xld
-\end_inset
-
-shenchen
-\begin_inset Quotes xrd
-\end_inset
-
- Chen
-\end_layout
-
-\begin_layout Abstract
-This Bachelor-Thesis
-\begin_inset Foot
-status open
+Shengdi Chen
+\begin_inset script superscript
 
 \begin_layout Plain Layout
+\begin_inset Formula $\alpha$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Thanks
+RW/CSE, D-MATH, ETH Zürich: 
 \begin_inset Flex Code
 status open
 
@@ -208,12 +217,8 @@ ch | 17-943-358
 
 \end_layout
 
-\end_inset
-
-, conducted under the supervision of Prof.
- Dr.
- J.
- Buhmann, explores various techniques to solving the classic video-game
+\begin_layout Abstract
+This thesis explores various techniques to solving the classic video-game
  Tetris.
  A fully extensible implementation of the Tetris-game is implemented, complying
  with essential elements of the game's official standard.
@@ -228,6 +233,166 @@ Adapted to accept inputs from machine-based agents, the resultant environment
  is Solutions from heuristics-driven evolutionary-algorithms and deep reinforcem
 ent-learning are explored and studied using various observation-mechanisms
  and reward-dynamics.
+\begin_inset VSpace 150baselineskip%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+This project, conducted under the supervision of Prof.
+ Dr.
+ J.
+ Buhmann, is executed under the framework of a Bachelor-Thesis at ETH Zürich.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand{
+\backslash
+headrulewidth}{0.7pt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Left Header
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Center Header
+Mastering Tetris: The 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+-Project
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Mastering Tetris: The 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+-Project
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Right Header
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Left Footer
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Center Footer
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thepage
+\end_layout
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thepage
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Right Footer
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

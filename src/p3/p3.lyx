@@ -136,24 +136,6 @@ underlying: pytorch
 
 \end_deeper
 \begin_layout Enumerate
-Algorithm
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-PPO
-\end_layout
-
-\begin_layout Enumerate
-A2C
-\end_layout
-
-\begin_layout Enumerate
-NOT DQN (only on discrete space)
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
 Training routine
 \end_layout
 
@@ -172,53 +154,128 @@ logging with tensor-board
 
 \end_deeper
 \end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+By further plugging in the concept of partial observation, an acting agent
+ conforming to the environment interface 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym.Env
+\end_layout
+
+\end_inset
+
+ is obtained.
+ The following chapters delineate this process towards the adaptation to
+ the interface 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Section
-Performance Measures
-\end_layout
-
-\begin_layout Subsection
-Intuitions
+Formulation of the MDP
 \end_layout
 
 \begin_layout Standard
-It does not take a veteran to conclude that the field on the left is in
- considerably better shape than that on the right.
- Indeed, the decision is quickly taken based on intuition such as the height
- of the field and the number of existent holes in the field.
- This section formalizes such intuitions to accurately various define performanc
-e measures 
-\begin_inset Formula $M$
+A critical framework for the analysis and quantification of agent performance,
+ the Markov decision-process (MDP), as described in standard literature
+ such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bertsekas_1995,bellman_1957"
+literal "false"
+
 \end_inset
 
- to gauge game-plays of Tetris.
-\size scriptsize
+, builds upon the discrete control-process as formulated previously by enriching
+ it with the notion of step-wise 
+\begin_inset Flex Emph
+status open
 
+\begin_layout Plain Layout
+rewards
+\end_layout
+
+\end_inset
+
+.
+ With the foundation of the formulation of the control-process for the Tetris-ga
+me, this section describes the reward structure as used in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Definition of rewards
+\end_layout
+
+\begin_layout Definition
+The reward
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+With every evolution from of the system from state 
+\begin_inset Formula $y_{\star}$
+\end_inset
+
+ to 
+\begin_inset Formula $y_{\star+1}$
+\end_inset
+
+, a reward 
+\begin_inset Formula $r$
+\end_inset
+
+ is produced.
+ This produces the following augmented illustration based on the first rendition
+ of the graph in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Formulation-of-Control-Process"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
-\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
-\end{bmatrix}\qquad\qquad\qquad\begin{bmatrix}\fullmoon & \fullmoon &  &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
- & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
- & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
- & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon\\
-\blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
-\end{bmatrix}
+\xymatrix{ &  &  & {f\left(\cdots\right)}\ar[d]_{{\text{2. evolve}}}\\
+*++[o][F-]{y_{\star}}\ar[rrrr] &  &  &  & *++[o][F-]{y_{\star+1}}\ar@/^{2pc}/[ddl]^{{\text{3. reward}}}\\
+\\
+ &  & *+[F-]{a_{\star}}\ar[uu]_{{\text{1. apply}}} & *+[F-]{r_{\star}}
+}
 \]
 
 \end_inset
@@ -227,14 +284,1263 @@ e measures
 \end_layout
 
 \begin_layout Standard
+Note that no theoretical range for reward 
+\begin_inset Formula $r$
+\end_inset
+
+ is imposed, i.e., 
+\begin_inset Formula $r\in\mathbb{R}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The MDP of a Tetris-game thus follows naturally:
+\end_layout
+
+\begin_layout Definition
+MDP of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The state 
+\begin_inset Formula $y$
+\end_inset
+
+ and the state-space 
+\begin_inset Formula $Y\ni y$
+\end_inset
+
+ is provided with Definition 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CROSS_REF
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+The action 
+\begin_inset Formula $a$
+\end_inset
+
+ and the action-space 
+\begin_inset Formula $A\ni a$
+\end_inset
+
+ is provided with Definition 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CROSS_REF
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+The transition-probability 
+\begin_inset Formula $P$
+\end_inset
+
+ is captured by the evolution 
+\begin_inset Formula $f$
+\end_inset
+
+ in Definition 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CROSS_REF
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+The reward 
+\begin_inset Formula $r$
+\end_inset
+
+ is specified in the upcoming section 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CROSS_REF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $4$
+\end_inset
+
+-tuple 
+\begin_inset Formula $\left(S,A,P,r\right)$
+\end_inset
+
+ completes the MDP formulation of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ in general.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Source of randomness of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Tetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+For the game of Tetris as a whole, the only possible source of randomness
+ is the generator, as the evolution mechanism of the field is completely
+ deterministic.
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, this source of stochasticity could also be removed by specifying a non-random
+ generator as described in previous sections
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+C_REF
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Reward-Engineering for Tetris
+\end_layout
+
+\begin_layout Subsubsection
+Episode Termination
+\end_layout
+
+\begin_layout Standard
+Following standard practices in reward formulation, the component of the
+ reward by checking if the episode has elapsed 
+\begin_inset Formula $r_{\text{GO}}$
+\end_inset
+
+ is defined as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+r_{\text{GO}}\coloneqq\left\{ \begin{alignedat}{2} & 1 & \qquad & \text{if episode not terminated}\\
+ & -2 &  & \text{otherwise}
+\end{alignedat}
+\right.
+\]
+
+\end_inset
+
+Similar reward components based on episode status are also utilized in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-nuno,uvipen"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The seemingly innocuous checking against episode termination, or colloquially
+ against the state of 
+\begin_inset Quotes xld
+\end_inset
+
+game-over
+\begin_inset Quotes xrd
+\end_inset
+
+, is non-trivial, as multiple such implementations exist.
+ Again, the reader is encouraged to visit the wiki-page
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Various Episode-Termination conditions: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Top_out"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ for more details.
+ The mechanism adopted by 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is described below:
+\end_layout
+
+\begin_layout Definition
+Criteria of episode termination in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+An episode is finished if and only if 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+any
+\end_layout
+
+\end_inset
+
+ block of the current piece overlaps with an occupied block of the field
+ before 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+all
+\end_layout
+
+\end_inset
+
+ blocks of the piece are visible.
+\end_layout
+
+\begin_layout Standard
+Note that this mechanism is inspired by the 
+\begin_inset Quotes xld
+\end_inset
+
+block-out
+\begin_inset Quotes xrd
+\end_inset
+
+ variation of described in the web-page nominated above.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Apart from the classical reward criteria of episode-termination of general
+ control-problems, another candidate specific to the Tetris-game is described
+ in the following section.
+\end_layout
+
+\begin_layout Subsubsection
+Line-Clears
+\end_layout
+
+\begin_layout Standard
+Resulting in scores in most Tetris implementations, the line-clears constitute
+ another apparent reward candidate 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+.
+ The exact mechanism of calculation is provided below:
+\end_layout
+
+\begin_layout Definition
+Reward by Line-Clears 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The reward induced by a line-clear of 
+\begin_inset Formula $n$
+\end_inset
+
+ (full-)lines is distributed as follows:
+\begin_inset Formula 
+\begin{equation}
+\begin{alignedat}{1}r_{\text{LC}}\left(n\right) & \wasypropto k\left(n\right)\\
+ & \coloneqq c\cdot k\left(n\right)
+\end{alignedat}
+\label{eq:reward-by-line-clear}
+\end{equation}
+
+\end_inset
+
+where the function 
+\begin_inset Formula $k\left(n\right)$
+\end_inset
+
+ for the standard, 
+\begin_inset Formula $4$
+\end_inset
+
+-block pieces
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+also known as 
+\begin_inset Quotes xld
+\end_inset
+
+Tetromino
+\begin_inset Quotes xrd
+\end_inset
+
+ or 
+\begin_inset Quotes xld
+\end_inset
+
+Tetrimino
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ only game-play is defined by The Guideline
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Scoring Guideline: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Scoring"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ as:
+\begin_inset Formula 
+\[
+k\left(n\right)\coloneqq\left\{ \begin{alignedat}{2} & 0 & \qquad & n=0\\
+ & 1 &  & n=1\\
+ & 3 &  & n=2\\
+ & 5 &  & n=3\\
+ & 8 &  & n=4\\
+ & \text{undefined} &  & \text{otherwise}
+\end{alignedat}
+\right.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Implicitly, higher 
+\begin_inset Quotes xld
+\end_inset
+
+per-cleared-line
+\begin_inset Quotes xrd
+\end_inset
+
+ score is awarded with more lines cleared at the same time.
+ Note that the maximal value for 
+\begin_inset Formula $n$
+\end_inset
+
+ is 
+\begin_inset Formula $4$
+\end_inset
+
+, oftentimes referred to as a 
+\begin_inset Quotes xld
+\end_inset
+
+Tetris-clear
+\begin_inset Quotes xrd
+\end_inset
+
+, scoring twice as much per line as compared to the case where 
+\begin_inset Formula $n$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+, also known as a 
+\begin_inset Quotes xld
+\end_inset
+
+single-clear
+\begin_inset Quotes xrd
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Proportionality-factor in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, the proportionality factor 
+\begin_inset Formula $c$
+\end_inset
+
+ of 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:reward-by-line-clear"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is chosen as:
+\begin_inset Formula 
+\[
+c\coloneqq10\cdot\left(\text{width-of-field}\right)
+\]
+
+\end_inset
+
+translating to 
+\begin_inset Formula $c\equiv100$
+\end_inset
+
+ for the standard field of 
+\begin_inset Formula $10$
+\end_inset
+
+ columns.
+\end_layout
+
+\begin_layout Standard
+The addition of the extra multiplicative factor 
+\begin_inset Formula $10$
+\end_inset
+
+, in contrast to other implementations such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-nuno,uvipen"
+literal "false"
+
+\end_inset
+
+, allows immediate identification of any line-clearing when manually monitoring
+ the agent: with the reward-component from observing episode termination
+ 
+\begin_inset Formula $r_{\text{GO}}$
+\end_inset
+
+ valued at 
+\begin_inset Formula $1$
+\end_inset
+
+ per non-terminating step, the sum from simply taking 
+\begin_inset Formula $10$
+\end_inset
+
+ steps would otherwise be indistinguishable from achieving a 
+\begin_inset Quotes xld
+\end_inset
+
+single
+\begin_inset Quotes xrd
+\end_inset
+
+ line-clear
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+in other words, 
+\begin_inset Formula $1$
+\end_inset
+
+ line is cleared
+\end_layout
+
+\end_inset
+
+.
+ Setting the line-clear rewards 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+ to multiples of 
+\begin_inset Formula $100$
+\end_inset
+
+ thus eliminates such ambiguity.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Reward in Entirety
+\end_layout
+
+\begin_layout Standard
+With the two components 
+\begin_inset Formula $r_{\text{GO}}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+ defined above, one concludes the final reward function of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Definition
+Reward 
+\begin_inset Formula $r$
+\end_inset
+
+ of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+At any time-step 
+\begin_inset Formula $t_{'\star}$
+\end_inset
+
+, the reward induced by undertaking action 
+\begin_inset Formula $a_{\star}$
+\end_inset
+
+ is defined as the sum of the reward from checking episode termination 
+\begin_inset Formula $r_{\text{GO}}$
+\end_inset
+
+ and calculating the line-clear induced score 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+r\coloneqq r_{\text{GO}}+r_{\text{LC}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In general, the reward-mechanism of any control-problem is prototyped with
+ the base-class below:
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# env/reporter/reward/reward.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class RewardFactory:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, **kwargs):
+\end_layout
+
+\begin_layout Plain Layout
+
+        super().__init__(**kwargs)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_reward(self, **kwargs) -> float:
+\end_layout
+
+\begin_layout Plain Layout
+
+        pass
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_reward_gameover(self, **kwargs) -> float:
+\end_layout
+
+\begin_layout Plain Layout
+
+        pass
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The constructor shall initialize individual components of the full reward-mechan
+ism, where each such component subsequently follow the following abstraction
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# env/reporter/reward/component.py 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class _RewardComponent:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, **kwargs):
+\end_layout
+
+\begin_layout Plain Layout
+
+        super().__init__(**kwargs)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_reward(self, **kwargs) -> Any:
+\end_layout
+
+\begin_layout Plain Layout
+
+        pass
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the case of Shetris, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+RewardFactory
+\end_layout
+
+\end_inset
+
+ is inherited and initialized with two components: one for the line-clear
+ 
+\begin_inset Formula $r_{\text{LC}}$
+\end_inset
+
+ and one for the episode-termination 
+\begin_inset Formula $r_{\text{GO}}$
+\end_inset
+
+:
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# env/reporter/reward/reward.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class RewardStandard(RewardFactory):
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, engine: Engine):
+\end_layout
+
+\begin_layout Plain Layout
+
+        self._engine = engine
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        self._lineclear = RewardLineClear(self._engine)
+\end_layout
+
+\begin_layout Plain Layout
+
+        self._gameover = RewardGameover(self._engine)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        super().__init__()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reader is referred to the source-code to inspect the details of the
+ implementation of these two components.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary of MDP-Formulation
+\end_layout
+
+\begin_layout Standard
+With the formula for reward calculation 
+\begin_inset Formula $r$
+\end_inset
+
+, the MDP formulation of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is complete at this point.
+ The following section introduces the final adaptations required for creating
+ a machine-compatible interactive environment for training.
+\end_layout
+
+\begin_layout Section
+Observation Extraction
+\end_layout
+
+\begin_layout Subsection
+Context
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ library as developed by OpenAI
+\begin_inset CommandInset citation
+LatexCommand cite
+key "gym"
+literal "false"
+
+\end_inset
+
+ stipulates a standardized framework for the description of a closed system
+ accessible via interaction with a decision-making agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ With the formulation of the MDP, the only missing piece towards the formulation
+ of the description of an agent conforming to the interface of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ is the notion of partial observation defined as follows.
+\end_layout
+
+\begin_layout Subsubsection
+Partial Observations
+\end_layout
+
+\begin_layout Standard
+Instead of the (full) state 
+\begin_inset Formula $y$
+\end_inset
+
+ of the system, the agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ perceives the system with 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+observation
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x\in\left\{ x_{0},x_{1},x_{2}\cdots\right\} $
+\end_inset
+
+ of some observation-space 
+\begin_inset Formula $x_{\forall t}\in X$
+\end_inset
+
+ and decides upon the 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+action
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+cf.
+ control-input 
+\begin_inset Formula $u$
+\end_inset
+
+ in control-theory
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $a\in\left\{ a_{0},a_{1},a_{2}\cdots\right\} $
+\end_inset
+
+ of some action-space 
+\begin_inset Formula $a_{\forall t}\in A$
+\end_inset
+
+ to apply to the system, which then evolves with the usual internal evolution-dy
+namics 
+\begin_inset Formula $f\left(\cdots\right)$
+\end_inset
+
+, inducing a reward value 
+\begin_inset Formula $r\in\left\{ r_{0},r_{1},r_{2}\cdots\right\} $
+\end_inset
+
+ of (one-dimensional) real number 
+\begin_inset Formula $r_{\forall t}\in\mathbb{R}^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Microscopically, the now fully augmented illustration below captures the
+ evolution of the system from both the system-internal 
+\begin_inset Formula $y_{\star}$
+\end_inset
+
+ perspective and that of the agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+\xymatrix{ &  &  & {f\left(\cdots\right)}\ar[d]_{{\text{2. evolve}}}\\
+*++[o][F-]{y_{\star}}\ar@{-->}[dd]_{{\text{0.a. Observe}}}\ar[rrrr] &  &  &  & *++[o][F-]{y_{\star+1}}\ar@/^{2pc}/[ddl]^{{\text{3. reward}}} & \qquad\text{[System Internals]}\\
+\\
+*+[F-]{x_{\star}}\ar[rr]_{{\text{0.b. decide}}} &  & *+[F-]{a_{\star}}\ar[uu]_{{\text{1. apply}}} & *+[F-]{r_{\star}} &  & \qquad\text{[Agent Perception]}\\
+\\
+\\
+}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Given the MDP-Formulation in the previous section, it thus remains to specify
+ the process of extracting the observation 
+\begin_inset Formula $x$
+\end_inset
+
+ of the agent from the system state 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ This following section provides insights into the implementation of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Intuitions
+\end_layout
+
+\begin_layout Standard
+It does not take a veteran of the Tetris-game to conclude that the field
+ on the left is in considerably better shape than that on the right as depicted
+ in the comparative illustration 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:good-bad-fields"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below: the uneven columns and the numerous holes of the field both constitute
+ undesirable traits, leading to the rejection of the field on the right-hand-sid
+e to be rejected as decent game-play.
+\size scriptsize
+
+\begin_inset Formula 
+\begin{equation}
+\begin{bmatrix}\\
+\\
+\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
+\end{bmatrix}\qquad\qquad\qquad\begin{bmatrix}\fullmoon & \fullmoon &  &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+ & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
+\end{bmatrix}\label{eq:good-bad-fields}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+These intuitions, while section formalizes such intuitions to accurately
+ various define performance measures 
+\begin_inset Formula $M$
+\end_inset
+
+ to gauge game-plays of Tetris.
+\end_layout
+
+\begin_layout Plain Layout
 No extreme expertise is required to formulate intuitive heuristics of measuring
  the game-play performance in Tetris: one aims at achieving placing the
  pieces onto the field such that the columns are evenly distributed, not
  stacked too high with few holes.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
-The metrics
+Field-based Measures
+\end_layout
+
+\begin_layout Standard
+The fact that the introductory paragraph uses solely the field to gauge
+ performance of the game-play conveys the important message that the layout
+ of the field alone encapsulates a myriad of indicators for performance.
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ currently deploys three field-based metrics to measure the performance
+ of an agent that align with the intuitions delineated above: the height
+ 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+, the elevation 
+\begin_inset Formula $M_{E}$
+\end_inset
+
+ and the number of holes 
+\begin_inset Formula $M_{N}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection
@@ -303,7 +1609,7 @@ for the standard field.
 \end_layout
 
 \begin_layout Plain Layout
-Observe the following corner cases:
+One observe the following corner cases:
 \end_layout
 
 \begin_layout Itemize
@@ -460,16 +1766,12 @@ Elevation
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
 \begin_layout Example
 Elevation
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 The elevation is defined as the difference in height between two adjacent
  columns.
  Implicitly, given the standard field of 
@@ -512,7 +1814,7 @@ Shetris
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -524,7 +1826,7 @@ Extension to a field
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 The elevation of a field is naturally defined as the elevation of every
  column of the field:
 \begin_inset Formula 
@@ -542,7 +1844,7 @@ M_{E}\left(c_{9}\right)
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -554,7 +1856,7 @@ Demonstration
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -567,7 +1869,7 @@ Add illustration
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 
 \size scriptsize
 \begin_inset Formula 
@@ -591,13 +1893,8 @@ Add illustration
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
@@ -608,8 +1905,17 @@ Holes
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
+Probably the most dreaded element for the game-play of Tetris are 
+\begin_inset Quotes xld
+\end_inset
+
+holes
+\begin_inset Quotes xrd
+\end_inset
+
+ in the field.
+ This concept is formalized here:
+\end_layout
 
 \begin_layout Definition
 Holes of a column
@@ -646,7 +1952,7 @@ The Number-of-holes of a column
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -665,9 +1971,1003 @@ M_{N}\left(c\right)\in\texttt{range(20)}\triangleq\left[0;19\right]
 
 \end_layout
 
+\begin_layout Subsubsection
+Two levels of abstraction
+\end_layout
+
+\begin_layout Standard
+Summing up the three field-based measures enlisted above, one concludes
+ the following two different levels of details when measuring the field:
+ 
+\end_layout
+
+\begin_layout Description
+column-level the three measures are applied level of accuracy could be on
+ the column level, which produces more vectors, each of a narrower range
+\end_layout
+
+\begin_layout Description
+field-level the measures are applied to the entire field by summing over
+ results of every column, producing less vectors, each of a wider range
+\end_layout
+
+\begin_layout Standard
+The trade-off between number of vectors and range of vectors to track is
+ illustrated in the two tables below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="7">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+discrete-range
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gym-translation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Height 
+\begin_inset Formula $M_{H}$
 \end_inset
 
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;20\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\texttt{range(21)}^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elevation 
+\begin_inset Formula $M_{E}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;20\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\texttt{range(21)}^{9}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Holes 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;19\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\texttt{range(20)}^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+All
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym.MultiDiscrete([21...21 | 21...21 | 20...20])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+column-level measures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+As well as
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="7">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+discrete-range
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gym-translation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Height 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;200\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(201)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Elevation 
+\begin_inset Formula $M_{E}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;180\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(181)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Holes 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;190\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(191)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+All
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+MultiDiscrete([201, 181, 191])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+field-level measures
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Beyond the field
 \end_layout
 
 \begin_layout Subsubsection
@@ -675,10 +2975,6 @@ Line-Clears
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
 As the final objective, the line-clear is defined
 \end_layout
 
@@ -704,17 +3000,434 @@ Field
 \end_inset
 
  processes its freezing.
- The line-clears 
+ The number of line-clears after one move is always within the range of
+ 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $4$
+\end_inset
+
+, including both boundaries.
 \end_layout
 
-\end_deeper
+\begin_layout Enumerate
+Despite the fact that every line-clear apparently produces award, the number
+ of lines cleared at once leads to different calculations.
+ In particular, the 
+\begin_inset Quotes xld
+\end_inset
+
+per-line
+\begin_inset Quotes xrd
+\end_inset
+
+ reward increases with higher number of lines cleared.
+ This is explained in later sections on reward engineering.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add reference
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="7">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+discrete-range
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gym-translation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lines-cleared 
+\begin_inset Formula $M_{C}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;4\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(5)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The piece-id
+\end_layout
+
+\begin_layout Definition
+Piece-id 
+\begin_inset Formula $M_{\texttt{pid}}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+As the final measure, the piece-id is used.
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="7">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Observations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+discrete-range
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gym-translation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;6\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(7)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary of the environment
+\end_layout
+
+\begin_layout Standard
+At this point, the full environment within the framework of the interface
+ of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ is fully specified.
+ In the source code, this is implemented in the 
+\end_layout
+
 \begin_layout Section
-Training with 
+Solution with 
 \begin_inset Flex Code
 status open
 
@@ -727,20 +3440,116 @@ sb3
 
 \end_layout
 
+\begin_layout Subsection
+Four types of observations
+\end_layout
+
 \begin_layout Standard
-\begin_inset Note Greyedout
+With the various components of the observations as specified above, 
+\end_layout
+
+\begin_layout Definition
+The four modes of training
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+With the consideration of varying components of the observation, in particular:
+\end_layout
+
+\begin_layout Itemize
+each of the three components of the field (the height, the elevation and
+ the holes) could either be represented as vectors or added to form one
+ sum;
+\end_layout
+
+\begin_layout Itemize
+the 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-The evolution-strategy, as introduced by 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "best-ai"
-literal "false"
+pid
+\end_layout
 
 \end_inset
 
-, utilizes the above metrics:
+ could be included or discarded in the observation;
+\end_layout
+
+\begin_layout Itemize
+the number of line-clears is always included.
+\end_layout
+
+\begin_layout Standard
+Thus, the impact of the various formation of the observation must be investigate
+d, specifically, the variations exist in whether to use the compact, summed
+ observation of the field, as well as whether to use include the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+.
+ These two binary decisions result in a total of four possible configurations
+ of observation.
+ The internal representation during training is captured in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Encoding-of-Variations-of-training-modes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-Code
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Obs: field
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Obs: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
 \end_layout
 
 \end_inset
@@ -748,8 +3557,405 @@ literal "false"
 
 \end_layout
 
-\begin_layout Subsection
-Training with 
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+rel.
+ save-location
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Included
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+./shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Compact
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Omitted
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+./shetris01
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Included
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+./shetris02
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $03$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Full
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Omitted
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+./shetris03
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Encoding-of-Variations-of-training-modes"
+
+\end_inset
+
+Encoding of Variations of Training-Modes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In Shetris, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisInfo
+\end_layout
+
+\end_inset
+
+-class inherits the general information provider 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+InfoProvider
+\end_layout
+
+\end_inset
+
+ for any environment conforming to the interface of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ and provides flexible modifications specific to the parameters of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ environment.
+ In particular, the relative save-location is specified with:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/result/info.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class ShetrisInfo(InfoProvider):
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_rel_dirs() -> Tuple[str, str]:
+\end_layout
+
+\begin_layout Plain Layout
+
+        base = "./shetris<add_modifier>/"
+\end_layout
+
+\begin_layout Plain Layout
+
+        tensorboard = os.path.join(base, InfoProvider.tensorboard_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+        saveload = os.path.join(base, InfoProvider.saveload_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        return tensorboard, saveload
+\end_layout
+
+\begin_layout Plain Layout
+
+    ...
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Specifying-Save-Load-Location-for-shetrisenv"
+
+\end_inset
+
+Specifying Save-Load Location for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -761,12 +3967,26 @@ Training type
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Enumerate
+Add all observation types
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
 The first type of observation first requires the values of the field-metrics
  height, elevation and hole of every column; afterwards, the number of lines-cle
 ared as well as the piece-id.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="8" columns="7">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
@@ -1341,7 +4561,7 @@ All
 status open
 
 \begin_layout Plain Layout
-MultiDiscrete([21, 181, 191, 5, 7])
+MultiDiscrete([21, 21..., 21, 20, 20..., 20, 5, 7])
 \end_layout
 
 \end_inset
@@ -1394,641 +4614,6 @@ MultiDiscrete([21, 181, 191, 5, 7])
 
 
 \end_layout
-
-\begin_layout Subsubsection
-Type
-\begin_inset Formula $2$
-\end_inset
-
-: compact observation
-\begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="7">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Observations
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-numbers of
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-range
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Sum of Height 
-\begin_inset Formula $M_{H}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;200\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(201)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Sum of Elevation 
-\begin_inset Formula $M_{E}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;180\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(181)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Holes 
-\begin_inset Formula $M_{H}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;190\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(191)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Lines-cleared 
-\begin_inset Formula $M_{C}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;4\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(5)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(7)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Implementation of Evolution-Algorithm; DQN
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Collection of results; compose thesis
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
 
 \end_inset
 
@@ -2489,6 +5074,13 @@ reuse, use best prediction
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Implementation details
 \end_layout
@@ -2589,7 +5181,7 @@ discount-factor
 \begin_inset Formula $\gamma=0.99$
 \end_inset
 
-;
+, conforming to the recommendation as made by ;
 \end_layout
 
 \begin_layout Itemize
@@ -2617,7 +5209,51 @@ in total,
 \begin_inset Formula $10'000$
 \end_inset
 
- episodes are recorded in total.
+ episodes are recorded in total
+\end_layout
+
+\begin_layout Itemize
+the Adam's Optimizer is used
+\end_layout
+
+\begin_layout Itemize
+The MSE-loss instead of Huber's Loss is used, as recommended by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note: the discount-factor is implicitly taken to be the value as agreed
+ upon for the default value under general consensus 
+\begin_inset Formula $\gamma=0.99$
+\end_inset
+
+, instead of further tuning.
+ The justification of this is found later in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Cross-Ref to P5!
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Training Length
+\end_layout
+
+\begin_layout Standard
+As it turns out, 
 \end_layout
 
 \begin_layout Subsubsection
@@ -2873,12 +5509,167 @@ numpy.ndarray
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
-Custom 
+Training setups
+\end_layout
+
+\begin_layout Standard
+For the observation-factory of the reporter, any extra configurations through
+ keyword-arguments are allowed.
+ In particular, the return type could either be 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
+
+\end_inset
+
+ or pytorch's 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+torch.Tensor
+\end_layout
+
+\end_inset
+
+;
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/shetris/env/reporter/reporter.py
+\end_layout
+
+\begin_layout Plain Layout
+
+class Reporter:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, engine: Engine):
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.obs_factory = ObsStandard(
+\end_layout
+
+\begin_layout Plain Layout
+
+            self.engine,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_compact_field=<modify this>,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_pid=<modify this>,
+\end_layout
+
+\begin_layout Plain Layout
+
+            # set to False only for manual DQN-training
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_np=True,
+\end_layout
+
+\begin_layout Plain Layout
+
+        )
+\end_layout
+
+\begin_layout Plain Layout
+
+        ...
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
 Hard-coded Evolution logic
+\end_layout
+
+\begin_layout Standard
+To conclude this chapter on various agents, this section provides an alternative
+ solution.
+ Originally studied and published in
+\end_layout
+
+\begin_layout Enumerate
+The good: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Encoded in hard-coded style, this solution requires no training at all;
+\end_layout
+
+\begin_layout Enumerate
+extremely well performing, as used as reference in other work such as 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+find stanford-paper source
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The idea behind the genetic-solution 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+The evolution-strategy, as introduced by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-best-ai"
+literal "false"
+
+\end_inset
+
+, utilizes the above metrics:
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2892,344 +5683,88 @@ literal "false"
 
 \end_layout
 
-\begin_layout Subsubsection
-Multiple training
+\begin_layout Subsection
+Implementation details
 \end_layout
 
-\begin_layout Subsubsection
-Batch-1
+\begin_layout Enumerate
+For the observation-factory
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Greyedout
+\begin_deeper
+\begin_layout Enumerate
+the compact-field must be used
+\end_layout
+
+\begin_layout Enumerate
+the pid must not be included
+\end_layout
+
+\begin_layout Enumerate
+the return type must be 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-Done with:
+numpy.ndarray
 \end_layout
 
-\begin_layout Enumerate
-Engine:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Sequence
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-OBS:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-relative heights
-\end_layout
-
-\begin_layout Enumerate
-pid
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Reward:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-relatives
-\end_layout
-
-\begin_layout Enumerate
-absolutes
-\end_layout
-
-\end_deeper
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Batch2
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-Done with:
-\end_layout
-
-\begin_layout Enumerate
-Engine:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-seqence
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-obs:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-relative heights, pid
-\end_layout
-
-\begin_layout Enumerate
-height, elevation, holes
-\end_layout
-
-\end_deeper
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
+in particular, the observation-factory is thus limited to:
+\begin_inset listings
+inline false
 status open
 
 \begin_layout Plain Layout
-local2:
+
+        self.obs_factory = ObsStandard(
 \end_layout
-
-\begin_layout Enumerate
-naive negative weights:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-all 
-\begin_inset Formula $-1$
-\end_inset
-
- for height, elevation, hole
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $+1$
-\end_inset
-
- for line
-\end_layout
-
-\end_deeper
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Getting better
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
 
 \begin_layout Plain Layout
-Local3; Euler3; reproduction of HK-paper
+
+            self.engine,
 \end_layout
-
-\begin_layout Enumerate
-obs:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-height, elevation, holes: all unpacked (many vectors)
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $10$
-\end_inset
-
- vectors, each of 
-\begin_inset Formula $20$
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $9$
-\end_inset
-
- vectors, each of 
-\begin_inset Formula $20$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $10$
-\end_inset
-
- vectors, each of 
-\begin_inset Formula $20$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-pid
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $1$
-\end_inset
-
- vector, each of 
-\begin_inset Formula $7$
-\end_inset
-
- (or bag-size of choice)
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-line-clears
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $1$
-\end_inset
-
- vector, each of 
-\begin_inset Formula $5$
-\end_inset
-
- (
-\begin_inset Formula $0$
-\end_inset
-
- lines to 
-\begin_inset Formula $4$
-\end_inset
-
- lines cleared)
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Enumerate
-new cost function: extremely simplified
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-number of lines cleared
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Result:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-have some clearing: 
-\begin_inset Formula $10$
-\end_inset
-
- lines per game
-\end_layout
-
-\begin_layout Enumerate
-training process:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $350$
-\end_inset
-
- FPS
-\end_layout
-
-\begin_layout Enumerate
-very turbulent training: massive dipping!
-\end_layout
-
-\end_deeper
-\end_deeper
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
 
 \begin_layout Plain Layout
-Euler4: reproduction of uvipen
+
+            use_compact_field=True,
 \end_layout
 
-\begin_layout Enumerate
-Obs:
+\begin_layout Plain Layout
+
+            use_pid=False,
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-sum of height
+\begin_layout Plain Layout
+
+            # set to False only for manual DQN-training
 \end_layout
 
-\begin_layout Enumerate
-sum of elevation
+\begin_layout Plain Layout
+
+            use_np=False
 \end_layout
 
-\begin_layout Enumerate
-sum of holes
+\begin_layout Plain Layout
+
+        )
 \end_layout
 
-\begin_layout Enumerate
-pid
+\begin_layout Plain Layout
+
 \end_layout
 
-\begin_layout Enumerate
-lines cleared
+\end_inset
+
+
 \end_layout
 
 \end_deeper
-\begin_layout Enumerate
-reward
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $1+\left(wl^{2}\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $0$
-\end_inset
-
- if game-over9
-\end_layout
-
-\end_deeper
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Idea
 \end_layout
@@ -3417,68 +5952,6 @@ Baselines
 Intuitive baselines
 \end_layout
 
-\begin_layout Definition
-Random
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Pick all three components purely randomly.
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-Deep-fall 
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Referred to as 
-\begin_inset Quotes xld
-\end_inset
-
-Let it fall deep
-\begin_inset Quotes xrd
-\end_inset
-
- during consultation with the supervisor.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-\begin_inset Formula $r\coloneqq\arg\min$
-\end_inset
-
-: rotate to make the smallest height
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $x\coloneqq\arg\max y$
-\end_inset
-
-: pick the horizontal position that let's the piece drop down the most
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $y\coloneqq\max y$
-\end_inset
-
-: full-down.
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -3953,7 +6426,7 @@ literal "false"
 \begin_layout Enumerate
 save the policy and evaluate it individually from the model
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset CommandInset href
@@ -3974,7 +6447,7 @@ literal "false"
 \begin_layout Enumerate
 save the (huge) reply-buffer 
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset CommandInset href
@@ -3996,7 +6469,7 @@ literal "false"
 \begin_layout Enumerate
 tensorboard: more advanced model saving
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Flex URL

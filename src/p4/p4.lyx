@@ -113,82 +113,11 @@ todonotes
 \begin_body
 
 \begin_layout Section
-The Results
-\end_layout
-
-\begin_layout Subsection
 Analysis Framework
 \end_layout
 
-\begin_layout Standard
-Despite the vast capability of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisEnv
-\end_layout
-
-\end_inset
-
- for modifications, this thesis studies the behavior of acting agents under
- mostly standard-conforming conditions.
- In particular:
-\end_layout
-
-\begin_layout Itemize
-The field is always chosen to be of the standard-size, i.e., 
-\begin_inset Formula $20$
-\end_inset
-
- blocks in height and 
-\begin_inset Formula $10$
-\end_inset
-
- blocks in width
-\end_layout
-
-\begin_layout Itemize
-the piece-id generator
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The hard-coded nature of the solution based on evolution-algorithm leads
- to the fact that no training is required.
- On the other hand, it proves to serve as the measure of a decent agent,
- as later demonstrated.
- This section introduces the setup required for the solution with 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-sb3
-\end_layout
-
-\end_inset
-
- and manually encoded 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-dqn
-\end_layout
-
-\end_inset
-
- solution, which do require training.
-\end_layout
-
-\begin_layout Subsubsection
-Setup
+\begin_layout Subsection
+Re-producing the environment
 \end_layout
 
 \begin_layout Standard
@@ -202,8 +131,39 @@ Euler
 
 \end_inset
 
- scientific compute cluster with the common access-clearance of ETH members.
- Given the version requirement for 
+ scientific compute cluster with the common access-clearance of ETH-Zürich
+ members.
+ Essential setups required to reproduce the training environment are enumerated
+ as follows:
+\end_layout
+
+\begin_layout Solution
+Loading the Python interpreter
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Result ! Setup ! 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+python
+\end_layout
+
+\end_inset
+
+-interpreter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Given the version requirement for 
 \begin_inset Flex Code
 status open
 
@@ -225,9 +185,10 @@ status open
 
 , the newer generation of software-stack
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
+Description of the new software stack: 
 \begin_inset CommandInset href
 LatexCommand href
 target "https://scicomp.ethz.ch/wiki/New_SPACK_software_stack_on_Euler"
@@ -250,37 +211,37 @@ In the older software-stack,
 status open
 
 \begin_layout Plain Layout
-Python-2
-\end_layout
-
-\end_inset
-
- is linked to calling 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
 $ python
 \end_layout
 
 \end_inset
 
- on a (log-in) node, and 
+ is linked to 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-$ python3
+python2.7
 \end_layout
 
 \end_inset
 
- executes version 
+, whereas 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-3.6
+python3
+\end_layout
+
+\end_inset
+
+ executes 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+python3.6
 \end_layout
 
 \end_inset
@@ -291,8 +252,20 @@ status open
 \end_inset
 
 , followed by manually calling the module-loading commands.
- The excerpt of shell-commands accomplish the module-setup such that the
- version requirement of 
+\end_layout
+
+\begin_layout Standard
+The excerpt of shell-commands in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Loading-essential-modules-on-euler"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ accomplishes the module-setup such that the version requirement of 
 \begin_inset Flex Code
 status open
 
@@ -304,6 +277,7 @@ Python
 
  is fulfilled.
 \begin_inset listings
+lstparams "language=bash"
 inline false
 status open
 
@@ -336,10 +310,51 @@ $ python --version
 Python 3.10.4
 \end_layout
 
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Loading-essential-modules-on-euler"
+
 \end_inset
 
+Loading essential modules on 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Euler
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 With the required python interpreter, the extra packages as listed in the
- introductory chapter of the thesis are installed.
+ introductory chapter of the thesis can now be installed.
  With 
 \begin_inset Flex Code
 status open
@@ -352,7 +367,46 @@ pipenv
 
 , the process of generating a testing virtual-environment along with dependency
  installation is fully automated:
+\end_layout
+
+\begin_layout Solution
+Virtual-Environment setup with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pipenv
+\end_layout
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Result ! Setup ! 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pipenv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
 \begin_inset listings
+lstparams "language=bash"
 inline false
 status open
 
@@ -368,10 +422,864 @@ $ pipenv install
 
 \end_inset
 
-With the virtual-environment 
+With the virtual-environment and necessary packages available, the setup
+ is now complete.
+ The virtual-environment is accessible either by acquiring a sub-shell or
+ running the desired command in an one-off fashion.
+ 
+\begin_inset listings
+lstparams "language=bash"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# invoke a sub-shell
+\end_layout
+
+\begin_layout Plain Layout
+
+$ pipenv shell
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# execute a specific command (in the sub-shell)
+\end_layout
+
+\begin_layout Plain Layout
+
+$ pipenv run <command_to_run>
+\end_layout
+
+\end_inset
+
+User
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Note
+Direct execution
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Note that some modules contain the following block of code at the end of
+ the file:
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+if __name__ == "__main__":
+\end_layout
+
+\begin_layout Plain Layout
+
+    ...
+\end_layout
+
+\end_inset
+
+indicating the possibility of script-style execution.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
+Analysis Metrics
+\end_layout
+
+\begin_layout Subsubsection
+Training setup
+\end_layout
+
+\begin_layout Standard
+Despite the vast capability of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ for modifications, this thesis studies the behavior of acting agents under
+ mostly standard-conforming conditions.
+ In particular, the following parameters are deployed for training:
+\end_layout
+
+\begin_layout Itemize
+The field is always chosen to be of the standard-size, i.e., 
+\begin_inset Formula $20$
+\end_inset
+
+ blocks in height and 
+\begin_inset Formula $10$
+\end_inset
+
+ blocks in width
+\end_layout
+
+\begin_layout Itemize
+the piece-id generator is set to the standard-compliant, shuffled 
+\begin_inset Formula $7$
+\end_inset
+
+-bag algorithm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Testing setup
+\end_layout
+
+\begin_layout Standard
+The hard-coded nature of the solution based on evolution-algorithm leads
+ to the fact that no training is required, and the requirements in the previous
+ section thus do not apply.
+ For the testing, however, all thee solutions are treated equally under
+ the following setup:
+\end_layout
+
+\begin_layout Enumerate
+due to the deep integration of the field shape within the environment itself
+ at creation time as seen in previous chapters 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+C_REF
+\end_layout
+
+\end_inset
+
+, the field still assumes the standard size;
+\end_layout
+
+\begin_layout Enumerate
+the piece-id generator is now varied to introduce various training scenarios
+ to the testing facility
+\end_layout
+
+\begin_layout Standard
+Note that the flexibility of the generator is really strident at this point:
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+this would be much trickier to realize in tangled implementations.
+ FINISH THIS!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Measures and Thresholds
+\end_layout
+
+\begin_layout Standard
+For the Tetris-game, one observes the length of an episode as the intuitive
+ measure for evaluating the performance of an agent, i.e., the number of calls
+ to the stepping function 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym.Env.step(...)
+\end_layout
+
+\end_inset
+
+ before the episode is terminated with the 
+\begin_inset Quotes xld
+\end_inset
+
+game-over
+\begin_inset Quotes xrd
+\end_inset
+
+ signal, translating to the number of new pieces 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ returned by the generator the per episode.
+ Obviously, the positively correlated number of lines cleared per episode
+ 
+\begin_inset Formula $n_{L}$
+\end_inset
+
+ further constitutes another metric.
+\end_layout
+
+\begin_layout Standard
+These two measures of number of pieces 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ and that of lines cleared per episode 
+\begin_inset Formula $n_{L}$
+\end_inset
+
+ are also used in implementations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-best-ai,tetris-nuno,uvipen"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Of more practical utility are the following two critical thresholds for
+ the metric number of pieces 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ based on heuristic reasoning:
+\end_layout
+
+\begin_layout Conjecture*
+Thresholds for 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ for the standard field
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Given the standard field-size of 
+\begin_inset Formula $20\times10$
+\end_inset
+
+, the following two rules-of-thumb provide rapid insight into the performance
+ of an agent at the Tetris-game:
+\end_layout
+
+\begin_layout Description
+Random-Performance based on empirical evidence, the purely random-acting
+ agent achieves the performance of number of pieces per episode 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ of approximately 
+\begin_inset Formula $20$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Description
+One-Board-Threshold fundamental stacking behavior is accquired when the
+ 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ value approaches 
+\begin_inset Formula $50$
+\end_inset
+
+, the theoretical number of 
+\begin_inset Formula $4$
+\end_inset
+
+-block-pieces
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Otherwise known as 
+\begin_inset Quotes xld
+\end_inset
+
+Tetriminos
+\begin_inset Quotes xrd
+\end_inset
+
+ or 
+\begin_inset Quotes xld
+\end_inset
+
+Tetrominos
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ required to fill the board of 
+\begin_inset Formula $20\times10\equiv200$
+\end_inset
+
+ blocks 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+once
+\end_layout
+
+\end_inset
+
+ in its entirety;
+\end_layout
+
+\begin_layout Description
+Two-Board-Performance with the 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ value of 
+\begin_inset Formula $100$
+\end_inset
+
+, the board would theoretically have been filled to its capacity 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+twice
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The four regions induced by the segregation through the three thresholds
+ lead to the following guidelines utilized in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ to evaluate the overall performance of an acting agent:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="6">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{P}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training Impact
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+General Assessment
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomspace="70baselineskip%">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $<20$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Negative
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\begin{alignedat}{1}\\
+\text{Insufficient}\\
+\\
+\end{alignedat}
+\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomspace="20baselineskip%">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[20;50\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[\begin{alignedat}{1}\\
+\text{Positive}\\
+\\
+\end{alignedat}
+\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row bottomspace="100baselineskip%">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[50;100\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $>100$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Successful 
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Guidelines of Agent-Assessment
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Solution by 
 \begin_inset Flex Code
 status open
@@ -385,105 +1293,1325 @@ sb3
 
 \end_layout
 
-\begin_layout Subsubsection
-Necessary setups
+\begin_layout Subsection
+General setup
+\end_layout
+
+\begin_layout Standard
+General setups for training models with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ are described as follows:
+\end_layout
+
+\begin_layout Solution
+Training framework
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+three algorithms implemented by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ library are used: A2C, PPO and DQN; each of which are trained for all four
+ variations of observations;
 \end_layout
 
 \begin_layout Enumerate
-For the observation-factory of the reporter, any extra configurations through
- keyword-arguments are allowed.
- In particular, the return type could either be 
+unless otherwise stated, 
+\begin_inset Formula $10`000`000$
+\end_inset
+
+ (
+\begin_inset Formula $10$
+\end_inset
+
+ million) steps are used for every observation-variations and every algorithm;
+\end_layout
+
+\begin_layout Enumerate
+To monitor the training progress, periodic saving is performed for every
+ 
+\begin_inset Formula $10'000$
+\end_inset
+
+ steps.
+ In particular, in addition to saving the parameters of the model at the
+ particular time, extra logging is collected with 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-numpy.ndarray
+sb3
 \end_layout
 
 \end_inset
 
- or pytorch's 
+'s internal logging mechanism to 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-torch.Tensor
+tensorboard
 \end_layout
 
 \end_inset
 
-;
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In particular, the information provider for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ environment, as first described in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Specifying-Save-Load-Location-for-shetrisenv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, allows quick selection of the algorithm of choice:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
 inline false
 status open
 
 \begin_layout Plain Layout
 
-# train/src/rl/shetris/env/reporter/reporter.py
+# train/src/rl/result/info.py
 \end_layout
 
 \begin_layout Plain Layout
 
-class Reporter:
 \end_layout
 
 \begin_layout Plain Layout
 
-    def __init__(self, engine: Engine):
+class ShetrisInfo(InfoProvider):
 \end_layout
 
 \begin_layout Plain Layout
 
-        ...
+    @staticmethod
 \end_layout
 
 \begin_layout Plain Layout
 
-        self.obs_factory = ObsStandard(
+    def get_algpol() -> Tuple[Type[BaseAlgorithm], Type[BasePolicy]]:
 \end_layout
 
 \begin_layout Plain Layout
 
-            self.engine,
+        return AlgPolFactory.get_a2c()
 \end_layout
 
 \begin_layout Plain Layout
 
-            use_compact_field=<modify this>,
+        # return AlgPolFactory.get_ppo()
 \end_layout
 
 \begin_layout Plain Layout
 
-            use_pid=<modify this>,
-\end_layout
-
-\begin_layout Plain Layout
-
-            # set to False only for manual DQN-training
-\end_layout
-
-\begin_layout Plain Layout
-
-            use_np=True,
-\end_layout
-
-\begin_layout Plain Layout
-
-        )
-\end_layout
-
-\begin_layout Plain Layout
-
-        ...	
+        # return AlgPolFactory.get_dqn()
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+PPO
+\end_layout
+
+\begin_layout Subsubsection
+Result statement
+\end_layout
+
+\begin_layout Standard
+Two separate runs with PPO are conducted, with the first 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="5">
+<lyxtabular version="3" rows="5" columns="7">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
 <column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PPO-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training-time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PPO-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training Time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A2C
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(201)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[20;30\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[0;180\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(181)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $40$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\texttt{\textasciitilde}50$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+range(191)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[20;30\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Analysis and Interpretation
+\end_layout
+
+\begin_layout Standard
+The first run for Variation-1 and Variation-2, the first run was prematurely
+ 
+\end_layout
+
+\begin_layout Subsection
+A2C
+\end_layout
+
+\begin_layout Subsubsection
+Result statement
+\end_layout
+
+\begin_layout Standard
+As stated in the opening section, 
+\begin_inset Formula $10$
+\end_inset
+
+ million steps are used for training.
+\end_layout
+
+\begin_layout Subsubsection
+Analysis and Interpretation
+\end_layout
+
+\begin_layout Standard
+Solution by the A2C algorithm displays stable, but slow progress.
+ In general, the trained agent displays unsatisfactory results, with 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ never exceeding the 
+\begin_inset Formula $50$
+\end_inset
+
+ range.
+\end_layout
+
+\begin_layout Subsection
+DQN
+\end_layout
+
+\begin_layout Subsubsection
+Result statement
+\end_layout
+
+\begin_layout Subsubsection
+Analysis and Interpretation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+One observes turbulent training process 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Summary
+\end_layout
+
+\begin_layout Standard
+One thus summarizes as follows:
+\end_layout
+
+\begin_layout Enumerate
+For save Variation: Best Policy in general: looking horizontally
+\end_layout
+
+\begin_layout Enumerate
+For every Policy: Best Performance at which Variation? [looking vertically]
+\end_layout
+
+\begin_layout Standard
+As the final summary to conclude the training process with sb3, one observes
+ the following tables:
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="9">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PPO-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PPO-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+DQN
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+A2C
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $28$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $01$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $38$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $20$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $35$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $02$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $40$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $40$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-
+\begin_inset Formula $03$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $40$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+All
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="4">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -493,16 +2621,7 @@ class Reporter:
 \begin_inset Text
 
 \begin_layout Plain Layout
-Exp-1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Algorithm
+Variation-Code
 \end_layout
 
 \end_inset
@@ -511,7 +2630,7 @@ Algorithm
 \begin_inset Text
 
 \begin_layout Plain Layout
-Observations (always in numpy)
+Algorithm
 \end_layout
 
 \end_inset
@@ -540,19 +2659,7 @@ location
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $0$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-PPO
+default
 \end_layout
 
 \end_inset
@@ -561,7 +2668,7 @@ PPO
 \begin_inset Text
 
 \begin_layout Plain Layout
-Compact; with pid (True, True)
+Compact-Field; with pid (True, True)
 \end_layout
 
 \end_inset
@@ -582,7 +2689,16 @@ M + 5M
 \begin_inset Text
 
 \begin_layout Plain Layout
-shetris
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+./shetris
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -593,19 +2709,7 @@ shetris
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $9$
+\begin_inset Formula $01$
 \end_inset
 
 
@@ -646,19 +2750,7 @@ shetris01
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left[0;19\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10$
+\begin_inset Formula $02$
 \end_inset
 
 
@@ -699,18 +2791,9 @@ shetris02
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\left[0;4\right]$
+\begin_inset Formula $03$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -729,7 +2812,7 @@ Full; without pid (False, False)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5M
 \end_layout
 
 \end_inset
@@ -749,18 +2832,6 @@ shetris03
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
 
 \end_layout
 
@@ -813,15 +2884,6 @@ pid
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -851,15 +2913,6 @@ Implementation of Evolution-Algorithm; DQN
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
@@ -904,105 +2957,11 @@ Collection of results; compose thesis
 
 \end_layout
 
-\begin_layout Enumerate
-For parallel training, must rename the output directory, otherwise, 
-\begin_inset Flex Code
-status open
-
 \begin_layout Plain Layout
-sb3
-\end_layout
-
-\end_inset
-
- with output into the same directory.
- This is achieved by modifying
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-# train/src/rl/result/info.py
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-class ShetrisInfo(InfoProvider):
-\end_layout
-
-\begin_layout Plain Layout
-
-    @staticmethod
-\end_layout
-
-\begin_layout Plain Layout
-
-    def get_algpol() -> Tuple[Type[BaseAlgorithm], Type[BasePolicy]]:
-\end_layout
-
-\begin_layout Plain Layout
-
-        return AlgPolFactory.get_ppo()
-\end_layout
-
-\begin_layout Plain Layout
-
-        # return AlgPolFactory.get_dqn()
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-    @staticmethod
-\end_layout
-
-\begin_layout Plain Layout
-
-    def get_rel_dirs() -> Tuple[str, str]:
-\end_layout
-
-\begin_layout Plain Layout
-
-        base = "./shetris<add_modifier>/"
-\end_layout
-
-\begin_layout Plain Layout
-
-        tensorboard = os.path.join(base, InfoProvider.tensorboard_subdir)
-\end_layout
-
-\begin_layout Plain Layout
-
-        saveload = os.path.join(base, InfoProvider.saveload_subdir)
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-        return tensorboard, saveload
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Four trainings were performed
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="8" columns="5">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
@@ -1432,529 +3391,13 @@ Collection of results; compose thesis
 
 \end_layout
 
-\begin_layout Subsection
-Solution by Evolution Algorithm
-\end_layout
-
-\begin_layout Enumerate
-For the observation-factory
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-the compact-field must be used
-\end_layout
-
-\begin_layout Enumerate
-the pid must not be included
-\end_layout
-
-\begin_layout Enumerate
-the return type must be 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-numpy.ndarray
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
-\begin_layout Standard
-in particular, the observation-factory is thus limited to:
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-        self.obs_factory = ObsStandard(
-\end_layout
-
-\begin_layout Plain Layout
-
-            self.engine,
-\end_layout
-
-\begin_layout Plain Layout
-
-            use_compact_field=True,
-\end_layout
-
-\begin_layout Plain Layout
-
-            use_pid=False,
-\end_layout
-
-\begin_layout Plain Layout
-
-            # set to False only for manual DQN-training
-\end_layout
-
-\begin_layout Plain Layout
-
-            use_np=False
-\end_layout
-
-\begin_layout Plain Layout
-
-        )
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-The Evolution-Algorithm
-\end_layout
-
-\begin_layout Standard
-The Evolution-Algorithm performed extremely well.
- Testing on the standard shuffled 
-\begin_inset Formula $7$
-\end_inset
-
--bag generator, the agent performs over 
-\begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="5">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Generator
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-#pieces
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Number of Lines Cleared
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Sequencer(7)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $>1'000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Shuffler(7)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $>10'000$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $9$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-DQN
+\begin_layout Section
+Solution by DQN
 \end_layout
 
 \begin_layout Enumerate
@@ -2470,36 +3913,92 @@ result/shetris<CHANGE_THIS>/
 
 \end_layout
 
-\begin_layout Section
-The whole pipeline
-\end_layout
-
-\begin_layout Subsection
-Key analysis metrics
-\end_layout
-
 \begin_layout Standard
-When viewing the results, several key analysis-metrics are required to obtain
- a general overview.
- To begin with, the episode-length already provides powerful indication
- of the performance:
-\begin_inset Formula 
-\[
-\text{Length}_{\text{Episode}}\equiv\text{\#pieces}
-\]
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Solution by Evolution Algorithm
+\end_layout
+
+\begin_layout Enumerate
+For the observation-factory
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+the compact-field must be used
+\end_layout
+
+\begin_layout Enumerate
+the pid must not be included
+\end_layout
+
+\begin_layout Enumerate
+the return type must be 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy.ndarray
+\end_layout
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
-Intuitive metrics
+\begin_layout Standard
+in particular, the observation-factory is thus limited to:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+        self.obs_factory = ObsStandard(
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-When playing purely randomly, one observes the average length of episode
+\begin_layout Plain Layout
+
+            self.engine,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_compact_field=True,
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_pid=False,
+\end_layout
+
+\begin_layout Plain Layout
+
+            # set to False only for manual DQN-training
+\end_layout
+
+\begin_layout Plain Layout
+
+            use_np=False
+\end_layout
+
+\begin_layout Plain Layout
+
+        )
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -2511,60 +4010,143 @@ When playing purely randomly, one observes the average length of episode
 \end_layout
 
 \begin_layout Subsection
-General framework
+The Evolution-Algorithm
 \end_layout
 
 \begin_layout Standard
-The following framework is established for the general training and testing
-\end_layout
-
-\begin_layout Enumerate
-The standard field of 
-\begin_inset Formula $20\times10$
-\end_inset
-
- is used
-\end_layout
-
-\begin_layout Enumerate
-During training, the standard, shuffled 
+The Evolution-Algorithm performed extremely well.
+ Testing on the standard shuffled 
 \begin_inset Formula $7$
 \end_inset
 
--bag generator is used; multiple flavors of generators are used for testing
+-bag generator, the agent performs over 
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="5">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Generator
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
+#pieces
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Section
-Results
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of Lines Cleared
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Greyedout
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-The key result is thus:
+Sequencer(7)
 \end_layout
 
-\begin_layout Enumerate
-The Evolution-based solution, as also noted in 
-\begin_inset Note Note
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $>1'000$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-find stanford-paper source
-\end_layout
-
-\end_inset
-
-, 
+Shuffler(7)
 \end_layout
 
 \end_inset
@@ -2572,30 +4154,288 @@ find stanford-paper source
 
 \end_layout
 
-\begin_layout Definition
-Evaluating the result
-\end_layout
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
 
-\begin_deeper
-\begin_layout Enumerate
-We save the model 
-\begin_inset Formula $\mathcal{M}$
+\begin_layout Plain Layout
+\begin_inset Formula $>10'000$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Enumerate
-Call the model on a new game 
-\begin_inset Formula $\mathcal{M}\left(g\right)$
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
 \end_inset
 
 
 \end_layout
 
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
 \end_inset
 
 
