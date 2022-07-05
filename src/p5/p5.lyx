@@ -828,6 +828,10 @@ Add the MOVE-phase
 explore different rules of Tetris: implement more variations for engines
 \end_layout
 
+\begin_layout Enumerate
+Add previewing
+\end_layout
+
 \begin_layout Subsubsection
 Other improvements
 \end_layout

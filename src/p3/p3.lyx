@@ -1398,9 +1398,7 @@ Microscopically, the now fully augmented illustration below captures the
 \xymatrix{ &  &  & {f\left(\cdots\right)}\ar[d]_{{\text{2. evolve}}}\\
 *++[o][F-]{y_{\star}}\ar@{-->}[dd]_{{\text{0.a. Observe}}}\ar[rrrr] &  &  &  & *++[o][F-]{y_{\star+1}}\ar@/^{2pc}/[ddl]^{{\text{3. reward}}} & \qquad\text{[System Internals]}\\
 \\
-*+[F-]{x_{\star}}\ar[rr]_{{\text{0.b. decide}}} &  & *+[F-]{a_{\star}}\ar[uu]_{{\text{1. apply}}} & *+[F-]{r_{\star}} &  & \qquad\text{[Agent Perception]}\\
-\\
-\\
+*+[F-]{x_{\star}}\ar[rr]_{{\text{0.b. decide}}} &  & *+[F-]{a_{\star}}\ar[uu]_{{\text{1. apply}}} & *+[F-]{r_{\star}} &  & \qquad\text{[Agent Perception]}
 }
 \]
 
@@ -1526,21 +1524,22 @@ ShetrisEnv
 
 \end_inset
 
- currently deploys three field-based metrics to measure the performance
+ currently deploys three field-based observations to measure the performance
  of an agent that align with the intuitions delineated above: the height
  
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x_{H}$
 \end_inset
 
 , the elevation 
-\begin_inset Formula $M_{E}$
+\begin_inset Formula $x_{E}$
 \end_inset
 
  and the number of holes 
-\begin_inset Formula $M_{N}$
+\begin_inset Formula $x_{N}$
 \end_inset
 
 .
+ The following sections introduce them separately:
 \end_layout
 
 \begin_layout Subsubsection
@@ -1552,16 +1551,16 @@ Height
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
+To begin the investigation of the field, the height-based observation 
+\begin_inset Formula $x_{H}$
+\end_inset
 
-\begin_layout Plain Layout
-Thus arises the question of gauging the performance of a specific move.
+ is introduced:
 \end_layout
 
 \begin_layout Definition
 Height 
-\begin_inset Formula $M_{H}\left(c\right)$
+\begin_inset Formula $x_{H}\left(c\right)$
 \end_inset
 
  of a column 
@@ -1572,9 +1571,9 @@ Height
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 The height 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x_{H}$
 \end_inset
 
  is intuitively defined for one single column 
@@ -1584,15 +1583,15 @@ The height
  as the maximal vertical coordinate of an occupied box.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Thus, the range of 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x_{H}$
 \end_inset
 
  is:
 \begin_inset Formula 
 \[
-M_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
+x_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
 \]
 
 \end_inset
@@ -1600,7 +1599,7 @@ M_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
 translating to 
 \begin_inset Formula 
 \[
-M_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
+x_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
 \]
 
 \end_inset
@@ -1608,7 +1607,7 @@ M_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
 for the standard field.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 One observe the following corner cases:
 \end_layout
 
@@ -1627,32 +1626,51 @@ One observe the following corner cases:
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Plain Layout
-Generalization to the whole field is readily available:
+\begin_layout Standard
+The height of the column could be readily generalized to extract the observation
+ from the field-state 
+\begin_inset Formula $y^{F}$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Definition
-Height 
-\begin_inset Formula $M_{H}\left(f\right)$
+Accessing Height-Observation 
+\begin_inset Formula $x^{H}$
 \end_inset
 
- of a field 
-\begin_inset Formula $f$
+ of the field-state 
+\begin_inset Formula $y^{F}$
 \end_inset
 
 
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
-In the raw unprocessed fashion, the height of a field is a vector of length:
+\begin_layout Itemize
+in the raw unprocessed fashion, the height of a field is a vectorized compositio
+n of the height of every column:
+\begin_inset Formula 
+\[
+M_{H}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{H}\left(c_{0}\right)\\
+M_{H}\left(c_{1}\right)\\
+\vdots\\
+\vdots
+\end{alignedat}
+\right]\in\left[\texttt{range}\left(21\right)\right]^{\text{n-columns}}
+\]
+
+\end_inset
+
+translating to:
 \begin_inset Formula 
 \[
 M_{H}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{H}\left(c_{0}\right)\\
@@ -1665,11 +1683,46 @@ M_{H}\left(c_{9}\right)
 
 \end_inset
 
+for the standard field of 
+\begin_inset Formula $10$
+\end_inset
+
+ columns.
+\end_layout
+
+\begin_layout Itemize
+On the other hand, the vectorized measure could be further compressed into
+ a scalar-value via summation.
+ For the standard-field, one observes the following 
+\begin_inset Quotes xld
+\end_inset
+
+compact
+\begin_inset Quotes xrd
+\end_inset
+
+ field-height:
+\begin_inset Formula 
+\[
+M_{H}^{C}\left(f\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}M_{H}\left(c_{i}\right)}\in\left[\texttt{range}\left(21\right)\right]^{10}
+\]
+
+\end_inset
+
+Note the range of this compact variant of the field-height must be calculated
+ separately:
+\begin_inset Formula 
+\[
+M_{H}\left(f\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}M_{H}\left(c_{i}\right)}\in\left[\texttt{range}\left(21\right)\right]^{10}
+\]
+
+\end_inset
+
 
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
@@ -1685,7 +1738,7 @@ Note on desirable
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 As the criteria for deciding if an episode is over correlates directly to
  the 
 \begin_inset Quotes xld
@@ -1705,12 +1758,16 @@ le.
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
 
 \begin_layout Example
 Several examples of 
@@ -1766,8 +1823,12 @@ Elevation
 
 \end_layout
 
-\begin_layout Example
-Elevation
+\begin_layout Definition
+Elevation of a column 
+\begin_inset Formula $c$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -1819,6 +1880,14 @@ Shetris
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Similar to the height-measure 
+\begin_inset Formula $M_{H}$
+\end_inset
+
+, the elevation-measure could be extended 
 \end_layout
 
 \begin_layout Definition
@@ -1993,7 +2062,15 @@ field-level the measures are applied to the entire field by summing over
 
 \begin_layout Standard
 The trade-off between number of vectors and range of vectors to track is
- illustrated in the two tables below.
+ illustrated as follows: the column-level, 
+\begin_inset Quotes xld
+\end_inset
+
+full
+\begin_inset Quotes xrd
+\end_inset
+
+ variant is depicted in Table 
 \end_layout
 
 \begin_layout Standard
@@ -2459,7 +2536,14 @@ gym.MultiDiscrete([21...21 | 21...21 | 20...20])
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-column-level measures
+\begin_inset Quotes xld
+\end_inset
+
+full
+\begin_inset Quotes xrd
+\end_inset
+
+, column-level measures
 \end_layout
 
 \end_inset
@@ -3216,9 +3300,13 @@ range(5)
 The piece-id
 \end_layout
 
+\begin_layout Standard
+Finally, the piece-id also constitutes a viable candidate for observation:
+\end_layout
+
 \begin_layout Definition
 Piece-id 
-\begin_inset Formula $M_{\texttt{pid}}$
+\begin_inset Formula $x_{\texttt{pid}}$
 \end_inset
 
 
@@ -3226,7 +3314,6 @@ Piece-id
 
 \begin_deeper
 \begin_layout Standard
-As the final measure, the piece-id is used.
 \begin_inset Tabular
 <lyxtabular version="3" rows="2" columns="7">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
@@ -3406,46 +3493,30 @@ range(7)
 
 \end_layout
 
+\begin_layout Standard
+This intuitive component seems to nevertheless induce disagreement on its
+ relevance as observation.
+ In particular, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "uvipen"
+literal "false"
+
+\end_inset
+
+ excludes 
+\begin_inset Formula $x^{\texttt{pid}}$
+\end_inset
+
+ in the observation completely.
+\end_layout
+
 \begin_layout Subsection
 Summary of the environment
 \end_layout
 
-\begin_layout Standard
-At this point, the full environment within the framework of the interface
- of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-gym
-\end_layout
-
-\end_inset
-
- is fully specified.
- In the source code, this is implemented in the 
-\end_layout
-
-\begin_layout Section
-Solution with 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-sb3
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 Four types of observations
-\end_layout
-
-\begin_layout Standard
-With the various components of the observations as specified above, 
 \end_layout
 
 \begin_layout Definition
@@ -3785,159 +3856,6 @@ name "tab:Encoding-of-Variations-of-training-modes"
 \end_inset
 
 Encoding of Variations of Training-Modes
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Note
-Implementation in 
-\begin_inset Flex Noun
-status open
-
-\begin_layout Plain Layout
-Shetris
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-In Shetris, the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisInfo
-\end_layout
-
-\end_inset
-
--class inherits the general information provider 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-InfoProvider
-\end_layout
-
-\end_inset
-
- for any environment conforming to the interface of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-gym
-\end_layout
-
-\end_inset
-
- and provides flexible modifications specific to the parameters of the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisEnv
-\end_layout
-
-\end_inset
-
- environment.
- In particular, the relative save-location is specified with:
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-# train/src/rl/result/info.py
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-class ShetrisInfo(InfoProvider):
-\end_layout
-
-\begin_layout Plain Layout
-
-    @staticmethod
-\end_layout
-
-\begin_layout Plain Layout
-
-    def get_rel_dirs() -> Tuple[str, str]:
-\end_layout
-
-\begin_layout Plain Layout
-
-        base = "./shetris<add_modifier>/"
-\end_layout
-
-\begin_layout Plain Layout
-
-        tensorboard = os.path.join(base, InfoProvider.tensorboard_subdir)
-\end_layout
-
-\begin_layout Plain Layout
-
-        saveload = os.path.join(base, InfoProvider.saveload_subdir)
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-        return tensorboard, saveload
-\end_layout
-
-\begin_layout Plain Layout
-
-    ...
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "lis:Specifying-Save-Load-Location-for-shetrisenv"
-
-\end_inset
-
-Specifying Save-Load Location for 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisEnv
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -4620,6 +4538,392 @@ MultiDiscrete([21, 21..., 21, 20, 20..., 20, 5, 7])
 
 \end_layout
 
+\begin_layout Subsubsection
+Final Remark
+\end_layout
+
+\begin_layout Standard
+At this point, the full environment of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ conforming to the framework of the interface of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ is fully specified.
+ This environment class, internally named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+, is implemented in the module 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+src/rl/shetris/env/shenv.py
+\end_layout
+
+\end_inset
+
+ of the source-code repository.
+\end_layout
+
+\begin_layout Section
+Solution with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Algorithms
+\end_layout
+
+\begin_layout Standard
+Due to the specific environment properties of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+, not all algorithms of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+-library are applicable for training.
+ In particular, as both the action and the observation-space are of the
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+MultiDiscrete
+\end_layout
+
+\end_inset
+
+ type of gym
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+C_REF
+\end_layout
+
+\end_inset
+
+, the following two algorithms are viable:
+\end_layout
+
+\begin_layout Itemize
+the A2C 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "A2C"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the improved PPO 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PPO"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition, for the sake comparative completeness as shown in later sections,
+ extra adaptations are made to allow usage of the DQN algorithm 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original,dqn-nature"
+literal "false"
+
+\end_inset
+
+of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+General setups
+\end_layout
+
+\begin_layout Note
+Implementation in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+In Shetris, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisInfo
+\end_layout
+
+\end_inset
+
+-class inherits the general information provider 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+InfoProvider
+\end_layout
+
+\end_inset
+
+ for any environment conforming to the interface of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ and provides flexible modifications specific to the parameters of the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ environment.
+ In particular, the relative save-location is specified with:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/result/info.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class ShetrisInfo(InfoProvider):
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_rel_dirs() -> Tuple[str, str]:
+\end_layout
+
+\begin_layout Plain Layout
+
+        base = "./shetris<add_modifier>/"
+\end_layout
+
+\begin_layout Plain Layout
+
+        tensorboard = os.path.join(base, InfoProvider.tensorboard_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+        saveload = os.path.join(base, InfoProvider.saveload_subdir)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+        return tensorboard, saveload
+\end_layout
+
+\begin_layout Plain Layout
+
+    ...
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "lis:Specifying-Save-Load-Location-for-shetrisenv"
+
+\end_inset
+
+Specifying Save-Load Location for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+In particular, the information provider for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ environment, as first described in Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:Specifying-Save-Load-Location-for-shetrisenv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, allows quick selection of the algorithm of choice:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# train/src/rl/result/info.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class ShetrisInfo(InfoProvider):
+\end_layout
+
+\begin_layout Plain Layout
+
+    @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_algpol() -> Tuple[Type[BaseAlgorithm], Type[BasePolicy]]:
+\end_layout
+
+\begin_layout Plain Layout
+
+        return AlgPolFactory.get_a2c()
+\end_layout
+
+\begin_layout Plain Layout
+
+        # return AlgPolFactory.get_ppo()
+\end_layout
+
+\begin_layout Plain Layout
+
+        # return AlgPolFactory.get_dqn()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Deep Q-Network
 \end_layout
@@ -4676,7 +4980,7 @@ Based on the introduction to the evolution-model in section
 status open
 
 \begin_layout Plain Layout
-add cross-Ref
+C_REF
 \end_layout
 
 \end_inset
@@ -4815,11 +5119,23 @@ The optimal
 \begin_inset Formula $Q$
 \end_inset
 
--Value is achieved with the optimal, maximizing policy 
+-Value 
+\begin_inset Formula $Q^{*}$
+\end_inset
+
+, defined as:
+\begin_inset Formula 
+\[
+Q^{*}\coloneqq\underset{\pi}{\max}\left\{ Q_{t_{k}:t_{T}}\right\} 
+\]
+
+\end_inset
+
+is achieved with the optimal, maximizing policy 
 \begin_inset Formula $\pi^{*}$
 \end_inset
 
- such that:
+:
 \begin_inset Formula 
 \[
 \pi^{*}\coloneqq\underset{\pi}{\arg\max}\left\{ Q_{t_{k}:t_{T}}\right\} 
@@ -4879,14 +5195,6 @@ ed.
 
 \end_layout
 
-\begin_layout Definition
-Here, the optimization-target at any time-step 
-\begin_inset Formula $t_{k}$
-\end_inset
-
- is
-\end_layout
-
 \begin_layout Subsubsection
 Deep Q-Learning
 \end_layout
@@ -4911,15 +5219,20 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Deep Q-Learning approximates the (potentially) complex mapping of the optimal
- action-value function 
+ Specifically, the (potentially) complex mapping of the optimal action-value
+ function 
 \begin_inset Formula $Q^{*}$
 \end_inset
 
- is approximated with the deep-network:
+ is approximated with a function 
+\begin_inset Formula $Q$
+\end_inset
+
+ learnable by a deep-network parameterized on the weights 
+\begin_inset Formula $\theta$
+\end_inset
+
+:
 \begin_inset Formula 
 \[
 Q\left(x,a;\theta\right)\colonapprox Q^{*}
@@ -4927,11 +5240,30 @@ Q\left(x,a;\theta\right)\colonapprox Q^{*}
 
 \end_inset
 
- parameterized with 
-\begin_inset Formula $\theta$
+This framework enables the utilization of the toolkit from deep-learning
+ to find the approximating 
+\begin_inset Formula $Q$
 \end_inset
 
 .
+ As the original conceivers pointed out in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Q-learning-original,dqn-nature"
+literal "false"
+
+\end_inset
+
+, and as existing implementations demonstrated 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stanford,uvipen,tetris-nuno,sb3"
+literal "false"
+
+\end_inset
+
+, the familiar optimization-techniques and loss-functions from evaluating
+ deep networks are available for Deep Q-Learning.
 \end_layout
 
 \begin_layout Subsubsection
@@ -4939,7 +5271,8 @@ Replay-buffer
 \end_layout
 
 \begin_layout Standard
-Furthermore, a replay-memory of length 
+Apart from introducing the fusion of q-learning with deep-networks, Deep
+ Q-Learning also deploys a replay-memory of length 
 \begin_inset Formula $N$
 \end_inset
 
@@ -4953,7 +5286,7 @@ a priori
 
 \end_inset
 
- is used to hold the 
+ to hold the 
 \begin_inset Quotes xld
 \end_inset
 
@@ -4997,80 +5330,67 @@ literal "false"
 , outstanding results were achieved with such constructions.
 \end_layout
 
-\begin_layout Subsection
-Whole pipeline
+\begin_layout Note
+Implementation details in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
 \end_layout
 
-\begin_layout Enumerate
-Pre-build the replay-buffer
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-keep running episodes
-\end_layout
+\begin_layout Standard
+The fixed size limitation of the replay-buffer, which in itself is intentional
+ as explained in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original"
+literal "false"
 
-\begin_deeper
-\begin_layout Enumerate
-every step: decide on the (action, observation)-pair
-\end_layout
-
-\begin_layout Enumerate
-record every step
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-keep running episodes until the number of steps recorded reaches a threshold
- (
-\begin_inset Formula $\nicefrac{1}{10}$
 \end_inset
 
- in our implementation) of the total size of replay-buffer
+, requires writing at both ends: insertion at the end and deletion at the
+ beginning.
+ The excellent choice for such operations is provided by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-in our case, 
-\begin_inset Formula $30'000$
 \end_inset
 
- is the replay-buffer total size
+'s standard library 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+collections.deque
 \end_layout
 
-\begin_layout Enumerate
-thus, 
-\begin_inset Formula $3'000$
 \end_inset
 
- steps are pre-recorded
+.
 \end_layout
 
-\begin_layout Enumerate
-this is roughly 
-\begin_inset Formula $150$
+\begin_layout Standard
+The choice of this particular data-structure for abstracting the replay-buffer
+ is also seen in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-nuno,uvipen"
+literal "false"
+
 \end_inset
 
- episodes run in the pre-recording mode
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Enumerate
-Any any step (for both phases), use 
-\begin_inset Formula $\epsilon$
-\end_inset
-
--algorithm to determine if:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-explore, i.e., pick new action
-\end_layout
-
-\begin_layout Enumerate
-reuse, use best prediction
+.
 \end_layout
 
 \end_deeper
@@ -5094,7 +5414,7 @@ literal "false"
 
 \end_inset
 
- and based on the accompanying official implementation
+, the accompanying official implementation
 \begin_inset Foot
 status collapsed
 
@@ -5125,7 +5445,7 @@ literal "false"
  and user tuned solutions in 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "uvipen,tetris-nuno"
+key "uvipen,tetris-nuno,DQN-deepmind-tweaked"
 literal "false"
 
 \end_inset
@@ -5140,87 +5460,52 @@ pytorch
 
 \end_inset
 
- is implemented.
-\end_layout
-
-\begin_layout Standard
-Without delving further into the definition of the Deep Q-Networks, of which
- literature abound, the author simply enlists several of the essential the
- hyper-parameters.
- These are surveyed from reference implementations such as 
+ is separately implemented under the package 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-sb3
+shetris/train/rl/util/dqn/
 \end_layout
 
 \end_inset
 
- 
+, containing, in particular, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+network.py
+\end_layout
+
+\end_inset
+
+ module defining the deep network, as well as the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+model.py
+\end_layout
+
+\end_inset
+
+ module offering the definition and training routine of the Deep Q-Learning
+ algorithm.
+\end_layout
+
+\begin_layout Subsubsection
+Hyper-parameters
+\end_layout
+
+\begin_layout Standard
+Without delving further into the intricacies of the Deep Q-Networks, the
+ thesis simply enlists several of the hyper-parameters essential to the
+ algorithm.
+ These are generally surveyed from reference implementations such as 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "sb3"
-literal "false"
-
-\end_inset
-
-, and are thus also used in the implementation.
-\end_layout
-
-\begin_layout Itemize
-Initial exploration 
-\begin_inset Formula $\epsilon\equiv1$
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Itemize
-discount-factor 
-\begin_inset Formula $\gamma=0.99$
-\end_inset
-
-, conforming to the recommendation as made by ;
-\end_layout
-
-\begin_layout Itemize
-size of the replay memory 
-\begin_inset Formula $N=30'000$
-\end_inset
-
-; and is initialized to 
-\begin_inset Quotes xld
-\end_inset
-
-pre
-\begin_inset Quotes xrd
-\end_inset
-
- fill to one-tenth of its capcity, i.e., 
-\begin_inset Formula $3'000$
-\end_inset
-
- steps are recorded;
-\end_layout
-
-\begin_layout Itemize
-in total, 
-\begin_inset Formula $10'000$
-\end_inset
-
- episodes are recorded in total
-\end_layout
-
-\begin_layout Itemize
-the Adam's Optimizer is used
-\end_layout
-
-\begin_layout Itemize
-The MSE-loss instead of Huber's Loss is used, as recommended by 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "what-matters-in-rl"
+key "sb3,DQN-deepmind-tweaked,DQN-deepmind-implementation"
 literal "false"
 
 \end_inset
@@ -5228,7 +5513,302 @@ literal "false"
 .
 \end_layout
 
+\begin_layout Solution
+The network
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
+A network with 
+\begin_inset Formula $1$
+\end_inset
+
+ hidden layer with input and output feature-size of 
+\begin_inset Formula $64$
+\end_inset
+
+ is used.
+ In addition, the output-layer has the apparent final size of 
+\begin_inset Formula $1$
+\end_inset
+
+ for returning the q-value.
+\end_layout
+
+\begin_layout Standard
+The feature-size for the input-layer directly depends on the specific observatio
+n-variant, as indicated by the following table:
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+First layer size
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4+1=5$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10+9+10+1+1=31$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10+9+10+1=30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As recommended by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
+
+\end_inset
+
+ and also seen in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-deepmind-tweaked,DQN-deepmind-implementation,uvipen,tetris-nuno"
+literal "false"
+
+\end_inset
+
+, the Adam's Optimizer and the MSE-Loss is used.
+\end_layout
+
+\begin_layout Standard
+It shall be note that 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ deploys Huber's-Loss within its implementation of DQN instead.
+ This difference is further examined later
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Essential hyper-parameters of DQN in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-greedy-algorithm the initial 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-value is to 
+\begin_inset Formula $\epsilon_{0}\equiv1$
+\end_inset
+
+, decaying linearly to 
+\begin_inset Formula $\epsilon_{\text{final}}=10^{-3}$
+\end_inset
+
+ after 
+\begin_inset Formula $2'000$
+\end_inset
+
+ episodes, as seen in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "uvipen"
+literal "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Description
+discount-factor 
+\begin_inset Formula $\gamma=0.99$
+\end_inset
+
+, conforming to the recommendation of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Description
+replay-memory: total step-capacity set to 
+\begin_inset Formula $N=30'000$
+\end_inset
+
+; pre-record to one-tenth of the capacity, i.e., 
+\begin_inset Formula $3'000$
+\end_inset
+
+ steps, at the beginning of training, which translates to approximately
+ 
+\begin_inset Formula $150$
+\end_inset
+
+ episodes based on empirical evidence as described later
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
 Note: the discount-factor is implicitly taken to be the value as agreed
  upon for the default value under general consensus 
 \begin_inset Formula $\gamma=0.99$
@@ -5248,16 +5828,21 @@ Cross-Ref to P5!
 .
 \end_layout
 
-\begin_layout Subsubsection
-Training Length
+\end_inset
+
+
 \end_layout
 
+\end_deeper
 \begin_layout Standard
-As it turns out, 
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
-Necessary adaptations
+Environment Adaptations
 \end_layout
 
 \begin_layout Standard
@@ -5274,6 +5859,10 @@ gym
 
  environment are enlisted below:
 \end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
 
 \begin_layout Enumerate
 The observation, which should be drawn from the entire history of state
@@ -5450,67 +6039,13 @@ _Helper
  seen in the next chapter.
 \end_layout
 
-\begin_layout Enumerate
-The fixed size limitation of the replay-buffer, which in itself is intentional
- as explained in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "DQN-original"
-literal "false"
-
-\end_inset
-
-, requires writing at both ends: insertion at the end and deletion at the
- beginning.
- The excellent choice for such operations is provided by 
-\begin_inset Flex Code
-status open
-
 \begin_layout Plain Layout
-Python
-\end_layout
-
-\end_inset
-
-'s standard library 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-collections.deque
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-The observation must be returned of the type 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-torch.Tensor
-\end_layout
-
-\end_inset
-
- instead of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-numpy.ndarray
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
 \begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \end_inset
 
 
@@ -5521,19 +6056,19 @@ Training setups
 \end_layout
 
 \begin_layout Standard
-For the observation-factory of the reporter, any extra configurations through
- keyword-arguments are allowed.
- In particular, the return type could either be 
+Each of the four observation-variants as listed previously is trained for
+ the DQN as described above.
+ However, due to the direct interaction with the 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-numpy.ndarray
+pytorch
 \end_layout
 
 \end_inset
 
- or pytorch's 
+-library, the observation must be output into its array-type 
 \begin_inset Flex Code
 status open
 
@@ -5543,7 +6078,29 @@ torch.Tensor
 
 \end_inset
 
-;
+.
+ Passing 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+False
+\end_layout
+
+\end_inset
+
+ to the keyword-argument 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+use_np
+\end_layout
+
+\end_inset
+
+ when constructing the Observation-Factory allows this transition.
+ The following constructing syntax performs the type conversion:
 \begin_inset listings
 inline false
 status open
@@ -5551,6 +6108,10 @@ status open
 \begin_layout Plain Layout
 
 # train/src/rl/shetris/env/reporter/reporter.py
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -5580,17 +6141,17 @@ class Reporter:
 
 \begin_layout Plain Layout
 
-            use_compact_field=<modify this>,
+            use_compact_field=<set_as_needed>,
 \end_layout
 
 \begin_layout Plain Layout
 
-            use_pid=<modify this>,
+            use_pid=<set_as_needed>,
 \end_layout
 
 \begin_layout Plain Layout
 
-            # set to False only for manual DQN-training
+            # set to False to output torch.Tensor
 \end_layout
 
 \begin_layout Plain Layout
@@ -5618,90 +6179,167 @@ Hard-coded Evolution logic
 \end_layout
 
 \begin_layout Standard
-To conclude this chapter on various agents, this section provides an alternative
- solution.
- Originally studied and published in
-\end_layout
-
-\begin_layout Enumerate
-The good: 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Encoded in hard-coded style, this solution requires no training at all;
-\end_layout
-
-\begin_layout Enumerate
-extremely well performing, as used as reference in other work such as 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-find stanford-paper source
-\end_layout
+To conclude this chapter on the investigation of various agents, this section
+ provides an alternative solution requiring no training.
+ Originally studied and published in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-best-ai"
+literal "false"
 
 \end_inset
 
-;
+, this agent chooses the optimizer-action 
+\begin_inset Formula $a^{*}$
+\end_inset
+
+ that maximizes a hard-coded reward-function at every step.
+ The specifics are given below:
+\end_layout
+
+\begin_layout Subsection
+Agent specification
+\end_layout
+
+\begin_layout Definition
+The reward-function 
+\begin_inset Formula $r$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The reward function is calculated with:
+\begin_inset Formula 
+\[
+r\coloneqq\left[\begin{alignedat}{1}-0.51\\
+-0.18\\
+-0.35\\
++0.76
+\end{alignedat}
+\right]\circ\left[\begin{alignedat}{1}x^{H}\\
+x^{E}\\
+x^{N}\\
+x^{L}
+\end{alignedat}
+\right]
+\]
+
+\end_inset
+
+where the observation components are defined as previously.
 \end_layout
 
 \end_deeper
 \begin_layout Standard
-The idea behind the genetic-solution 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-The evolution-strategy, as introduced by 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "tetris-best-ai"
-literal "false"
-
-\end_inset
-
-, utilizes the above metrics:
-\end_layout
-
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset citation
-LatexCommand cite
-key "tetris-best-ai"
-literal "false"
+Thus follows the agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
 
+:
+\end_layout
+
+\begin_layout Definition
+Agent 
+\begin_inset Formula $\mathcal{A}$
 \end_inset
 
 
-\end_layout
-
-\begin_layout Subsection
-Implementation details
-\end_layout
-
-\begin_layout Enumerate
-For the observation-factory
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-the compact-field must be used
+\begin_layout Standard
+At every step, the Agent applies the optimal action 
+\begin_inset Formula $a^{*}$
+\end_inset
+
+ in the sense of maximizing the reward 
+\begin_inset Formula $r$
+\end_inset
+
+ as defined above.
 \end_layout
 
-\begin_layout Enumerate
-the pid must not be included
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
-\begin_layout Enumerate
-the return type must be 
+\begin_layout Remark
+Adaptation details
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The original work in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-best-ai"
+literal "false"
+
+\end_inset
+
+ operates with 
+\begin_inset Formula $1$
+\end_inset
+
+-length preview of the piece-id.
+ 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ currently disallows such previewing, which, in turn, requires slight adaptation
+s to the search process for the optimal action 
+\begin_inset Formula $a^{*}$
+\end_inset
+
+.
+ Note that this agent is also incorporated as reference in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stanford"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Also, the observation must be configured in Variation
+\begin_inset Formula $1$
+\end_inset
+
+, i.e., with the compact field-observation, excluding the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+.
+ Finally, the observation must output the type 
 \begin_inset Flex Code
 status open
 
@@ -5712,9 +6350,10 @@ numpy.ndarray
 \end_inset
 
 
-\end_layout
+\begin_inset Note Greyedout
+status open
 
-\begin_layout Standard
+\begin_layout Plain Layout
 in particular, the observation-factory is thus limited to:
 \begin_inset listings
 inline false
@@ -5764,7 +6403,55 @@ status open
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Quick Analysis
+\end_layout
+
+\begin_layout Standard
+Some initial statements can be made regarding the agent as described above:
+\end_layout
+
+\begin_layout Enumerate
+the hard-coded nature of the reward-to-action process eliminates the process
+ of training entirely, rendering this agent suitable as a 
+\begin_inset Quotes xld
+\end_inset
+
+real-time
+\begin_inset Quotes xrd
+\end_inset
+
+ comparative criteria for evaluating trained agents as described previously
+\end_layout
+
+\begin_layout Enumerate
+On the other hand, 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status collapsed
+
 \begin_layout Section
 Idea
 \end_layout
@@ -5778,7 +6465,7 @@ Naive-Solution
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 Given the small dimension of 
 \begin_inset Formula $\mathbf{Q}$
 \end_inset
@@ -5815,7 +6502,7 @@ Given the small dimension of
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -5827,7 +6514,7 @@ Deficiencies of the Naive-Solution
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 The Naive-Solution, though simple to implement, presents various aspects
  of possible improvement, with the two most prominent ones being:
 \end_layout
@@ -5876,7 +6563,7 @@ Based purely on heuristics, might require stringent proof
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -5888,7 +6575,7 @@ Machine-Solution
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 As of time of writing, no specifics are known pertaining to determining
  a machine-based solution.
  For the purpose of this specific paper, techniques from Reinforcement-Learning
@@ -5937,7 +6624,7 @@ an optimization-strategy on finding
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -5952,7 +6639,7 @@ Baselines
 Intuitive baselines
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -5971,75 +6658,6 @@ tactic
 
 \end_layout
 
-\begin_layout Standard
-At each (discrete) step, the player's input is, as mentioned above, completely
- captured by 
-\begin_inset Formula $\mathbf{Q}$
-\end_inset
-
-.
- A 
-\begin_inset Quotes xld
-\end_inset
-
-
-\begin_inset Flex Emph
-status open
-
-\begin_layout Plain Layout
-tactic
-\end_layout
-
-\end_inset
-
-
-\begin_inset Quotes xrd
-\end_inset
-
- 
-\begin_inset Formula $\mathbb{T}$
-\end_inset
-
-, thus, provides such 
-\begin_inset Formula $\mathbf{Q}$
-\end_inset
-
- given the rest of the information.
- Formally, this is expressed as follows.
-\end_layout
-
-\begin_layout Definition
-A tactic 
-\begin_inset Formula $\mathbb{T}$
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\left.\begin{alignedat}{1}S_{n}\\
-\mathbf{R}_{\text{clr}}\circ\mathbf{R}_{y,n}\eqqcolon\mathbf{R}_{n}\\
-\mathbf{P}_{n+1}
-\end{alignedat}
-\right\} \stackrel{\mathbb{T}}{\longrightarrow}\mathbf{Q}_{n+1}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Note
 The domain of 
 \begin_inset Formula $\mathbf{Q}$
@@ -6049,7 +6667,7 @@ The domain of
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 For any given 
 \begin_inset Formula $\mathbf{P}$
 \end_inset
@@ -6067,7 +6685,7 @@ For any given
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -6083,7 +6701,7 @@ The optimal tactic
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 An optimal tactic 
 \begin_inset Formula $\mathbb{T}$
 \end_inset
@@ -6111,7 +6729,7 @@ measure
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -6147,7 +6765,7 @@ easy to implement:
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -6225,7 +6843,7 @@ https://tetris.wiki/T-Spin
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -6322,7 +6940,7 @@ tetris
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -6338,7 +6956,7 @@ The final score
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 Though 
 \begin_inset Formula $C_{3}$
 \end_inset
@@ -6362,304 +6980,20 @@ Though
 \end_layout
 
 \end_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-Training Process
-\end_layout
-
-\begin_layout Definition
-The biggest ideas during training
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Save the result!
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Since super-computers might terminate longer-acting processes, the optimal
- regiment for prolonged period of training is to repeat a small chunk of
- training-runs, record the result after every chunk, and continue from this
- chunk-result later on
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-How to save the result
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-stable-baseline
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-raw-save model
-\begin_inset Foot
-status open
-
 \begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-name "basic_training"
-target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#basic-usage-training-saving-loading"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-save the policy and evaluate it individually from the model
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-save the (huge) reply-buffer 
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-tensorboard: more advanced model saving
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://stable-baselines3.readthedocs.io/en/master/guide/tensorboard.html
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Standard
 \begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
-What we do apart from raw-training during training
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Of course, we need to train stuff
-\end_layout
-
-\begin_layout Enumerate
-call-backs
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-not even a call-back, just do periodic eval during testing
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#id3"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-# Create the model, the training environment
-\end_layout
-
-\begin_layout Plain Layout
-
-# and the test environment (for evaluation)
-\end_layout
-
-\begin_layout Plain Layout
-
-model = SAC('MlpPolicy', 'Pendulum-v1', verbose=1,
-\end_layout
-
-\begin_layout Plain Layout
-
-            learning_rate=1e-3, create_eval_env=True)
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-# Evaluate the model every 1000 steps on 5 test episodes
-\end_layout
-
-\begin_layout Plain Layout
-
-# and save the evaluation to the "logs/" folder
-\end_layout
-
-\begin_layout Plain Layout
-
-model.learn(6000, eval_freq=1000, n_eval_episodes=5, eval_log_path="./logs/")
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-existing call-backs
-\end_layout
-
-\begin_layout Enumerate
-self-implemented call-backs
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-save best
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset CommandInset href
-LatexCommand href
-target "https://stable-baselines3.readthedocs.io/en/master/guide/examples.html#using-callback-monitoring-training"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Definition
-Training
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Save the model
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-use the resulting model to play
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-After some period of training
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-we save the current 
-\begin_inset Quotes xld
-\end_inset
-
-model
-\begin_inset Quotes xrd
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-make a video of current play
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 

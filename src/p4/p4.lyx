@@ -140,7 +140,7 @@ Euler
 \begin_layout Solution
 Loading the Python interpreter
 \begin_inset Index idx
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Result ! Setup ! 
@@ -185,7 +185,7 @@ status open
 
 , the newer generation of software-stack
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Description of the new software stack: 
@@ -203,7 +203,7 @@ literal "false"
 
  of Euler must be explicitly loaded
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 In the older software-stack, 
@@ -529,8 +529,25 @@ ShetrisEnv
  In particular, the following parameters are deployed for training:
 \end_layout
 
+\begin_layout Solution
+Training setup
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+For 
+\begin_inset Formula $\mathcal{A}_{\text{SB3}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{A}_{\text{DQN}}$
+\end_inset
+
+, the following setup is used for training:
+\end_layout
+
 \begin_layout Itemize
-The field is always chosen to be of the standard-size, i.e., 
+the field is always chosen to be of the standard-size, i.e., 
 \begin_inset Formula $20$
 \end_inset
 
@@ -538,7 +555,7 @@ The field is always chosen to be of the standard-size, i.e.,
 \begin_inset Formula $10$
 \end_inset
 
- blocks in width
+ blocks in width;
 \end_layout
 
 \begin_layout Itemize
@@ -549,6 +566,72 @@ the piece-id generator is set to the standard-compliant, shuffled
 -bag algorithm.
 \end_layout
 
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The hard-coded nature of 
+\begin_inset Formula $\mathcal{A}^{3}$
+\end_inset
+
+ spares the process of training.
+\end_layout
+
+\begin_layout Standard
+Crucial to the specification of the training-process, the termination-criteria
+ is given below:
+\end_layout
+
+\begin_layout Solution
+Allocation of training resources
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The duration of training-process is restricted by the time of occurrence
+ of either of the following two events, whichever occurs first:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $10$
+\end_inset
+
+ million evolution-steps are taken by calling the method 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv.step()
+\end_layout
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $40$
+\end_inset
+
+ hours of wall-time have elapsed on the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Euler
+\end_layout
+
+\end_inset
+
+-cluster.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -561,6 +644,10 @@ Testing setup
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
 The hard-coded nature of the solution based on evolution-algorithm leads
  to the fact that no training is required, and the requirements in the previous
  section thus do not apply.
@@ -588,7 +675,40 @@ the piece-id generator is now varied to introduce various training scenarios
  to the testing facility
 \end_layout
 
-\begin_layout Standard
+\begin_deeper
+\begin_layout Enumerate
+Specifics: shuffled 
+\begin_inset Formula $7$
+\end_inset
+
+-bag
+\end_layout
+
+\begin_layout Enumerate
+Sequenced 
+\begin_inset Formula $7$
+\end_inset
+
+-bag
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(0,1\right)$
+\end_inset
+
+-bag
+\end_layout
+
+\begin_layout Enumerate
+all 
+\begin_inset Formula $\left(0\right)$
+\end_inset
+
+-bag
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
 Note that the flexibility of the generator is really strident at this point:
  
 \begin_inset Note Note
@@ -604,24 +724,24 @@ this would be much trickier to realize in tangled implementations.
 
 \end_layout
 
-\begin_layout Subsubsection
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Measures and Thresholds
+\end_layout
+
+\begin_layout Subsubsection
+Two Measures
 \end_layout
 
 \begin_layout Standard
 For the Tetris-game, one observes the length of an episode as the intuitive
  measure for evaluating the performance of an agent, i.e., the number of calls
- to the stepping function 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-gym.Env.step(...)
-\end_layout
-
-\end_inset
-
- before the episode is terminated with the 
+ to the stepping function as previously described before the episode is
+ terminated with the 
 \begin_inset Quotes xld
 \end_inset
 
@@ -629,29 +749,44 @@ game-over
 \begin_inset Quotes xrd
 \end_inset
 
- signal, translating to the number of new pieces 
+ signal.
+ Given the Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Time-stepping-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ of the time-stepping scheme, the length of an episode translates directly
+ to the number of new pieces 
 \begin_inset Formula $n_{P}$
 \end_inset
 
- returned by the generator the per episode.
- Obviously, the positively correlated number of lines cleared per episode
- 
-\begin_inset Formula $n_{L}$
-\end_inset
-
- further constitutes another metric.
+ as returned by the generator.
 \end_layout
 
 \begin_layout Standard
-These two measures of number of pieces 
-\begin_inset Formula $n_{P}$
-\end_inset
-
- and that of lines cleared per episode 
+In similar fashion, the positively correlated number-of-lines-cleared of
+ an episode 
 \begin_inset Formula $n_{L}$
 \end_inset
 
- are also used in implementations 
+ further constitutes another performance indicator.
+\end_layout
+
+\begin_layout Standard
+The two measures 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $n_{L}$
+\end_inset
+
+ are also utilized in 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "tetris-best-ai,tetris-nuno,uvipen"
@@ -660,6 +795,10 @@ literal "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsubsection
+Three Thresholds
 \end_layout
 
 \begin_layout Standard
@@ -1193,7 +1332,6 @@ Negative
 \noun off
 \color none
 Successful 
-
 \end_layout
 
 \end_inset
@@ -1266,7 +1404,11 @@ Successful
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Guidelines of Agent-Assessment
+Guidelines of Agent-Assessment based on 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+-values
 \end_layout
 
 \end_inset
@@ -1276,11 +1418,39 @@ Guidelines of Agent-Assessment
 
 \end_inset
 
+In essence, the 
+\begin_inset Formula $n_{P}$
+\end_inset
 
+-value offers immediate feedback to the assessment of an agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+.
+ Specifically, the agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ is defined as decently performing with three-digit 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+-values, i.e.:
+\begin_inset Formula 
+\[
+\begin{alignedat}{1} & n_{P}>100\\
+\Longleftrightarrow\; & \text{Acceptable Performance of }\mathcal{A}
+\end{alignedat}
+\]
+
+\end_inset
+
+With the preparation for defining the framework of analysis, the performance
+ of the individual agents is studied in the following sections.
 \end_layout
 
 \begin_layout Section
-Solution by 
+Agent by 
 \begin_inset Flex Code
 status open
 
@@ -1316,8 +1486,18 @@ Training framework
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-three algorithms implemented by the 
+\begin_layout Standard
+As mentioned previously
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+, three algorithms implemented by the 
 \begin_inset Flex Code
 status open
 
@@ -1327,24 +1507,13 @@ SB3
 
 \end_inset
 
- library are used: A2C, PPO and DQN; each of which are trained for all four
- variations of observations;
+ library are used: A2C, PPO and DQN.
+ Each algorithm is trained for all four variations of observations.
+ 
 \end_layout
 
-\begin_layout Enumerate
-unless otherwise stated, 
-\begin_inset Formula $10`000`000$
-\end_inset
-
- (
-\begin_inset Formula $10$
-\end_inset
-
- million) steps are used for every observation-variations and every algorithm;
-\end_layout
-
-\begin_layout Enumerate
-To monitor the training progress, periodic saving is performed for every
+\begin_layout Standard
+To monitor the training progress, periodic saving is performed after every
  
 \begin_inset Formula $10'000$
 \end_inset
@@ -1374,82 +1543,36 @@ tensorboard
 .
 \end_layout
 
-\end_deeper
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In particular, the information provider for the 
+To further facilitate public access to the results presented in this thesis,
+ such logs created by 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-ShetrisEnv
+TensorBoard
 \end_layout
 
 \end_inset
 
- environment, as first described in Listing 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lis:Specifying-Save-Load-Location-for-shetrisenv"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, allows quick selection of the algorithm of choice:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
+ have been uploaded to 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-
-# train/src/rl/result/info.py
+TensorBoard.dev
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
+ and are publicly accessible without a Google-account.
+ The interested reader is encouraged to visit the site for interactive inspectio
+n of the results.
 \end_layout
 
-\begin_layout Plain Layout
-
-class ShetrisInfo(InfoProvider):
-\end_layout
-
-\begin_layout Plain Layout
-
-    @staticmethod
-\end_layout
-
-\begin_layout Plain Layout
-
-    def get_algpol() -> Tuple[Type[BaseAlgorithm], Type[BasePolicy]]:
-\end_layout
-
-\begin_layout Plain Layout
-
-        return AlgPolFactory.get_a2c()
-\end_layout
-
-\begin_layout Plain Layout
-
-        # return AlgPolFactory.get_ppo()
-\end_layout
-
-\begin_layout Plain Layout
-
-        # return AlgPolFactory.get_dqn()
-\end_layout
-
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1464,15 +1587,29 @@ Result statement
 \end_layout
 
 \begin_layout Standard
-Two separate runs with PPO are conducted, with the first 
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+Two separate runs with PPO are conducted, with the first run constituting
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FINISH THIS
 \end_layout
 
-\begin_layout Standard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="7">
+<lyxtabular version="3" rows="5" columns="6">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
 <column alignment="left" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1501,7 +1638,22 @@ Variation
 \begin_inset Text
 
 \begin_layout Plain Layout
-PPO-1
+\begin_inset Formula $n_{P}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{L}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1519,25 +1671,16 @@ Training-time
 \begin_inset Text
 
 \begin_layout Plain Layout
-PPO-2
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tensorboard
 \end_layout
 
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-Training Time
-\end_layout
 
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-A2C
 \end_layout
 
 \end_inset
@@ -1566,7 +1709,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $42$
 \end_inset
 
 
@@ -1578,16 +1721,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $350$
 \end_inset
 
 
@@ -1599,7 +1733,14 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $18$
+\end_inset
 
+h:
+\begin_inset Formula $49$
+\end_inset
+
+m
 \end_layout
 
 \end_inset
@@ -1608,12 +1749,11 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(201)
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/o44Q2FRES7WM2uAj9yO93w/"
+literal "false"
 
 \end_inset
 
@@ -1646,7 +1786,7 @@ Variation-1
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\color{red}\left[20;30\right]}$
+\begin_inset Formula ${\color{red}\left[26;27\right]}$
 \end_inset
 
 
@@ -1658,16 +1798,7 @@ Variation-1
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;180\right]$
+\begin_inset Formula $\left[40;55\right]$
 \end_inset
 
 
@@ -1679,7 +1810,18 @@ Variation-1
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
 
+h 
+\begin_inset Formula $21$
+\end_inset
+
+m (
+\begin_inset Formula $5$
+\end_inset
+
+Mil steps)
 \end_layout
 
 \end_inset
@@ -1688,12 +1830,11 @@ Variation-1
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(181)
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Link"
+target "https://tensorboard.dev/experiment/JU1sG4oFQnSzzghDBLrSpQ/"
+literal "false"
 
 \end_inset
 
@@ -1726,7 +1867,7 @@ Variation-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $40$
+\begin_inset Formula $52$
 \end_inset
 
 
@@ -1738,16 +1879,7 @@ Variation-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\texttt{\textasciitilde}50$
+\begin_inset Formula $760$
 \end_inset
 
 
@@ -1759,7 +1891,14 @@ Variation-2
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $20$
+\end_inset
 
+h 
+\begin_inset Formula $13$
+\end_inset
+
+m
 \end_layout
 
 \end_inset
@@ -1768,12 +1907,11 @@ Variation-2
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-range(191)
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/RPMnwId7R7CMqYeWn25AHg/"
+literal "false"
 
 \end_inset
 
@@ -1806,7 +1944,7 @@ Variation-3
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula ${\color{red}\left[20;30\right]}$
+\begin_inset Formula ${\color{red}\left[29;31\right]}$
 \end_inset
 
 
@@ -1818,6 +1956,9 @@ Variation-3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $50;65$
+\end_inset
+
 
 \end_layout
 
@@ -1827,7 +1968,18 @@ Variation-3
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $4$
+\end_inset
 
+h 
+\begin_inset Formula $9$
+\end_inset
+
+m (
+\begin_inset Formula $5$
+\end_inset
+
+Mil steps)
 \end_layout
 
 \end_inset
@@ -1836,15 +1988,14 @@ Variation-3
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
+\begin_inset CommandInset href
+LatexCommand href
+name "Link"
+target "https://tensorboard.dev/experiment/OCMzXz64Ry2i7QQmRZpDrQ/"
+literal "false"
 
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -1852,6 +2003,417 @@ Variation-3
 </cell>
 </row>
 </lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
+\begin_layout Plain Layout
+In the second run, the established 
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{P}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{L}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training-time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tensorboard
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $42$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $440$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8$
+\end_inset
+
+h 
+\begin_inset Formula $24$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/kK5mK34RSa6BWpZD8gNvHQ/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[27;28\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $45;55$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8$
+\end_inset
+
+h 
+\begin_inset Formula $49$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/6cvWG33WRkeD401pxd1v1Q/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $55$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $770$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+h 
+\begin_inset Formula $29$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/dixh0wI3TquQoNzNi0Sbrg/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[30;32\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $75;80$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8$
+\end_inset
+
+h 
+\begin_inset Formula $12$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/IAe5ov8gRgqQCDWsjLEdjQ/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -1867,6 +2429,52 @@ The first run for Variation-1 and Variation-2, the first run was prematurely
  
 \end_layout
 
+\begin_layout Itemize
+Both variations without observing the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ demonstrate oscillation throughout the training process without convergence
+ to unique values for the measures 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $n_{L}$
+\end_inset
+
+; in contrast, the Default and Variation-3 mode both demonstrate a smoother
+ training process with convergence to fixed values for 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $n_{L}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+The best performing agent is achieved with Variation-2: the value for average
+ episode length 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+ terminates at approximately 
+\begin_inset Formula $55$
+\end_inset
+
+, approximately doubling the performance of the worst performing agent of
+ Variation-1.
+\end_layout
+
 \begin_layout Subsection
 A2C
 \end_layout
@@ -1875,12 +2483,413 @@ A2C
 Result statement
 \end_layout
 
+\begin_layout Solution
+Table
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
-As stated in the opening section, 
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{P}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{L}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training-time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tensorboard
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $37$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $330$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $10$
 \end_inset
 
- million steps are used for training.
+h:
+\begin_inset Formula $22$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/HMdPImUDQwWFxMpsaWLe7Q/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[26;28\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[35;45\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+h 
+\begin_inset Formula $44$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/Yoe7xAybSpmSxk1h08WhNw/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $46$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $450$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $12$
+\end_inset
+
+h 
+\begin_inset Formula $39$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/ZTe7NGXoRlaBVE9hQmMCvQ/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[33;35\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $75;95$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $10$
+\end_inset
+
+h 
+\begin_inset Formula $52$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/8RWI0rBKTWKNjgMzQE6cXw/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -1908,18 +2917,410 @@ DQN
 Result statement
 \end_layout
 
-\begin_layout Subsubsection
-Analysis and Interpretation
+\begin_layout Solution
+Table
 \end_layout
 
+\begin_deeper
 \begin_layout Standard
-\begin_inset Note Note
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="6">
+<features booktabs="true" islongtable="true" longtabularalignment="center">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{P}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{L}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Training-time
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-One observes turbulent training process 
+Tensorboard
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Default
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $27$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left[60;75\right]$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8$
+\end_inset
+
+h:
+\begin_inset Formula $54$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/2kwv7rTBQ12zEr2qP1MjDQ/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula ${\color{red}\left[21;23\right]}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $30$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $8$
+\end_inset
+
+h 
+\begin_inset Formula $38$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/wf5XLzhZTPy6mDoTZNS03g/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $45$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $370$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $11$
+\end_inset
+
+h 
+\begin_inset Formula $37$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/MsPzaEZ4QZahBlKpQpR4rA/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $43$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $210$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $9$
+\end_inset
+
+h 
+\begin_inset Formula $43$
+\end_inset
+
+m
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset CommandInset href
+LatexCommand href
+name "link"
+target "https://tensorboard.dev/experiment/6dHPbv23R6ijZ3kP5KXARg/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1930,15 +3331,91 @@ Summary
 \end_layout
 
 \begin_layout Standard
-One thus summarizes as follows:
+Several summarizing statements on the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
 \end_layout
 
-\begin_layout Enumerate
-For save Variation: Best Policy in general: looking horizontally
+\end_inset
+
+-trained agents are presented below:
 \end_layout
 
-\begin_layout Enumerate
-For every Policy: Best Performance at which Variation? [looking vertically]
+\begin_layout Subsubsection
+On training resources
+\end_layout
+
+\begin_layout Standard
+Every training variation finishes with plenty of time to spare.
+ In fact, no training iteration spent more than 
+\begin_inset Formula $12$
+\end_inset
+
+ hours to finish executing 
+\begin_inset Formula $10$
+\end_inset
+
+ million steps.
+ In this regard, A2C appears to require more wall-time for training than
+ PPO and DQN under similar circumstances.
+\end_layout
+
+\begin_layout Standard
+On the other hand, Variation-2 takes longer to finish than the other three
+ training modes for all algorithms.
+ This does not seem surprising, as this variant utilizes the vastest observation
+-space, as defined previously
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+.
+ Interestingly, substantial reduction of training time is observed with
+ Variation-3, which, in comparison, only removes the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ component.
+\end_layout
+
+\begin_layout Standard
+Regarding training time, the interested reader shall further study the 
+\begin_inset Quotes xld
+\end_inset
+
+FPS
+\begin_inset Quotes xrd
+\end_inset
+
+ section in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Tensorboard
+\end_layout
+
+\end_inset
+
+ data accessible via the aforementioned links.
+\end_layout
+
+\begin_layout Subsubsection
+General Results
 \end_layout
 
 \begin_layout Standard
@@ -1979,7 +3456,7 @@ Variation
 \begin_inset Text
 
 \begin_layout Plain Layout
-PPO-1
+PPO
 \end_layout
 
 \end_inset
@@ -1997,7 +3474,7 @@ PPO-1
 \begin_inset Text
 
 \begin_layout Plain Layout
-PPO-2
+A2C
 \end_layout
 
 \end_inset
@@ -2033,7 +3510,7 @@ DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
-A2C
+Best Alg
 \end_layout
 
 \end_inset
@@ -2062,7 +3539,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $42$
 \end_inset
 
 
@@ -2083,7 +3560,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $37$
 \end_inset
 
 
@@ -2104,7 +3581,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $28$
+\begin_inset Formula $27$
 \end_inset
 
 
@@ -2125,10 +3602,7 @@ Default
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
-\end_inset
-
-
+PPO
 \end_layout
 
 \end_inset
@@ -2161,7 +3635,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $38$
+\begin_inset Formula $27$
 \end_inset
 
 
@@ -2182,7 +3656,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $20$
+\begin_inset Formula $27$
 \end_inset
 
 
@@ -2203,7 +3677,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $22$
 \end_inset
 
 
@@ -2224,10 +3698,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $35$
-\end_inset
-
-
+PPO
 \end_layout
 
 \end_inset
@@ -2260,6 +3731,48 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\boxed{55}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $46$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Formula $40$
 \end_inset
 
@@ -2281,52 +3794,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $40$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $30$
-\end_inset
-
-
+PPO
 \end_layout
 
 \end_inset
@@ -2359,7 +3827,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $40$
+\begin_inset Formula $31$
 \end_inset
 
 
@@ -2380,7 +3848,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $34$
 \end_inset
 
 
@@ -2401,7 +3869,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
+\begin_inset Formula $43$
 \end_inset
 
 
@@ -2422,10 +3890,7 @@ Variation-
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $30$
-\end_inset
-
-
+DQN
 \end_layout
 
 \end_inset
@@ -2605,807 +4070,144 @@ All
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status collapsed
+By inspecting each row individually, one concludes that, with the exception
+ of Variation-3, PPO is the best performing algorithm, which corresponds
+ to the statement in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
 
-\begin_layout Plain Layout
-\begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="4">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Variation-Code
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Algorithm
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Steps
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-location
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-default
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Compact-Field; with pid (True, True)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $5$
-\end_inset
-
-M + 5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-./shetris
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $01$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Compact; without pid (True, False)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris01
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $02$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Full; with pid (False, True)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5M + 5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris02
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $03$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Full; without pid (False, False)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris03
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Implementation of Evolution-Algorithm; DQN
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Collection of results; compose thesis
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-Four trainings were performed
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="5">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Exp-1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Observations
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Algorithm
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Compact
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-PPO
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;20\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $9$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;19\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Holes 
-\begin_inset Formula $M_{H}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\left[0;4\right]$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Lines-cleared 
-\begin_inset Formula $M_{C}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Implementation of Evolution-Algorithm; DQN
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Collection of results; compose thesis
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
+\begin_layout Standard
+On the other hand, Variation-2 generally yields higher scoring for 
+\begin_inset Formula $n_{P}$
 \end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
 
+ than all other variants, where the difference is especially pronounced
+ for PPO and A2C.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
 \begin_layout Section
-Solution by DQN
+Self-Implemented DQN
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
+General Remarks
+\end_layout
+
+\begin_layout Standard
+Similar to the solution by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+, parameters logged by 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+FINISH THIS
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace 30baselineskip%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "70col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.5pt"
+separation "0.2cm"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tensorboard.dev/experiment/eA6s6uyXRFmdGCM6p6JcWg/"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Training results
+\end_layout
+
+\begin_layout Subsubsection
+Termination
+\end_layout
+
+\begin_layout Standard
+Unlike solutions by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+, the 
+\begin_inset Formula $40$
+\end_inset
+
+ hours expires before the threshold of 
+\begin_inset Formula $10$
+\end_inset
+
+ million steps is reached.
+ The following table enlists the number of steps and episodes executed until
+ training termination:
+\end_layout
+
+\begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="8" columns="5">
+<lyxtabular version="3" rows="5" columns="3">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3414,25 +4216,7 @@ Solution by DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
-Exp-1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rotate="90" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-First layer size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Observations (always in Tensor: last is false)
+Variation
 \end_layout
 
 \end_inset
@@ -3441,7 +4225,11 @@ Observations (always in Tensor: last is false)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Steps
+Num-Steps (
+\begin_inset Formula $\times10^{6}$
+\end_inset
+
+)
 \end_layout
 
 \end_inset
@@ -3450,7 +4238,11 @@ Steps
 \begin_inset Text
 
 \begin_layout Plain Layout
-location
+Num-Episodes (
+\begin_inset Formula $\times10^{3}$
+\end_inset
+
+)
 \end_layout
 
 \end_inset
@@ -3461,31 +4253,7 @@ location
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $0$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $5$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Compact; with pid (True, True)
+Default
 \end_layout
 
 \end_inset
@@ -3494,216 +4262,7 @@ Compact; with pid (True, True)
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $5$
-\end_inset
-
-M + 5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $4$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Compact; without pid (True, False)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris01
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $2$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10+9+10+1+1=31$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Full; with pid (False, True)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5M + 5M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris02
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $3$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $10+9+10+1=30$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Full; without pid (False, False)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-shetris03
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $1$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
+\begin_inset Formula $5.311$
 \end_inset
 
 
@@ -3715,15 +4274,9 @@ pid
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $16.88$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -3735,25 +4288,7 @@ pid
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Implementation of Evolution-Algorithm; DQN
+Variation-1
 \end_layout
 
 \end_inset
@@ -3762,6 +4297,9 @@ Implementation of Evolution-Algorithm; DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $5.294$
+\end_inset
+
 
 \end_layout
 
@@ -3771,6 +4309,9 @@ Implementation of Evolution-Algorithm; DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $10.04$
+\end_inset
+
 
 \end_layout
 
@@ -3778,10 +4319,57 @@ Implementation of Evolution-Algorithm; DQN
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $6.701$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $45.64$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variation-3
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $6.801$
+\end_inset
+
 
 \end_layout
 
@@ -3791,33 +4379,9 @@ Implementation of Evolution-Algorithm; DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $40.01$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-Collection of results; compose thesis
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -3829,6 +4393,10 @@ Collection of results; compose thesis
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset listings
 inline false
 status open
@@ -3913,37 +4481,84 @@ result/shetris<CHANGE_THIS>/
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Section
-Solution by Evolution Algorithm
+\begin_layout Subsection
+Result statement
 \end_layout
 
-\begin_layout Enumerate
-For the observation-factory
+\begin_layout Standard
+For the two training variants using the compact field-observation, the logged
+ graphs by 
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-the compact-field must be used
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/results/dqn/default/def-0.9-2.png
+	height 5cm
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Enumerate
-the pid must not be included
+\begin_layout Plain Layout
+\begin_inset Formula $\qquad$
+\end_inset
+
+
+\begin_inset space \dotfill{}
+\end_inset
+
+
+\begin_inset Formula $\qquad$
+\end_inset
+
+
+\begin_inset VSpace 90baselineskip%
+\end_inset
+
+
 \end_layout
 
-\begin_layout Enumerate
-the return type must be 
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/results/dqn/var1/v01-0.9-2.png
+	height 5cm
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-numpy.ndarray
+Tensorboard
+\end_layout
+
+\end_inset
+
+ logs: Default-mode (upper) and 
+\begin_inset Quotes xld
+\end_inset
+
+Variation-1
+\begin_inset Quotes xrd
+\end_inset
+
+ (lower) [compact field-observation]
 \end_layout
 
 \end_inset
@@ -3951,48 +4566,73 @@ numpy.ndarray
 
 \end_layout
 
-\begin_layout Standard
-in particular, the observation-factory is thus limited to:
-\begin_inset listings
-inline false
+\end_inset
+
+For the two training variants using the full field-observation, the following
+ two logs are observed
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/results/dqn/var2/v02-0.9-2.png
+	height 5cm
 
-        self.obs_factory = ObsStandard(
+\end_inset
+
+
+\begin_inset VSpace 100baselineskip%
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename /mnt/x/Dox/amperstand/eth/tss/bsc/shetris/tss/bin/results/dqn/var3/v03-0.9-2.png
+	height 5cm
 
-            self.engine,
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
-
-            use_compact_field=True,
-\end_layout
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
-            use_pid=False,
-\end_layout
-
-\begin_layout Plain Layout
-
-            # set to False only for manual DQN-training
-\end_layout
+\begin_inset Flex Code
+status open
 
 \begin_layout Plain Layout
-
-            use_np=False
+Tensorboard
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-        )
+ log for 
+\begin_inset Quotes xld
+\end_inset
+
+Variation-2
+\begin_inset Quotes xrd
+\end_inset
+
+ and 
+\begin_inset Quotes xld
+\end_inset
+
+Variation-3
+\begin_inset Quotes xrd
+\end_inset
+
+ (full field-observation)
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
+
 
 \end_layout
 
@@ -4001,12 +4641,88 @@ status open
 
 \end_layout
 
-\end_deeper
+\begin_layout Subsection
+Testing Results
+\end_layout
+
+\begin_layout Subsection
+Analysis
+\end_layout
+
 \begin_layout Standard
-\begin_inset Separator plain
+Analysis re required to understand the performance improvement of the self-imple
+mented DQN Agent in comparison to the DQN Agent by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+.
+ The following arguments are found:
+\end_layout
+
+\begin_layout Enumerate
+The Loss of the self-implemented DQN follows the recommendation of empirical
+ studies conducted by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
+
+\end_inset
+
+ by choosing the MSE-loss instead of the Huber's-Loss, which is explicitly
+ rejected by the same research publication.
+\end_layout
+
+\begin_layout Enumerate
+the self-implemented DQN exploits the accurate, minimal action-space by
+ removing the possibility for duplicates of rotational configurations for
+ pieces such as the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+ or 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+O
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ This removes redundancy in the action and thus improves accuracy of the
+ data to the network.
+\end_layout
+
+\begin_layout Section
+Hard-coded Evolution Algorithm
 \end_layout
 
 \begin_layout Subsection
