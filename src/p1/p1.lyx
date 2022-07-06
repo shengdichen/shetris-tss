@@ -128,7 +128,7 @@ Shetris
 \begin_inset Quotes xrd
 \end_inset
 
-, as shown in the header section.
+, as shown in the header.
 \end_layout
 
 \begin_layout Standard
@@ -188,7 +188,13 @@ literal "false"
 \end_inset
 
  have demonstrated the 
-\begin_inset Formula $NP$
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+NP
+\end_layout
+
 \end_inset
 
 -completeness of optimally solving 
@@ -214,33 +220,6 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Reinforcement-Learning has been shown to achieve human level-performance
- in classical gaming environments
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Nature paper
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Concerning this thesis, recent algorithmic breakthroughs for DQN, PPO
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PPO"
-literal "false"
-
-\end_inset
-
- and
 \end_layout
 
 \begin_layout Subsubsection
@@ -334,6 +313,27 @@ literal "false"
 LatexCommand cite
 key "PPO,A2C"
 literal "false"
+
+\end_inset
+
+.
+ The relevance of these algorithms to 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is discussed in later Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Training-with-sb3"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -760,7 +760,17 @@ SB3
 
 \end_inset
 
- enforce project-wide type-hinting as well.
+ enforce project-wide type-hinting of source-code in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+ as well.
 \end_layout
 
 \begin_layout Subsection
@@ -826,7 +836,7 @@ literal "false"
 \end_layout
 
 \begin_layout Itemize
-All other aspects of the game, including the 
+All other aspects of the Tetris-game, including the 
 \begin_inset Flex Code
 status open
 
@@ -836,7 +846,7 @@ engine
 
 \end_inset
 
- as described Section 
+ as described in Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Essential-Implementations"
@@ -859,7 +869,7 @@ literal "false"
 \end_layout
 
 \begin_layout Itemize
-This thesis-document itself if accessible under: 
+This thesis-document itself is accessible under: 
 \begin_inset CommandInset href
 LatexCommand href
 name "Link to GitHub"

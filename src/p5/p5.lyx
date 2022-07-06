@@ -137,11 +137,39 @@ Shetris
 \begin_layout Standard
 The uneven quality of various online implementations of Tetris used for
  machine-based learning, coupled with the disappointing training results
- from direct usage of raw game files binaries gave rise to the necessity
- of programming the Tetris-game from scratch.
+ from direct usage of raw game files binaries as noted in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hk"
+literal "false"
+
+\end_inset
+
+ led to the realization of the necessity of programming the Tetris-game
+ from scratch.
  The consideration of the diversity of existing renditions of the game and
  the goal for adaptation to the maximal amount of rule-sets drive the implementa
-tion process of the core engine that abstracts the main logic of the game.
+tion process of the core components of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, including, in particular, the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+engine
+\end_layout
+
+\end_inset
+
+ that abstracts the main logic of the game.
 \end_layout
 
 \begin_layout Standard
@@ -171,17 +199,7 @@ SB3
 ) are utilized in four training-modes of the environment.
  In addition, a Deep-Q-Network tuned for the action and observation-structure
  specific to Tetris is implemented separately, and trained under the same
- conditions as for 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-SB3
-\end_layout
-
-\end_inset
-
-.
+ conditions as for direct comparison.
 \end_layout
 
 \begin_layout Standard
@@ -197,9 +215,11 @@ SB3
 
 \end_inset
 
- library yield unsatisfactory results, the tailored DQN solution achieves
- marginally inferior performance in comparison to the reference under all
- testing scenarios.
+ library yields unsatisfactory results, the tailored DQN solution achieves
+ marginally inferior performance in comparison to the reference agent under
+ most testing scenarios.
+ However, visible gaps are seen in other evaluation setups, leading to room
+ of followup research and further improvement.
 \end_layout
 
 \begin_layout Subsection
@@ -727,8 +747,8 @@ The immediate reaction after conducting a general survey of the status-quo
  was mixed: on the one hand, several exciting projects promise the possibility
  of successful adaptation of the algorithms of the field to the game.
  On the other hand, such project-repositories generally sport sloppy implementat
-ions of Tetris and display deficiencies on the matter of fundamental software
- engineering.
+ions of Tetris and display deficiencies on the matter of fundamental principles
+ fundamental software engineering.
 \end_layout
 
 \begin_layout Standard
@@ -746,8 +766,8 @@ Mixed sentiments
 \begin_layout Standard
 Initially, this thesis-project envisioned the tackling of a variety of Tetris
  rule-sets with near expert-level finesse.
- However, as the project progressed, this initial ambition soon subsided:
- the time-restriction embedded in the framework of a Bachelor-Thesis dictates
+ However, as the project progressed, the lofty ambition soon subsided: the
+ time-restriction embedded in the framework of a Bachelor-Thesis dictates
  down-scaling of the span of the goals and of the methodologies.
  Furthermore, the agent trained on the tuned algorithm still left a lot
  to be desired in some basic testing scenarios and failed to out-perform
@@ -756,11 +776,20 @@ Initially, this thesis-project envisioned the tackling of a variety of Tetris
 
 \begin_layout Standard
 However, the gulf between the original envisioning and the current progress
- also initiates vast room for improvement.
- Given the fundamental design concept of extendability and modularity, the
- fundamental structure of the source-code welcomes modifications and additions
- of functionality.
- With this, various directions of possible future work are conceivable:
+ also initiates room for improvement.
+ Given its fundamental design concept of extendability and modularity, the
+ fundamental structure of the source-code of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ welcomes modifications and additions of functionality.
+ With this, various directions of future work are conceivable:
 \end_layout
 
 \begin_layout Subsection
@@ -833,7 +862,7 @@ Shetris
 \end_inset
 
 , but were neither further pursued nor documented in this thesis due to
- disappointing results.
+ unsatisfactory results.
 \end_layout
 
 \begin_layout Standard
@@ -880,9 +909,9 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Finally, the training process itself shall be further stream-lined to for
- the purpose of more detailed logging, more accurate parameter tuning and
- the possibility of effective usage of vectorized training on high-performance
+Finally, the training process itself shall be further stream-lined for the
+ purpose of more detailed logging, more accurate parameter tuning and the
+ possibility of effective usage of vectorized training on high-performance
  computing clusters.
  Also, more intensive tuning of hyper-parameters, as advocated by 
 \begin_inset CommandInset citation
@@ -927,7 +956,7 @@ To the supervisor of this thesis, Prof.
  of this thesis in its earliest infancy, for the inspiring and philosophical
  approach to the field of machine-learning as a whole, and, of course, for
  granting the much needed extension for completion;
-\begin_inset VSpace 150baselineskip%
+\begin_inset VSpace 50baselineskip%
 \end_inset
 
 
@@ -936,7 +965,7 @@ To the supervisor of this thesis, Prof.
 \begin_layout Standard
 To my advisors, Ivan, Ami and Eugene: my heart-felt thanks to the extended
  sessions of talks, the continuous support and the constructive suggestions;
-\begin_inset VSpace 150baselineskip%
+\begin_inset VSpace 50baselineskip%
 \end_inset
 
 
@@ -945,7 +974,7 @@ To my advisors, Ivan, Ami and Eugene: my heart-felt thanks to the extended
 \begin_layout Standard
 To my family and my friends: my sincere gratitude for the unyielding support
  and care;
-\begin_inset VSpace 150baselineskip%
+\begin_inset VSpace 50baselineskip%
 \end_inset
 
 

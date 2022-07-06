@@ -524,8 +524,8 @@ ShetrisEnv
 
 \end_inset
 
- for modifications and extensions, this thesis studies the behavior of acting
- agents under mostly standard-conforming conditions.
+ for modifications and extensions, the behavior of agents acting under mostly
+ guideline-conforming conditions is studied.
  In particular, the following parameters are deployed for training:
 \end_layout
 
@@ -535,12 +535,8 @@ Training setup
 
 \begin_deeper
 \begin_layout Standard
-Whereas the hard-coded nature of 
-\begin_inset Formula $\mathcal{A}^{\text{HC}}$
-\end_inset
-
- spares the process of training, the following setup is used for training
- the 
+Whereas the hard-coded nature of spares the process of training, the following
+ setup is used for training the 
 \begin_inset Flex Code
 status open
 
@@ -560,15 +556,7 @@ DQN
 
 \end_inset
 
- agents 
-\begin_inset Formula $\mathcal{A}_{\text{SB3}}$
-\end_inset
-
- and 
-\begin_inset Formula $\mathcal{A}^{\text{DQN}}$
-\end_inset
-
-:
+ agents:
 \end_layout
 
 \begin_layout Itemize
@@ -584,7 +572,7 @@ the field is always chosen to be of the standard-size, i.e.,
 \end_layout
 
 \begin_layout Itemize
-the piece-id generator is set to the standard-compliant, shuffled 
+the piece-id generator is set to the guideline-compliant, shuffled 
 \begin_inset Formula $7$
 \end_inset
 
@@ -830,7 +818,7 @@ T
  performance on all such testing scenarios.
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
 In addition to the standard, shuffled 
 \begin_inset Formula $7$
 \end_inset
@@ -839,13 +827,13 @@ In addition to the standard, shuffled
  performances achieved with their non-random counterparts.
 \end_layout
 
-\begin_layout Remark
+\begin_layout Standard
 The non-random 
 \begin_inset Formula $7$
 \end_inset
 
--bag is included as a moderately challenging testing framework that is simple
- to setup and portably re-producible.
+-bag is included as a portably re-producible testing framework that is simple
+ to setup and non-trivial to solve.
 \end_layout
 
 \end_deeper
@@ -1096,7 +1084,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
+<features booktabs="true" tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top" width="0pt">
@@ -1542,6 +1530,10 @@ Successful
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -1629,13 +1621,6 @@ With the preparation for defining the framework of analysis, the performance
  of the individual agents is studied in the following sections.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Newpage newpage
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Agent by 
 \begin_inset Flex Code
@@ -1644,6 +1629,13 @@ status open
 \begin_layout Plain Layout
 sb3
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Agent-by-sb3"
 
 \end_inset
 
@@ -1868,15 +1860,15 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="left" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2289,6 +2281,10 @@ literal "false"
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -2353,15 +2349,15 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="left" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2750,6 +2746,10 @@ literal "false"
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -2927,7 +2927,7 @@ TensorBoard
 
 \begin_layout Standard
 Again, the best performance is achieved at Variation-2, whereas Variation-1
- finishes with the poorest performance.
+ again finishes with the poorest performance.
  
 \end_layout
 
@@ -2948,15 +2948,15 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="left" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3345,6 +3345,10 @@ literal "false"
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -3435,7 +3439,7 @@ Similar to PPO and A2C, Variation-2 performs the best, whereas the lowest
 \begin_inset Formula $r$
 \end_inset
 
--values are again obtained in training mode Variation-1.
+-values are obtained in training mode Variation-1.
 \end_layout
 
 \end_deeper
@@ -3455,8 +3459,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="left" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3611,7 +3615,7 @@ literal "false"
 </cell>
 </row>
 <row>
-<cell alignment="left" valignment="top" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3849,6 +3853,10 @@ literal "false"
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -3909,7 +3917,7 @@ On training resources
 \begin_layout Standard
 Every training variation finishes with plenty of time to spare.
  In fact, no training iteration spent more than 
-\begin_inset Formula $12$
+\begin_inset Formula $13$
 \end_inset
 
  hours to finish executing 
@@ -3925,13 +3933,13 @@ Every training variation finishes with plenty of time to spare.
 On the other hand, Variation-2 takes longer to finish than the other three
  training modes for all algorithms.
  This does not seem surprising, as this variant utilizes the vastest observation
--space, as defined previously
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-REF
-\end_layout
+-space, as defined previously in Example 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:Obs-Var-2"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -3951,7 +3959,8 @@ pid
 \end_layout
 
 \begin_layout Standard
-Regarding training time, the interested reader shall further study the 
+On the subject of training time, training time, the interested reader shall
+ further study the 
 \begin_inset Quotes xld
 \end_inset
 
@@ -3985,8 +3994,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="9">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="left" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="left" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -4079,7 +4088,7 @@ Best Alg.
 </cell>
 </row>
 <row>
-<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4447,7 +4456,7 @@ DQN
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4617,6 +4626,10 @@ Var-3
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -4777,8 +4790,8 @@ noprefix "false"
 \end_inset
 
 .
- Instead of performing extra testing, the author concludes that the agents
- as presented above fail to qualify as being successfully trained.
+ Instead of performing extra testing, one concludes that the agents as presented
+ above fail to qualify as being successfully trained.
 \end_layout
 
 \end_deeper
@@ -4790,7 +4803,14 @@ noprefix "false"
 \end_layout
 
 \begin_layout Section
-Self-Implemented DQN
+Agent by Self-Implemented DQN
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Agent-by-Self-Implemented-dqn"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -4892,7 +4912,7 @@ SB3
 \begin_inset Formula $40$
 \end_inset
 
- hours expires before the threshold of 
+ hours restriction expires before the threshold of 
 \begin_inset Formula $10$
 \end_inset
 
@@ -5001,8 +5021,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="3">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
@@ -5078,7 +5098,7 @@ Default
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5184,6 +5204,10 @@ Variation-3
 </row>
 </lyxtabular>
 
+\end_inset
+
+
+\begin_inset VSpace bigskip
 \end_inset
 
 
@@ -5306,7 +5330,7 @@ noprefix "false"
 , whereas Illustrations 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:dqn-var1-var2"
+reference "fig:dqn-var2-var3"
 plural "false"
 caps "false"
 noprefix "false"
@@ -5367,7 +5391,7 @@ status open
 \begin_layout Plain Layout
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:dqn-var1-var2"
+name "fig:dqn-var2-var3"
 
 \end_inset
 
@@ -5400,10 +5424,9 @@ The highly turbulent training process is obvious: each agent has achieved
 \begin_inset Formula $n_{L}$
 \end_inset
 
- values.
- To shed light on the oscillatory training process uniformly observed in
- the illustrations above for all four agents, the average number of pieces
- 
+ values at some point during the training process.
+ To shed light on the oscillatory training process uniformly observed above,
+ the average number of pieces 
 \begin_inset Formula $n_{P}$
 \end_inset
 
@@ -5413,6 +5436,14 @@ The highly turbulent training process is obvious: each agent has achieved
 
  are calculated with the initial 
 \begin_inset Formula $3'000$
+\end_inset
+
+ 
+\begin_inset Quotes xld
+\end_inset
+
+burn-in
+\begin_inset Quotes xrd
 \end_inset
 
  episodes trimmed:
@@ -5432,6 +5463,13 @@ Average
 
 \begin_layout Solution
 Result statement on self-implemented DQN
+\begin_inset CommandInset label
+LatexCommand label
+name "solu:Result-statement-dqn"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -5462,19 +5500,9 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Also, in this sense of average performance throughout training, the training-mod
-es leading to the best and worst performing agent are exactly the opposite
- in comparison to the Conclusion 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "solu:Result-statement-sb3-all"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- for 
+Also, in this particular sense of average performance throughout training,
+ the training-modes leading to the best and worst performing agent are exactly
+ the opposite in comparison to the analysis of 
 \begin_inset Flex Code
 status open
 
@@ -5484,12 +5512,22 @@ SB3
 
 \end_inset
 
-: now, the observation-mode Variation-1 with the fewest amount of components
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "solu:Result-statement-sb3-all"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+: here, the observation-mode Variation-1 with the fewest amount of components
  lead to the best-performing agent, more than tripling the 
 \begin_inset Formula $n_{P}$
 \end_inset
 
--value of Variation-2 of the highest observation component count.
+-value of Variation-2 with the highest observation component count.
 \end_layout
 
 \end_deeper
@@ -5509,14 +5547,14 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="5">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -5785,6 +5823,10 @@ Variation-3
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -5868,7 +5910,7 @@ pid
 
 \end_inset
 
--values using the best-performing agent, i.e., trained on Variation-1.
+-values using the best-performing agent, i.e., the one trained on Variation-1.
  One thus concludes:
 \end_layout
 
@@ -5965,12 +6007,12 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="3">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6267,6 +6309,10 @@ Full-
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -6302,8 +6348,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="4" columns="5">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -6365,7 +6411,7 @@ Min
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -6597,6 +6643,10 @@ Full-
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -6744,8 +6794,8 @@ ShetrisEnv
 
 \end_inset
 
-, thus yielding vastly superior result compared to the agents trained by
- 
+, possibly contributing the vastly superior result compared to the agents
+ trained by 
 \begin_inset Flex Code
 status open
 
@@ -6767,7 +6817,7 @@ SB3
 \end_layout
 
 \begin_layout Section
-Hard-coded Evolution Algorithm
+Agent by Hard-coded Evolution 
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Hard-coded-Evolution-Algorithm"
@@ -6778,7 +6828,7 @@ name "sec:Hard-coded-Evolution-Algorithm"
 \end_layout
 
 \begin_layout Standard
-As the final note, the excellent performance of the reference-agent specified
+As a final note, the excellent performance of the reference-agent specified
  in Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -6813,10 +6863,10 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-One shall note under various testing setups, the performance of the agent
- trained on self-implemented DQN delivers similarly pleasing results.
- However, the room for improvement follows immediately under testing sequences
- such as the static 
+One shall note that under various testing setups, the performance of the
+ agent trained on the self-implemented DQN delivers similarly pleasing results.
+ However, the room for improvement is on immediate display under testing
+ sequences such as the static 
 \begin_inset Flex Code
 status open
 
@@ -6849,12 +6899,12 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="6" columns="3">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -7138,6 +7188,10 @@ Full
 \end_inset
 
 
+\begin_inset VSpace bigskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -7173,8 +7227,8 @@ status open
 \begin_layout Plain Layout
 \begin_inset Tabular
 <lyxtabular version="3" rows="4" columns="6">
-<features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<features booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0pt">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -7489,6 +7543,10 @@ Yes
 </row>
 </lyxtabular>
 
+\end_inset
+
+
+\begin_inset VSpace bigskip
 \end_inset
 
 

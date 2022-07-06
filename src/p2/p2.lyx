@@ -136,8 +136,8 @@ Tetris
 \begin_inset Quotes xrd
 \end_inset
 
- alone by no means offers a stringent set of definitions for implementation
- and execution of the game.
+ alone by no means offers a stringent set of definitions for the implementation
+ and the execution of the game.
  Indeed, from the moment of its original conception in the 1980s by its
  inventor A.
  Pajitnov
@@ -168,8 +168,9 @@ noprefix "false"
 \begin_layout Standard
 The fact that every game release implements a separate set of derivative
  components from the visual effects to the specific rules not only leads
- to diversity of the game, but also difficulty of standardization at the
- same time, complicating the analysis of the underlying Tetris-game itself.
+ to diversity of the game, but also to difficulty of standardization at
+ the same time, complicating the analysis of the underlying Tetris-game
+ itself.
  
 \end_layout
 
@@ -221,24 +222,24 @@ literal "false"
 
  documenting the official set of recommended implementation for common component
 s of a Tetris implementation, ranging from the size of the field (cf.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Cross-Ref
-\end_layout
+ Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-field"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-)to the algorithm of the generator (cf.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Cross-Ref
-\end_layout
+) to the algorithm of the piece-id generator (cf.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Generator"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -271,19 +272,6 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Note
@@ -549,20 +537,20 @@ future-extendable offer maximal API-extendability for future work beyond
 \end_layout
 
 \begin_layout Standard
-Note that the compliance to the The Guideline (or any standardized recommendatio
-n) is a delicate matter.
- In fact, as shall be demonstrated later, deviations from The Guideline
- sometimes produce unexpected, yet helpful results, and might even provide
- insights from otherwise inaccessible angles.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Cross-Ref
-\end_layout
+Note that the compliance to The Guideline (or any standardized recommendation)
+ is a delicate matter.
+ In fact, as shall be demonstrated later in specification 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Testing-framework"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
+, deviations from The Guideline sometimes produce unexpected, yet helpful
+ results, and might even provide insights from otherwise inaccessible angles.
  The reader shall thus pay attention to statements regarding adherence to
  the official standard, whenever explicit statements are made in this thesis.
 \end_layout
@@ -594,8 +582,17 @@ Shetris
 \end_layout
 
 \begin_layout Standard
-This section explains key implementation-details in Shetris by providing
- notes and justifications on the specific design decisions.
+This section explains key implementation-details in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ by providing notes and justifications on the specific design decisions.
  This discussion also establishes the low-level foundation for the theoretical
  formulation of the control-process and the practical adaptation to the
  learning-environment in future chapters.
@@ -802,6 +799,21 @@ pid
  in the exact order from left to right as shown above.
 \end_layout
 
+\begin_layout Standard
+A brief justification of the ordering among the pieces is found in Remark
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "rem:ordering-of-pid"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -844,7 +856,7 @@ Tetromino
 \begin_inset Formula $4$
 \end_inset
 
--box limitation.
+-block limitation.
  Indeed, researches such as 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -903,18 +915,28 @@ noprefix "false"
 \end_inset
 
 , extension to other constellations of pieces with arbitrary number of blocks
- is easily realizable under conformity to the API as described in later
- sections.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Cross-Ref
-\end_layout
+ is easily realizable under conformity to the API as described in Listing
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:relative-coordinates-data"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
+ and Listing 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:get-relative-coordinates"
+plural "false"
+caps "false"
+noprefix "false"
 
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -957,6 +979,10 @@ identity
  of the piece is known.
  However, rotational inputs to the piece might still lead to changes of
  its 
+\begin_inset Quotes xld
+\end_inset
+
+
 \begin_inset Flex Emph
 status open
 
@@ -964,6 +990,10 @@ status open
 shape
 \end_layout
 
+\end_inset
+
+
+\begin_inset Quotes xrd
 \end_inset
 
  (without modification to the 
@@ -1315,8 +1345,12 @@ The O-piece has the same piece-shape for any of the rotational values
 
 \begin_layout Standard
 Assuming no positional shifts in the vertical or the horizontal direction,
- all other pieces, every rotational value corresponds to one distinct configurat
-ion of the piece.
+ every rotational value corresponds to one distinct configuration of the
+ piece for all other 
+\begin_inset Formula $6$
+\end_inset
+
+ pieces.
  Their respective configurations at 
 \begin_inset Formula $\texttt{rot}\eqqcolon r=0$
 \end_inset
@@ -1786,7 +1820,7 @@ Shetris
 
 \end_inset
 
-, the field is represented by a two-dimensional field array of boolean entries
+, the field is represented by a two-dimensional array of boolean entries
  of the matrix-type 
 \begin_inset Flex Code
 status open
@@ -1808,7 +1842,7 @@ numpy
 \end_inset
 
 .
- Referred to as 
+ Referred to as the 
 \begin_inset Quotes xld
 \end_inset
 
@@ -1906,14 +1940,15 @@ Field
 \end_layout
 
 \begin_layout Standard
-A brief enumeration of common operations of the field, for example, finding
- fully occupied rows and performing line-clears, is found later 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Add reference
-\end_layout
+A brief enumeration of common operations of the field, for example, of finding
+ fully occupied rows and of performing line-clears, is found in Listing
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lis:typical-operations-of-Field"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -2164,7 +2199,7 @@ falls
 \end_layout
 
 \begin_layout Standard
-At this point, the coordinate, of every block of the field is found with
+At this point, the coordinate of every block of the field is found with
  the following schematics:
 \begin_inset Formula 
 \[
@@ -2292,7 +2327,7 @@ I
 
 \end_inset
 
--piece.
+-piece in all rotational configurations.
 \end_layout
 
 \end_deeper
@@ -2311,6 +2346,13 @@ status open
 \begin_layout Plain Layout
 Shetris
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:R-coord-matrix"
 
 \end_inset
 
@@ -2376,7 +2418,7 @@ where the reference-block
 \end_layout
 
 \begin_layout Example
-Some Relative coordinates
+Some relative-coordinates
 \end_layout
 
 \begin_deeper
@@ -2442,7 +2484,7 @@ It shall be pointed out that the reference-block
 \begin_inset Formula $\star$
 \end_inset
 
- can be chosen as arbitrarily within the 
+ can be chosen arbitrarily within the 
 \begin_inset Formula $4\times4$
 \end_inset
 
@@ -2462,8 +2504,9 @@ Shetris
 \end_inset
 
  is based on the indexing-convention as described previously: in this way,
- the relative-coordinates in both index-axes within a square-block is guaranteed
- to be always non-negative, and conforming to the standard 
+ all relative-coordinates in both index-axes within a the square-of-blocks
+ are guaranteed to be always non-negative, and conforming to the standard
+ 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2903,7 +2946,7 @@ broadcast-adding
 \begin_inset Quotes xrd
 \end_inset
 
- the absolute position, internally encoded as 
+ the absolute position, internally denoted by as 
 \begin_inset Flex Code
 status open
 
@@ -2921,7 +2964,17 @@ pos
 \begin_inset Formula $\texttt{[R-COORD]}$
 \end_inset
 
--matrix:
+-matrix as first defined in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:R-coord-matrix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
 \texttt{pos}\left(\star\right)\widetilde{+}\texttt{[R-COORD]}\coloneqq\begin{bmatrix}\left(\star_{0},\star_{1}\right) & \left(\star_{0}+1,\star_{1}+0\right) & \left(\star_{0}+2,\star_{1}+0\right) & \left(\star_{0}+3,\star_{1}+0\right)\\
@@ -3526,7 +3579,7 @@ Tetris-Guideline
 
 \end_inset
 
- stipulates the usage of the 
+ stipulates the usage of the shuffled 
 \begin_inset Quotes xld
 \end_inset
 
@@ -3709,7 +3762,7 @@ numpy
 
 \end_inset
 
-'s latest 
+'s 
 \begin_inset Quotes xld
 \end_inset
 
@@ -3769,16 +3822,14 @@ previewing
 \end_inset
 
  of future pieces and is widely utilized in existing implementations.
- Considering the fact that the caller is likely an observing agent as described
- in 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-
-\color greyedouttext
-REF
-\end_layout
+ Considering the fact that the caller is likely an observing agent as shown
+ in Example 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:Obs-Var-2"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -3880,7 +3931,7 @@ Shetris
 
 \end_inset
 
- provides the similar flexible bag-based facility for non-shuffled 
+ provides the same flexible bag-based facility for non-shuffled 
 \begin_inset Flex Code
 status open
 
@@ -3892,7 +3943,7 @@ pid
 
 -generation.
  In other words, the members of the input sequence-pool are simply repeated
- over in the exact order specified at creation when exhausted.
+ over in the exact order as specified at creation when exhausted.
 \end_layout
 
 \begin_layout Standard
@@ -3907,7 +3958,7 @@ noprefix "false"
 
 \end_inset
 
- explained later.
+ shown later.
 \end_layout
 
 \begin_layout Standard
@@ -3967,17 +4018,17 @@ Shetris
 
 \end_inset
 
-, whereas detailed discussions are found in later sections.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-C_REF
-\end_layout
+, whereas detailed discussions are found in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Definition
@@ -4025,7 +4076,8 @@ numpy.ndarray
 \end_inset
 
 , any such shifting operation translates to a simple addition or subtraction
- operation from the relative-coordinates, as explained in Definition 
+ operation applied to the relative-coordinates, as explained in Definition
+ 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "def:Construction-of-absolute-coordinates"
@@ -4228,6 +4280,14 @@ dropping
 \begin_inset Quotes xrd
 \end_inset
 
+, or 
+\begin_inset Quotes xld
+\end_inset
+
+falling
+\begin_inset Quotes xrd
+\end_inset
+
  of a piece as specialization.
 \end_layout
 
@@ -4331,7 +4391,7 @@ name "lis:Common-displacement-operations"
 
 \end_inset
 
-Common displacement operations of the 
+Common movement operations of the 
 \begin_inset Flex Code
 status open
 
@@ -4429,7 +4489,7 @@ Field
 -class that abstracts the field of the Tetris-game include locating fully-occupi
 ed rows, finding the indexes of currently occupied blocks, and ultimately,
  performing the line-clear operation.
- The prototypes of these functionalities are provided in Listing 
+ The signatures of these functionalities are provided in Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lis:typical-operations-of-Field"
@@ -4448,6 +4508,10 @@ status open
 \begin_layout Plain Layout
 
 # game/src/engine/placement/field.py
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -4651,7 +4715,7 @@ pid
 
 \end_inset
 
- values from any pool of potential values with optional randomness.
+ values from any pool of potential candidates with optional randomness.
 \end_layout
 
 \begin_layout Itemize
@@ -4725,6 +4789,7 @@ Shetris
  of Tetris as a whole.
  Structurally, one observes:
 \begin_inset listings
+lstparams "language=C"
 inline false
 status open
 
@@ -4795,6 +4860,13 @@ The interested reader is referred to the source-code library for deeper
 
 \begin_layout Section
 Formulation of the Control-Process
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Formulation-of-the-control-process"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5155,7 +5227,7 @@ Before defining the action
 \end_layout
 
 \begin_layout Definition
-Time-stepping of 
+Discrete time-stepping of 
 \begin_inset Flex Noun
 status open
 
@@ -5202,7 +5274,17 @@ pids = generator.get_pids()
 
 \end_inset
 
- to generate and retrieve the new piece-id(s).
+ to generate and retrieve the new piece-id(s) as described in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Generator"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \end_deeper
@@ -5214,8 +5296,15 @@ pids = generator.get_pids()
 \end_layout
 
 \begin_layout Standard
-Thus follow the definitions of the action and the evolution in the following
- section:
+Thus follow the definitions of the action 
+\begin_inset Formula $a$
+\end_inset
+
+ and the evolution 
+\begin_inset Formula $f$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Subsubsection
@@ -5371,7 +5460,7 @@ fall
 \begin_inset Formula $f^{\text{fall}}$
 \end_inset
 
- directly refers to the Listing 
+ directly refers to Listing 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lis:Common-displacement-operations"
@@ -5645,7 +5734,27 @@ status open
 -pairs.
  However, the perceptive reader might object the implicit wastefulness of
  this approach.
- This specific intricacy is discussed in later chapters.
+ This specific intricacy is further elaborated upon in discussion 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Specialized-pairing-of-action-obs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, as well as 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "solu:Improvements-of-self-dqn-over-sb3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \end_deeper

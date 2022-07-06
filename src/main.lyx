@@ -219,7 +219,7 @@ ch | 17-943-358
 
 \begin_layout Abstract
 This thesis explores various techniques from Reinforcement-Learning for
- the solving of the video-game Tetris.
+ the purpose of solving the video-game Tetris.
  A modularized, modifiable and extendable implementation of the Tetris-game
  is written from scratch, complying with the essential elements of the game's
  standardized guideline.
@@ -231,19 +231,21 @@ This thesis explores various techniques from Reinforcement-Learning for
 
 \begin_layout Abstract
 Four different modes with varying observation-mechanisms are deployed for
- training with three state-of-the-art algorithms of established implementations
- libraries, one of which, the Deep-Q-Network, is implemented anew with injected
- adaptations to accommodate the specific evolution structure of the Tetris-game.
+ training with three state-of-the-art algorithms of established implementations,
+ one of which, the Deep-Q-Network, is implemented anew with injected adaptations
+ to accommodate the specific evolution structure of the Tetris-game.
 \end_layout
 
 \begin_layout Abstract
-Two assessment criteria are established for performance evaluation of the
+Two assessment criteria are utilized for the performance evaluation of the
  trained agents: in addition to heuristic-driven threshold-comparison of
  parameters logged during training, a static, hard-coded reference-agent
  is adapted to the environment.
- Under the suitable training-mode, the self-implemented Deep-Q-Network is
- found to yield a trained agent of marginally inferior capability in comparison
- to the reference performance in almost all testing frameworks.
+ Whereas the direct usage of existing library methods produces lackluster
+ results, the self-implemented Deep-Q-Network is found to yield a trained
+ agent of marginally inferior capability in comparison to the reference
+ performance in the majority of the testing scenarios given the selection
+ of the suitable training-mode.
 \begin_inset VSpace 150baselineskip%
 \end_inset
 
@@ -254,7 +256,7 @@ Two assessment criteria are established for performance evaluation of the
 This project, conducted under the supervision of Prof.
  Dr.
  J.
- Buhmann, is executed under the framework of a Bachelor-Thesis under the
+ Buhmann, is executed within the framework of a Bachelor-Thesis under the
  catalogue identifier 
 \begin_inset Flex Code
 status open
@@ -738,16 +740,6 @@ filename "p4/p4.lyx"
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "p4/p4.1.lyx"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -780,21 +772,6 @@ filename "p5/p5.lyx"
 LatexCommand bibtex
 btprint "btPrintAll"
 bibfiles "bib/tetris,bib/rl,bib/code,bib/misc"
-
-\end_inset
-
-
-\begin_inset CommandInset nomencl_print
-LatexCommand printnomenclature
-set_width "auto"
-
-\end_inset
-
-
-\begin_inset CommandInset index_print
-LatexCommand printindex
-type "idx"
-name "Index"
 
 \end_inset
 
