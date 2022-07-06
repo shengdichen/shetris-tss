@@ -120,118 +120,137 @@ Executive Summary
 The gist
 \end_layout
 
-\begin_layout Definition
-The whole thesis
+\begin_layout Standard
+At this point, the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-To begin with, a fully extendable Tetris-engine is written completely from
- scratch.
- The engine is agnostic to the source of input and the rule-set, allowing
- the source to be both human and machine.
- The extendability is further seen in the flexible choice of front-ends.
- As a bare-minimum, text-based feedback is provided to the calling terminal.
- The field size and the piece-id generator are other variable components.
-\end_layout
-
-\begin_layout Enumerate
-This thesis considers an online version of the Tetris-game.
- Specifically, no piece preview is available.
- The episode is defined as the the action 
-\begin_inset Formula $a$
 \end_inset
 
- allowed for the acting agent for every piece.
- Three separate solutions are 
+-Project, at the time of writing, is summarized as follows:
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-implement the game engine
+\begin_layout Standard
+The uneven quality of various online implementations of Tetris used for
+ machine-based learning, coupled with the disappointing training results
+ from direct usage of raw game files binaries gave rise to the necessity
+ of programming the Tetris-game from scratch.
+ The consideration of the diversity of existing renditions of the game and
+ the goal for adaptation to the maximal amount of rule-sets drive the implementa
+tion process of the core engine that abstracts the main logic of the game.
 \end_layout
 
-\end_deeper
-\begin_layout Enumerate
+\begin_layout Standard
+With the theoretical MDP-formulation of the Tetris, an environment conforming
+ to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
 gym
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-implement the four core functions
-\end_layout
-
-\begin_layout Enumerate
-register
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-sb3
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-train
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-train a while
-\end_layout
-
-\begin_layout Enumerate
-record a short game
-\end_layout
-
-\begin_layout Enumerate
-break after some amount of steps
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-test
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-test on games (full random, random)
-\end_layout
-
-\begin_layout Enumerate
-test on atomics (given a field, and specific next pieces)
-\end_layout
-
-\end_deeper
-\end_deeper
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
+'s interface for the description of an decision-making agent is created.
+ Three state-of-the-art algorithms of Reinforcement-Learning as implemented
+ by the standard library Stable-Baselines3 (
+\begin_inset Flex Code
+status open
 
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+) are utilized in four training-modes of the environment.
+ In addition, a Deep-Q-Network tuned for the action and observation-structure
+ specific to Tetris is implemented separately, and trained under the same
+ conditions as for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Performance measures are established with both heuristic reasoning and an
+ established hard-coded, purely reward-driven reference agent.
+ While the raw usage of algorithms from the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ library yield unsatisfactory results, the tailored DQN solution achieves
+ marginally inferior performance in comparison to the reference under all
+ testing scenarios.
 \end_layout
 
 \begin_layout Subsection
-Time-lines
+Timeline
 \end_layout
 
 \begin_layout Standard
-The initial 
-\begin_inset Formula $3.5$
+The administrative details of this thesis can be retrieved under the course-cata
+logue of ETH Zürich under the registration number 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+401-3990-18L
+\end_layout
+
 \end_inset
 
- weeks were spent collecting initial ideas of mathematically formulating
- the problem
+.
 \end_layout
 
 \begin_layout Standard
-Another week was spent 
+The total execution time is estimated at approximately 
+\begin_inset Formula $3$
+\end_inset
+
+ months of full-time work, including the drafting of the thesis and the
+ composing of the source-code.
+ Specifics are found in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Time-stamps-of-key-activities"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="5">
+<lyxtabular version="3" rows="9" columns="3">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -254,29 +273,15 @@ Activities
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Time-Stamps
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+Duration (
+\begin_inset Formula $\times$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-Duration
+week)
 \end_layout
 
 \end_inset
@@ -287,21 +292,12 @@ Duration
 \begin_inset Text
 
 \begin_layout Plain Layout
-Formulate Tetris mathematically
+Theoretical formulation; Structuring of project
 \end_layout
 
 \end_inset
 </cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -314,15 +310,9 @@ Formulate Tetris mathematically
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $2$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -334,7 +324,7 @@ Formulate Tetris mathematically
 \begin_inset Text
 
 \begin_layout Plain Layout
-Survey 
+Survey, testing and inspection of 
 \begin_inset Flex Code
 status open
 
@@ -349,7 +339,7 @@ gym
 status open
 
 \begin_layout Plain Layout
-sb3
+SB3
 \end_layout
 
 \end_inset
@@ -368,28 +358,13 @@ sb3
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $1.5$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -401,7 +376,7 @@ sb3
 \begin_inset Text
 
 \begin_layout Plain Layout
-Implement 
+Implementation of 
 \begin_inset Flex Noun
 status open
 
@@ -411,7 +386,7 @@ Shetris
 
 \end_inset
 
-'s game module
+'s core modules
 \end_layout
 
 \end_inset
@@ -425,28 +400,15 @@ Shetris
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+approx.
+ 
+\begin_inset Formula $2.5$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -492,28 +454,15 @@ sb3
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+approx.
+ 
+\begin_inset Formula $1.5$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -543,24 +492,9 @@ Otherwise engaged: break from project
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $4$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -586,28 +520,13 @@ Engineer further Observation/Reward pairs
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $1$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -633,28 +552,13 @@ Implementation of Evolution-Algorithm; DQN
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $2$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -684,24 +588,9 @@ Collection of results; compose thesis
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $1.5$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -712,6 +601,34 @@ Collection of results; compose thesis
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Time-stamps-of-key-activities"
+
+\end_inset
+
+Time-stamps of key activities
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 Two elements surpassed the duration of initial planning:
 \end_layout
 
@@ -736,14 +653,10 @@ Shetris
 
 \end_inset
 
-, the process of its adaptation to 
+, the process of its adaptation to
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
 probably the most difficult decision was the one on implementing the 
 \begin_inset Flex Noun
 status open
@@ -759,7 +672,7 @@ Shetris
  environment, the decision was made after following thorough analysis of
  the status-quo.
  It is the author's sincere hope that the thesis-work as reported in the
- previous chapters shall serve convince the reader that 
+ previous chapters shall serve convince the reader that
 \end_layout
 
 \end_inset
@@ -767,109 +680,15 @@ Shetris
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Future Work
-\end_layout
-
-\begin_layout Subsection
-Into the future
-\end_layout
-
-\begin_layout Standard
-The author views the above insufficiency as a major chance for future improvemen
-t:
-\end_layout
-
-\begin_layout Subsubsection
-Improvement in training
-\end_layout
-
-\begin_layout Standard
-The training process could be further stream-lined.
- In particular, 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-SB3
-\end_layout
-
-\end_inset
-
- offers utilities to convert an existing environment to vectorized ones
- for massively parallel training.
- Due to 
-\end_layout
-
-\begin_layout Enumerate
-Using SB3's vectorized training environment
-\end_layout
-
-\begin_layout Enumerate
-parallelize calculation
-\end_layout
-
-\begin_layout Subsubsection
-Higher complexity
-\end_layout
-
-\begin_layout Enumerate
-Add the MOVE-phase
-\end_layout
-
-\begin_layout Enumerate
-explore different rules of Tetris: implement more variations for engines
-\end_layout
-
-\begin_layout Enumerate
-Add previewing
-\end_layout
-
-\begin_layout Subsubsection
-Other improvements
-\end_layout
-
-\begin_layout Enumerate
-split-pane layout: Left and right: human VS player
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Unfinished business
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-The author implemented several reward function based on intuition.
-\end_layout
-
-\end_deeper
 \begin_layout Section
 Epilogue
 \end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
 
 \begin_layout Subsection
 Original conception
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 The
 \begin_inset Flex Noun
 status open
@@ -880,8 +699,8 @@ Shetris
 
 \end_inset
 
--project was initially conceived when the author was struggling for the
- number one spot on the Haunted-mode of Tetris-Ultimate
+-project was initially conceived when the author was battling for the top
+ spot on the Haunted-mode of Tetris-Ultimate
 \begin_inset Foot
 status collapsed
 
@@ -902,46 +721,198 @@ literal "false"
  at the top of the game-field.
 \end_layout
 
-\begin_layout Plain Layout
-When composing this thesis, the initial wish of solving conquering the game
- to truly human-level play knowledge quickly subsided.
- The time-limit embedded in the framework of a Bachelor-Thesis dictates
- down-scaling of the goals, as well as the span of methodologies.
-\end_layout
-
-\begin_layout Plain Layout
-Initially, this thesis project envisioned tackling a variety of Tetris implement
-ations with near expert-level
-\end_layout
-
-\begin_layout Plain Layout
+\begin_layout Standard
 The immediate reaction after conducting a general survey of the status-quo
- of current researches on applying reinforcement-learning on the Tetris-game
- was mixed: on the one hand, the positive results reaffirm the possibility
- of obtaining significant result, 
+ of current researches on applying Reinforcement-Learning to the Tetris-game
+ was mixed: on the one hand, several exciting projects promise the possibility
+ of successful adaptation of the algorithms of the field to the game.
+ On the other hand, such project-repositories generally sport sloppy implementat
+ions of Tetris and display deficiencies on the matter of fundamental software
+ engineering.
 \end_layout
 
-\begin_layout Subsection
-Meeting reality
-\end_layout
-
-\begin_layout Plain Layout
-month into the project, However, the fundamental structure of the project
- is conceived with modularity and extendability in mind: the engine, separating
- configuration, field and the generator, is itself segregated from further
-\end_layout
-
-\begin_layout Plain Layout
-The agent 
+\begin_layout Standard
+The decision was then made to first embark on the programming of the game
+ as a stand-alone component, before transitioning to the training process
+ within the reinforcement-learning framework, along with the theoretical
+ scrutiny of Tetris as a whole towards the mathematical formulation of the
+ mechanism of the game-play.
 \end_layout
 
 \begin_layout Subsection
 Mixed sentiments
 \end_layout
 
+\begin_layout Standard
+Initially, this thesis-project envisioned the tackling of a variety of Tetris
+ rule-sets with near expert-level finesse.
+ However, as the project progressed, this initial ambition soon subsided:
+ the time-restriction embedded in the framework of a Bachelor-Thesis dictates
+ down-scaling of the span of the goals and of the methodologies.
+ Furthermore, the agent trained on the tuned algorithm still left a lot
+ to be desired in some basic testing scenarios and failed to out-perform
+ existing implementations.
+\end_layout
+
+\begin_layout Standard
+However, the gulf between the original envisioning and the current progress
+ also initiates vast room for improvement.
+ Given the fundamental design concept of extendability and modularity, the
+ fundamental structure of the source-code welcomes modifications and additions
+ of functionality.
+ With this, various directions of possible future work are conceivable:
+\end_layout
+
+\begin_layout Subsection
+Future work
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Future-work"
+
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The currently used, trimmed action-space as specified in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shall be enriched to accommodate the full action-space of the Tetris-game.
+ The effect of piece-previewing, as mentioned in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Generator"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shall be studied and compared to the current version without such look-ahead.
+\end_layout
+
+\begin_layout Standard
+For the environment itself, reward mechanisms beyond the current formula
+ as defined in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Reward-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shall be tested and analyzed, as suggested in general RL literature such
+ as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "reward-enginnering"
+literal "false"
+
+\end_inset
+
+.
+ In fact, some two-state rewards, i.e., rewards calculated based on two different
+ states were originally explored in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, but were neither further pursued nor documented in this thesis due to
+ disappointing results.
+\end_layout
+
+\begin_layout Standard
+Furthermore, it shall be envisioned to allow side-by-side game-plays among
+ multiple agents, in particular, the split-screen setup between human-player
+ and software-agents shall be considered, as well as the potential for deploying
+ multi-player
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Discussion of multi-player game-play
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Multiplayer_techniques"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Scoring-mechanism of multi-player mode
+\begin_inset CommandInset href
+LatexCommand href
+target "https://tetris.wiki/Garbage"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ game-modes for dynamic intra-agent training and testing.
+\end_layout
+
+\begin_layout Standard
+Finally, the training process itself shall be further stream-lined to for
+ the purpose of more detailed logging, more accurate parameter tuning and
+ the possibility of effective usage of vectorized training on high-performance
+ computing clusters.
+ Also, more intensive tuning of hyper-parameters, as advocated by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl"
+literal "false"
+
+\end_inset
+
+, shall be performed if freedom of resource and and time shall so permit.
+\begin_inset VSpace 150baselineskip%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The enumeration is by no means exhaustive.
+ The final, and probably the most resounding message of the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+-Project thus lies within the breadth of the spanning coverage of continual
+ research and the depth of the potential promise for future exploration.
 \end_layout
 
 \begin_layout Section
@@ -956,15 +927,28 @@ To the supervisor of this thesis, Prof.
  of this thesis in its earliest infancy, for the inspiring and philosophical
  approach to the field of machine-learning as a whole, and, of course, for
  granting the much needed extension for completion;
+\begin_inset VSpace 150baselineskip%
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-To my advisors, Ivan, Ami and Eugene: my heart-felt thanks to the many extended
- sessions of talks, inputs and ideas;
+To my advisors, Ivan, Ami and Eugene: my heart-felt thanks to the extended
+ sessions of talks, the continuous support and the constructive suggestions;
+\begin_inset VSpace 150baselineskip%
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-To my family: my sincere gratitude for the unyielding support over the years;
+To my family and my friends: my sincere gratitude for the unyielding support
+ and care;
+\begin_inset VSpace 150baselineskip%
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

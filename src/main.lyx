@@ -218,21 +218,32 @@ ch | 17-943-358
 \end_layout
 
 \begin_layout Abstract
-This thesis explores various techniques to solving the classic video-game
- Tetris.
- A fully extensible implementation of the Tetris-game is implemented, complying
- with essential elements of the game's official standard.
- Designed with the purpose of full accessibility for modification, this
- implementation is fully accessible for non-conforming modifications, and
- offers interaction possibilities with both human interaction and machine
- inputs.
+This thesis explores various techniques from Reinforcement-Learning for
+ the solving of the video-game Tetris.
+ A modularized, modifiable and extendable implementation of the Tetris-game
+ is written from scratch, complying with the essential elements of the game's
+ standardized guideline.
+ Furnished with feedback capability and support for both human-interactive
+ and machine-direct inputs, the implemented engine is then forged to a trainable
+ agent environment in accordance to the development of the Markov Decision
+ Process formulation of the general Tetris game-play.
 \end_layout
 
 \begin_layout Abstract
-Adapted to accept inputs from machine-based agents, the resultant environment
- is Solutions from heuristics-driven evolutionary-algorithms and deep reinforcem
-ent-learning are explored and studied using various observation-mechanisms
- and reward-dynamics.
+Four different modes with varying observation-mechanisms are deployed for
+ training with three state-of-the-art algorithms of established implementations
+ libraries, one of which, the Deep-Q-Network, is implemented anew with injected
+ adaptations to accommodate the specific evolution structure of the Tetris-game.
+\end_layout
+
+\begin_layout Abstract
+Two assessment criteria are established for performance evaluation of the
+ trained agents: in addition to heuristic-driven threshold-comparison of
+ parameters logged during training, a static, hard-coded reference-agent
+ is adapted to the environment.
+ Under the suitable training-mode, the self-implemented Deep-Q-Network is
+ found to yield a trained agent of marginally inferior capability in comparison
+ to the reference performance in almost all testing frameworks.
 \begin_inset VSpace 150baselineskip%
 \end_inset
 
@@ -243,7 +254,18 @@ ent-learning are explored and studied using various observation-mechanisms
 This project, conducted under the supervision of Prof.
  Dr.
  J.
- Buhmann, is executed under the framework of a Bachelor-Thesis at ETH Zürich.
+ Buhmann, is executed under the framework of a Bachelor-Thesis under the
+ catalogue identifier 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+401-3990-18L
+\end_layout
+
+\end_inset
+
+ at ETH Zürich.
 \end_layout
 
 \begin_layout Standard
@@ -455,7 +477,7 @@ filename "p2/p2.lyx"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Summary
 The game (one episode)
@@ -709,6 +731,16 @@ The Presentation of the Results
 \begin_inset CommandInset include
 LatexCommand input
 filename "p4/p4.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "p4/p4.1.lyx"
 
 \end_inset
 

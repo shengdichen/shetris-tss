@@ -199,7 +199,7 @@ Formulation of the MDP
 
 \begin_layout Standard
 A critical framework for the analysis and quantification of agent performance,
- the Markov decision-process (MDP), as described in standard literature
+ the Markov Decision Process (MDP), as described in standard literature
  such as 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -208,8 +208,17 @@ literal "false"
 
 \end_inset
 
-, builds upon the discrete control-process as formulated previously by enriching
- it with the notion of step-wise 
+, builds upon the discrete control-process as formulated previously 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+ by enriching it with the notion of step-wise 
 \begin_inset Flex Emph
 status open
 
@@ -235,16 +244,28 @@ Shetris
 \end_layout
 
 \begin_layout Subsection
-Definition of rewards
+Definition of reward
 \end_layout
 
 \begin_layout Definition
-The reward
+The reward 
+\begin_inset Formula $r_{\star}$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-With every evolution from of the system from state 
+At any time-step 
+\begin_inset Formula $\star$
+\end_inset
+
+, the reward 
+\begin_inset Formula $r_{\star}$
+\end_inset
+
+ is produced as the system evolves from state 
 \begin_inset Formula $y_{\star}$
 \end_inset
 
@@ -252,13 +273,9 @@ With every evolution from of the system from state
 \begin_inset Formula $y_{\star+1}$
 \end_inset
 
-, a reward 
-\begin_inset Formula $r$
-\end_inset
-
- is produced.
- This produces the following augmented illustration based on the first rendition
- of the graph in Definition 
+.
+ This leads to the following augmented illustration based on its first rendition
+ in Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "def:Formulation-of-Control-Process"
@@ -304,161 +321,8 @@ Note that no theoretical range for reward
 \end_layout
 
 \begin_layout Standard
-The MDP of a Tetris-game thus follows naturally:
-\end_layout
-
-\begin_layout Definition
-MDP of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisEnv
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-The state 
-\begin_inset Formula $y$
-\end_inset
-
- and the state-space 
-\begin_inset Formula $Y\ni y$
-\end_inset
-
- is provided with Definition 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-CROSS_REF
-\end_layout
-
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-The action 
-\begin_inset Formula $a$
-\end_inset
-
- and the action-space 
-\begin_inset Formula $A\ni a$
-\end_inset
-
- is provided with Definition 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-CROSS_REF
-\end_layout
-
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-The transition-probability 
-\begin_inset Formula $P$
-\end_inset
-
- is captured by the evolution 
-\begin_inset Formula $f$
-\end_inset
-
- in Definition 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-CROSS_REF
-\end_layout
-
-\end_inset
-
-;
-\end_layout
-
-\begin_layout Enumerate
-The reward 
-\begin_inset Formula $r$
-\end_inset
-
- is specified in the upcoming section 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-CROSS_REF
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The 
-\begin_inset Formula $4$
-\end_inset
-
--tuple 
-\begin_inset Formula $\left(S,A,P,r\right)$
-\end_inset
-
- completes the MDP formulation of 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-ShetrisEnv
-\end_layout
-
-\end_inset
-
- in general.
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Source of randomness of 
-\begin_inset Flex Noun
-status open
-
-\begin_layout Plain Layout
-Tetris
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-For the game of Tetris as a whole, the only possible source of randomness
- is the generator, as the evolution mechanism of the field is completely
- deterministic.
-\end_layout
-
-\begin_layout Standard
-In 
+The following section describes the construction of the reward mechanism
+ for 
 \begin_inset Flex Noun
 status open
 
@@ -468,26 +332,7 @@ Shetris
 
 \end_inset
 
-, this source of stochasticity could also be removed by specifying a non-random
- generator as described in previous sections
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-C_REF
-\end_layout
-
-\end_inset
-
 .
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
@@ -501,7 +346,7 @@ Episode Termination
 \begin_layout Standard
 Following standard practices in reward formulation, the component of the
  reward by checking if the episode has elapsed 
-\begin_inset Formula $r_{\text{GO}}$
+\begin_inset Formula $r^{\text{GO}}$
 \end_inset
 
  is defined as:
@@ -510,7 +355,7 @@ Following standard practices in reward formulation, the component of the
 \begin_layout Standard
 \begin_inset Formula 
 \[
-r_{\text{GO}}\coloneqq\left\{ \begin{alignedat}{2} & 1 & \qquad & \text{if episode not terminated}\\
+r^{\text{GO}}\coloneqq\left\{ \begin{alignedat}{2} & +1 & \qquad & \text{if episode not terminated}\\
  & -2 &  & \text{otherwise}
 \end{alignedat}
 \right.
@@ -521,7 +366,7 @@ r_{\text{GO}}\coloneqq\left\{ \begin{alignedat}{2} & 1 & \qquad & \text{if episo
 Similar reward components based on episode status are also utilized in 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "tetris-nuno,uvipen"
+key "uvipen,tetris-nuno"
 literal "false"
 
 \end_inset
@@ -530,7 +375,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-The seemingly innocuous checking against episode termination, or colloquially
+The seemingly innocuous checking against episode-termination, or colloquially
  against the state of 
 \begin_inset Quotes xld
 \end_inset
@@ -539,7 +384,8 @@ game-over
 \begin_inset Quotes xrd
 \end_inset
 
-, is non-trivial, as multiple such implementations exist.
+, is non-trivial, as multiple definitions exist across various implementations
+ of the game.
  Again, the reader is encouraged to visit the wiki-page
 \begin_inset Foot
 status open
@@ -573,7 +419,7 @@ Shetris
 \end_layout
 
 \begin_layout Definition
-Criteria of episode termination in 
+Criteria of episode-termination in 
 \begin_inset Flex Noun
 status open
 
@@ -621,7 +467,7 @@ block-out
 \begin_inset Quotes xrd
 \end_inset
 
- variation of described in the web-page nominated above.
+ variation described in the page nominated above.
 \end_layout
 
 \end_deeper
@@ -645,7 +491,7 @@ Line-Clears
 \begin_layout Standard
 Resulting in scores in most Tetris implementations, the line-clears constitute
  another apparent reward candidate 
-\begin_inset Formula $r_{\text{LC}}$
+\begin_inset Formula $r^{\text{LC}}$
 \end_inset
 
 .
@@ -654,7 +500,14 @@ Resulting in scores in most Tetris implementations, the line-clears constitute
 
 \begin_layout Definition
 Reward by Line-Clears 
-\begin_inset Formula $r_{\text{LC}}$
+\begin_inset Formula $r^{\text{LC}}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Reward-line-clear"
+
 \end_inset
 
 
@@ -669,7 +522,7 @@ The reward induced by a line-clear of
  (full-)lines is distributed as follows:
 \begin_inset Formula 
 \begin{equation}
-\begin{alignedat}{1}r_{\text{LC}}\left(n\right) & \wasypropto k\left(n\right)\\
+\begin{alignedat}{1}r^{\text{LC}}\left(n\right) & \wasypropto k\left(n\right)\\
  & \coloneqq c\cdot k\left(n\right)
 \end{alignedat}
 \label{eq:reward-by-line-clear}
@@ -685,12 +538,12 @@ where the function
 \begin_inset Formula $4$
 \end_inset
 
--block pieces
+-block pieces only game-play
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-also known as 
+In other words, every piece is a 
 \begin_inset Quotes xld
 \end_inset
 
@@ -706,12 +559,12 @@ Tetrimino
 \begin_inset Quotes xrd
 \end_inset
 
-
+.
 \end_layout
 
 \end_inset
 
- only game-play is defined by The Guideline
+ is defined by The Guideline
 \begin_inset Foot
 status collapsed
 
@@ -732,12 +585,11 @@ literal "false"
  as:
 \begin_inset Formula 
 \[
-k\left(n\right)\coloneqq\left\{ \begin{alignedat}{2} & 0 & \qquad & n=0\\
+k\left(n\in\left\{ 0,1,2,3,4\right\} \right)\coloneqq\left\{ \begin{alignedat}{2} & 0 & \qquad & n=0\\
  & 1 &  & n=1\\
  & 3 &  & n=2\\
  & 5 &  & n=3\\
- & 8 &  & n=4\\
- & \text{undefined} &  & \text{otherwise}
+ & 8 &  & n=4
 \end{alignedat}
 \right.
 \]
@@ -757,12 +609,8 @@ per-cleared-line
 \end_inset
 
  score is awarded with more lines cleared at the same time.
- Note that the maximal value for 
-\begin_inset Formula $n$
-\end_inset
-
- is 
-\begin_inset Formula $4$
+ Note that at the maximal value of 
+\begin_inset Formula $n=4$
 \end_inset
 
 , oftentimes referred to as a 
@@ -773,15 +621,11 @@ Tetris-clear
 \begin_inset Quotes xrd
 \end_inset
 
-, scoring twice as much per line as compared to the case where 
-\begin_inset Formula $n$
+, the per-line score rewarded is doubled compared to the case of 
+\begin_inset Formula $n=1$
 \end_inset
 
- is 
-\begin_inset Formula $1$
-\end_inset
-
-, also known as a 
+, which is also known as a 
 \begin_inset Quotes xld
 \end_inset
 
@@ -830,7 +674,7 @@ Shetris
 \begin_inset Formula $c$
 \end_inset
 
- of 
+ of Equation 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:reward-by-line-clear"
@@ -875,7 +719,7 @@ literal "false"
 , allows immediate identification of any line-clearing when manually monitoring
  the agent: with the reward-component from observing episode termination
  
-\begin_inset Formula $r_{\text{GO}}$
+\begin_inset Formula $r^{\text{GO}}$
 \end_inset
 
  valued at 
@@ -890,27 +734,13 @@ literal "false"
 \begin_inset Quotes xld
 \end_inset
 
-single
+single-clear
 \begin_inset Quotes xrd
 \end_inset
 
- line-clear
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-in other words, 
-\begin_inset Formula $1$
-\end_inset
-
- line is cleared
-\end_layout
-
-\end_inset
-
-.
+ as defined previously.
  Setting the line-clear rewards 
-\begin_inset Formula $r_{\text{LC}}$
+\begin_inset Formula $r^{\text{LC}}$
 \end_inset
 
  to multiples of 
@@ -934,11 +764,11 @@ Reward in Entirety
 
 \begin_layout Standard
 With the two components 
-\begin_inset Formula $r_{\text{GO}}$
+\begin_inset Formula $r^{\text{GO}}$
 \end_inset
 
  and 
-\begin_inset Formula $r_{\text{LC}}$
+\begin_inset Formula $r^{\text{LC}}$
 \end_inset
 
  defined above, one concludes the final reward function of 
@@ -956,7 +786,7 @@ Shetris
 
 \begin_layout Definition
 Reward 
-\begin_inset Formula $r$
+\begin_inset Formula $r_{\star}$
 \end_inset
 
  of 
@@ -966,6 +796,13 @@ status open
 \begin_layout Plain Layout
 Shetris
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Reward-of-shetris"
 
 \end_inset
 
@@ -983,17 +820,17 @@ At any time-step
 \end_inset
 
  is defined as the sum of the reward from checking episode termination 
-\begin_inset Formula $r_{\text{GO}}$
+\begin_inset Formula $r_{\star}^{\text{GO}}$
 \end_inset
 
  and calculating the line-clear induced score 
-\begin_inset Formula $r_{\text{LC}}$
+\begin_inset Formula $r_{\star}^{\text{LC}}$
 \end_inset
 
 :
 \begin_inset Formula 
 \[
-r\coloneqq r_{\text{GO}}+r_{\text{LC}}
+r_{\star}\coloneqq r_{\star}^{\text{GO}}+r_{\star}^{\text{LC}}
 \]
 
 \end_inset
@@ -1082,6 +919,15 @@ class RewardFactory:
 \begin_layout Plain Layout
 
         pass
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Abstraction for General Reward-Functions
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1090,58 +936,17 @@ class RewardFactory:
 \end_layout
 
 \begin_layout Standard
-The constructor shall initialize individual components of the full reward-mechan
-ism, where each such component subsequently follow the following abstraction
-\begin_inset listings
-lstparams "language=Python"
-inline false
+In the case of 
+\begin_inset Flex Noun
 status open
 
 \begin_layout Plain Layout
-
-# env/reporter/reward/component.py 
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-class _RewardComponent:
-\end_layout
-
-\begin_layout Plain Layout
-
-    def __init__(self, **kwargs):
-\end_layout
-
-\begin_layout Plain Layout
-
-        super().__init__(**kwargs)
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-    def get_reward(self, **kwargs) -> Any:
-\end_layout
-
-\begin_layout Plain Layout
-
-        pass
+Shetris
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-In the case of Shetris, the 
+, the inherited class 
 \begin_inset Flex Code
 status open
 
@@ -1151,13 +956,12 @@ RewardFactory
 
 \end_inset
 
- is inherited and initialized with two components: one for the line-clear
- 
-\begin_inset Formula $r_{\text{LC}}$
+ is initialized with two components: one for the line-clear 
+\begin_inset Formula $r^{\text{LC}}$
 \end_inset
 
  and one for the episode-termination 
-\begin_inset Formula $r_{\text{GO}}$
+\begin_inset Formula $r^{\text{GO}}$
 \end_inset
 
 :
@@ -1211,6 +1015,84 @@ class RewardStandard(RewardFactory):
 \begin_layout Plain Layout
 
         super().__init__()
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Specialization of Reward-Function in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that each individual reward-component subsequently follows the abstraction:
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# env/reporter/reward/component.py 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class _RewardComponent:
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, **kwargs):
+\end_layout
+
+\begin_layout Plain Layout
+
+        super().__init__(**kwargs)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    def get_reward(self, **kwargs) -> Any:
+\end_layout
+
+\begin_layout Plain Layout
+
+        pass
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Abstraction for General Reward-Components
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1220,7 +1102,7 @@ class RewardStandard(RewardFactory):
 
 \begin_layout Standard
 The reader is referred to the source-code to inspect the details of the
- implementation of these two components.
+ implementation of the reward mechanism.
 \end_layout
 
 \end_deeper
@@ -1236,11 +1118,7 @@ Summary of MDP-Formulation
 \end_layout
 
 \begin_layout Standard
-With the formula for reward calculation 
-\begin_inset Formula $r$
-\end_inset
-
-, the MDP formulation of 
+With the formula for reward calculation, the MDP-formulation of 
 \begin_inset Flex Noun
 status open
 
@@ -1251,7 +1129,195 @@ Shetris
 \end_inset
 
  is complete at this point.
- The following section introduces the final adaptations required for creating
+ The following definition recapitulates all previously mentioned components:
+\end_layout
+
+\begin_layout Definition
+MDP-formulation of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The 
+\begin_inset Formula $4$
+\end_inset
+
+-tuple:
+\begin_inset Formula 
+\[
+\Big(\left(y,Y\right),\left(a,A\right),f,r\Big)
+\]
+
+\end_inset
+
+ of the MDP-formulation for 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is defined as follows:
+\end_layout
+
+\begin_layout Standard
+As seen in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:State--of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the state 
+\begin_inset Formula $y$
+\end_inset
+
+ is composed of the field 
+\begin_inset Formula $y^{F}$
+\end_inset
+
+ and the piece 
+\begin_inset Formula $y^{P}$
+\end_inset
+
+.
+ The action 
+\begin_inset Formula $a$
+\end_inset
+
+, as specified in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, consists of one input to the rotation of the piece 
+\begin_inset Formula $a^{\texttt{rot}}$
+\end_inset
+
+ and another to the horizontal position 
+\begin_inset Formula $a^{\texttt{pos1}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+With the transitional evolution 
+\begin_inset Formula $f$
+\end_inset
+
+ is captured by Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the final reward mechanism 
+\begin_inset Formula $r$
+\end_inset
+
+ is provided by 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Reward-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Source of randomness
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+For the game of Tetris as a whole, the only possible source of randomness
+ is the generator, as the evolution mechanism of the field is otherwise
+ completely deterministic.
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, this source of stochasticity could also be removed by specifying a non-random
+ generator as described in previous sections
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With the availability of the MDP-formulation of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, the upcoming section introduces the final adaptations required for creating
  a machine-compatible interactive environment for training.
 \end_layout
 
@@ -1274,7 +1340,7 @@ gym
 
 \end_inset
 
- library as developed by OpenAI
+ library 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gym"
@@ -1282,14 +1348,15 @@ literal "false"
 
 \end_inset
 
- stipulates a standardized framework for the description of a closed system
- accessible via interaction with a decision-making agent 
+ as developed by OpenAI stipulates a standardized framework for the description
+ of a dynamic system accessible via interaction with a decision-making agent
+ 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
 .
- With the formulation of the MDP, the only missing piece towards the formulation
- of the description of an agent conforming to the interface of 
+ With the MDP-formulation in the previous chapter, the only missing piece
+ towards the description of an agent conforming to the interface of 
 \begin_inset Flex Code
 status open
 
@@ -1299,23 +1366,33 @@ gym
 
 \end_inset
 
- is the notion of partial observation defined as follows.
+ is the notion of partial observation.
+ This is defined as follows:
 \end_layout
 
 \begin_layout Subsubsection
 Partial Observations
 \end_layout
 
+\begin_layout Definition
+Partial Observations
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
-Instead of the (full) state 
-\begin_inset Formula $y$
+At any time-step 
+\begin_inset Formula $\star$
+\end_inset
+
+, instead of the (full) state 
+\begin_inset Formula $y_{\star}$
 \end_inset
 
  of the system, the agent 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
- perceives the system with 
+ perceives the system by the 
 \begin_inset Flex Emph
 status open
 
@@ -1326,73 +1403,41 @@ observation
 \end_inset
 
  
-\begin_inset Formula $x\in\left\{ x_{0},x_{1},x_{2}\cdots\right\} $
+\begin_inset Formula $x_{\star}$
 \end_inset
 
  of some observation-space 
-\begin_inset Formula $x_{\forall t}\in X$
+\begin_inset Formula $X\ni x_{\star}$
 \end_inset
 
- and decides upon the 
-\begin_inset Flex Emph
-status open
-
-\begin_layout Plain Layout
-action
-\end_layout
-
+, upon which the agent then decides the action 
+\begin_inset Formula $a_{\star}$
 \end_inset
 
-
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-cf.
- control-input 
-\begin_inset Formula $u$
-\end_inset
-
- in control-theory
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $a\in\left\{ a_{0},a_{1},a_{2}\cdots\right\} $
-\end_inset
-
- of some action-space 
-\begin_inset Formula $a_{\forall t}\in A$
-\end_inset
-
- to apply to the system, which then evolves with the usual internal evolution-dy
-namics 
+ to apply to the system.
+ The subsequent evolution-dynamics 
 \begin_inset Formula $f\left(\cdots\right)$
 \end_inset
 
-, inducing a reward value 
-\begin_inset Formula $r\in\left\{ r_{0},r_{1},r_{2}\cdots\right\} $
+ and the induced reward value 
+\begin_inset Formula $r$
 \end_inset
 
- of (one-dimensional) real number 
-\begin_inset Formula $r_{\forall t}\in\mathbb{R}^{1}$
-\end_inset
-
-.
+ maintain the same definition as seen previously for the MDP-formulation.
 \end_layout
 
 \begin_layout Standard
 Microscopically, the now fully augmented illustration below captures the
- evolution of the system from both the system-internal 
+ evolution of the system from both the perspective of the internal system
+ 
 \begin_inset Formula $y_{\star}$
 \end_inset
 
- perspective and that of the agent 
+ and that of the agent 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
-: 
+:
 \begin_inset Formula 
 \[
 \xymatrix{ &  &  & {f\left(\cdots\right)}\ar[d]_{{\text{2. evolve}}}\\
@@ -1407,18 +1452,30 @@ Microscopically, the now fully augmented illustration below captures the
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
-Given the MDP-Formulation in the previous section, it thus remains to specify
- the process of extracting the observation 
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Given the aforementioned MDP-formulation, it thus remains to specify the
+ process of extracting the observation 
 \begin_inset Formula $x$
 \end_inset
 
- of the agent from the system state 
+ of the agent 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ from the system state 
 \begin_inset Formula $y$
 \end_inset
 
 .
- This following section provides insights into the implementation of 
+ The following sections provide insights into the implementation of 
 \begin_inset Flex Noun
 status open
 
@@ -1451,6 +1508,16 @@ noprefix "false"
  below: the uneven columns and the numerous holes of the field both constitute
  undesirable traits, leading to the rejection of the field on the right-hand-sid
 e to be rejected as decent game-play.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+MAKE BETTER BAD FIELD
+\end_layout
+
+\end_inset
+
+
 \size scriptsize
 
 \begin_inset Formula 
@@ -1464,11 +1531,11 @@ e to be rejected as decent game-play.
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \blacksquare & \cdots
-\end{bmatrix}\qquad\qquad\qquad\begin{bmatrix}\fullmoon & \fullmoon &  &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
-\fullmoon & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
-\blacksquare & \fullmoon & \blacksquare &  & \cdots & \blacksquare & \fullmoon & \fullmoon\\
+\end{bmatrix}\qquad\quad\boxed{\succ}\quad\qquad\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
- & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
 \blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
 \fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon\\
@@ -1482,77 +1549,62 @@ e to be rejected as decent game-play.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-These intuitions, while section formalizes such intuitions to accurately
- various define performance measures 
-\begin_inset Formula $M$
+This section formalizes such intuitions to provide mechanisms for extracting
+ various components of observation from the existing state of the game-play
+ 
+\begin_inset Formula $y$
 \end_inset
 
- to gauge game-plays of Tetris.
-\end_layout
-
-\begin_layout Plain Layout
-No extreme expertise is required to formulate intuitive heuristics of measuring
- the game-play performance in Tetris: one aims at achieving placing the
- pieces onto the field such that the columns are evenly distributed, not
- stacked too high with few holes.
-\end_layout
-
-\end_inset
-
-
+ as defined previously.
 \end_layout
 
 \begin_layout Subsection
-Field-based Measures
+Field-based Observations
 \end_layout
 
 \begin_layout Standard
 The fact that the introductory paragraph uses solely the field to gauge
- performance of the game-play conveys the important message that the layout
- of the field alone encapsulates a myriad of indicators for performance.
- 
-\begin_inset Flex Code
+ performance of the game-play conveys the message that the layout of the
+ field alone encapsulates a myriad of performance indicators.
+ Three field-based observations are currently deployed in 
+\begin_inset Flex Noun
 status open
 
 \begin_layout Plain Layout
-ShetrisEnv
+Shetris
 \end_layout
 
 \end_inset
 
- currently deploys three field-based observations to measure the performance
- of an agent that align with the intuitions delineated above: the height
- 
-\begin_inset Formula $x_{H}$
+ to measure the performance of an agent, which align with the intuitions
+ delineated above: the height 
+\begin_inset Formula $x^{H}$
 \end_inset
 
 , the elevation 
-\begin_inset Formula $x_{E}$
+\begin_inset Formula $x^{E}$
 \end_inset
 
  and the number of holes 
-\begin_inset Formula $x_{N}$
+\begin_inset Formula $x^{N}$
 \end_inset
 
 .
- The following sections introduce them separately:
+ The following subsections introduce them separately:
 \end_layout
 
 \begin_layout Subsubsection
 Height 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{H}$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-To begin the investigation of the field, the height-based observation 
-\begin_inset Formula $x_{H}$
+To begin the the investigation of the field, the height-based observation
+ 
+\begin_inset Formula $x^{H}$
 \end_inset
 
  is introduced:
@@ -1560,7 +1612,7 @@ To begin the investigation of the field, the height-based observation
 
 \begin_layout Definition
 Height 
-\begin_inset Formula $x_{H}\left(c\right)$
+\begin_inset Formula $x^{H}\left(c\right)$
 \end_inset
 
  of a column 
@@ -1573,7 +1625,7 @@ Height
 \begin_deeper
 \begin_layout Standard
 The height 
-\begin_inset Formula $x_{H}$
+\begin_inset Formula $x^{H}$
 \end_inset
 
  is intuitively defined for one single column 
@@ -1581,17 +1633,14 @@ The height
 \end_inset
 
  as the maximal vertical coordinate of an occupied box.
-\end_layout
-
-\begin_layout Standard
-Thus, the range of 
-\begin_inset Formula $x_{H}$
+ Thus, the range of 
+\begin_inset Formula $x^{H}$
 \end_inset
 
  is:
 \begin_inset Formula 
 \[
-x_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
+x^{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
 \]
 
 \end_inset
@@ -1599,30 +1648,27 @@ x_{H}\left(\forall c\right)\in\left[0;\text{field-height}\right]
 translating to 
 \begin_inset Formula 
 \[
-x_{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
+x^{H}\in\texttt{range(21)}\triangleq\left[0;20\right]
 \]
 
 \end_inset
 
 for the standard field.
-\end_layout
-
-\begin_layout Standard
-One observe the following corner cases:
+ The following corner cases shall be noted:
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $M_{H}\equiv0$
+\begin_inset Formula $x^{H}\equiv0$
 \end_inset
 
- indicates a completely free column;
+ equates to a completely free column;
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $M_{H}\equiv20$
+\begin_inset Formula $x^{H}\equiv20$
 \end_inset
 
- shows occupation of the highest box.
+ indicates occupation of the highest box.
 \end_layout
 
 \end_deeper
@@ -1634,8 +1680,8 @@ One observe the following corner cases:
 \end_layout
 
 \begin_layout Standard
-The height of the column could be readily generalized to extract the observation
- from the field-state 
+The height of the column could be readily generalized to the corresponding
+ observation of the field-state 
 \begin_inset Formula $y^{F}$
 \end_inset
 
@@ -1643,56 +1689,98 @@ The height of the column could be readily generalized to extract the observation
 \end_layout
 
 \begin_layout Definition
-Accessing Height-Observation 
+Extracting 
 \begin_inset Formula $x^{H}$
 \end_inset
 
- of the field-state 
+ from the field-state 
 \begin_inset Formula $y^{F}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Extracting-height-from-field"
+
 \end_inset
 
 
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-in the raw unprocessed fashion, the height of a field is a vectorized compositio
-n of the height of every column:
+\begin_layout Standard
+Intuitively, the height of a field is the vectorized composition of the
+ height of every column:
 \begin_inset Formula 
 \[
-M_{H}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{H}\left(c_{0}\right)\\
-M_{H}\left(c_{1}\right)\\
+\begin{alignedat}{1}x^{H}\left(y^{F}\right)\; & \coloneqq\left[\begin{alignedat}{1}x^{H}\left(c_{0}\right)\\
+x^{H}\left(c_{1}\right)\\
 \vdots\\
 \vdots
 \end{alignedat}
-\right]\in\left[\texttt{range}\left(21\right)\right]^{\text{n-columns}}
-\]
-
-\end_inset
-
-translating to:
-\begin_inset Formula 
-\[
-M_{H}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{H}\left(c_{0}\right)\\
-M_{H}\left(c_{1}\right)\\
-\vdots\\
-M_{H}\left(c_{9}\right)
+\right]\\
+ & \in\left[\texttt{range}\left(\text{n-rows}+1\right)\right]^{\text{n-columns}}
 \end{alignedat}
-\right]\in\left[\texttt{range}\left(21\right)\right]^{10}
 \]
 
 \end_inset
 
-for the standard field of 
+where 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ denotes the 
+\begin_inset Formula $i^{\text{th}}$
+\end_inset
+
+ column from the left under the indexing convention as described in Definition
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Indexing-convention-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For the standard field of 
 \begin_inset Formula $10$
 \end_inset
 
- columns.
+ columns, the calculation translates to:
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}x^{H}\left(y^{F}\right)\; & \coloneqq\left[\begin{alignedat}{1}x^{H}\left(c_{0}\right)\\
+x^{H}\left(c_{1}\right)\\
+\vdots\\
+x^{H}\left(c_{9}\right)
+\end{alignedat}
+\right]\\
+ & \in\left[\texttt{range}\left(21\right)\right]^{10}
+\end{alignedat}
+\]
+
+\end_inset
+
+
 \end_layout
 
-\begin_layout Itemize
-On the other hand, the vectorized measure could be further compressed into
- a scalar-value via summation.
+\begin_layout Standard
+On the other hand, the 
+\begin_inset Quotes xld
+\end_inset
+
+full
+\begin_inset Quotes xrd
+\end_inset
+
+ observation-vector 
+\begin_inset Formula $x^{H}$
+\end_inset
+
+ above could be further compressed into a scalar-value via summation.
  For the standard-field, one observes the following 
 \begin_inset Quotes xld
 \end_inset
@@ -1701,19 +1789,30 @@ compact
 \begin_inset Quotes xrd
 \end_inset
 
- field-height:
+ field-height observation:
 \begin_inset Formula 
 \[
-M_{H}^{C}\left(f\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}M_{H}\left(c_{i}\right)}\in\left[\texttt{range}\left(21\right)\right]^{10}
+x^{H,C}\left(y^{F}\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}x^{H}\left(c_{i}\right)}
 \]
 
 \end_inset
 
 Note the range of this compact variant of the field-height must be calculated
- separately:
+ separately.
+ For the standard field, one concludes
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CHECK RANGE
+\end_layout
+
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-M_{H}\left(f\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}M_{H}\left(c_{i}\right)}\in\left[\texttt{range}\left(21\right)\right]^{10}
+x^{H,C}\left(y^{F}\right)\in\texttt{range}\left(201\right)\triangleq\left[0;200\right]
 \]
 
 \end_inset
@@ -1730,11 +1829,7 @@ M_{H}\left(f\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}M_{H}\left(c_{i}\
 \end_layout
 
 \begin_layout Note
-Note on desirable 
-\begin_inset Formula $M_{H}$
-\end_inset
-
-
+Desirable height observations
 \end_layout
 
 \begin_deeper
@@ -1749,12 +1844,15 @@ height
 \end_inset
 
  of the field, an intuitive metric concerns the maximal height.
- Intuitively: higher 
-\begin_inset Formula $\text{H}$
+ Intuitively, higher values of 
+\begin_inset Formula $x^{H,C}$
 \end_inset
 
--values are more susceptible to termination of an episode and are thus undesirab
-le.
+ and 
+\begin_inset Formula $x^{H}$
+\end_inset
+
+ are more susceptible to termination of an episode and are thus undesirable.
 \end_layout
 
 \end_deeper
@@ -1765,43 +1863,53 @@ le.
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
 \begin_layout Example
-Several examples of 
-\begin_inset Formula $M_{H}$
+Demonstration of 
+\begin_inset Formula $x^{H}$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{H,C}$
 \end_inset
 
 
 \end_layout
 
 \begin_deeper
-\begin_layout Plain Layout
-Given the standard field-size of 
-\begin_inset Formula $20\times10$
+\begin_layout Standard
+The following excerpt of the field illustrate the 
+\begin_inset Formula $x^{H}$
 \end_inset
 
-, the following illustration.
+ applied to the individual columns:
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 
 \size scriptsize
 \begin_inset Formula 
 \[
-\begin{bmatrix} & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare &  & \fullmoon\\
-\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
-5 & 3 & 4 & 1 & 0 & 3 & 2 & 5 &  & 0
+\begin{bmatrix}\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
+\fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon\\
+\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \fullmoon & \blacksquare & \fullmoon\\
+\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \blacksquare & \fullmoon\\
+5 & 3 & 4 & 1 & 0 & 3 & 2 & 5 & 6 & 0
 \end{bmatrix}
+\]
+
+\end_inset
+
+
+\size default
+And thus the compact counterpart yields:
+\begin_inset Formula 
+\[
+x^{H,C}\left(y^{F}\right)\coloneqq\mathop{\sum_{i\in\left[0;9\right]}x^{H}\left(c_{i}\right)}=29
 \]
 
 \end_inset
@@ -1810,6 +1918,8 @@ Given the standard field-size of
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
@@ -1817,10 +1927,34 @@ Given the standard field-size of
 
 \begin_layout Subsubsection
 Elevation 
-\begin_inset Formula $M_{E}$
+\begin_inset Formula $x^{E}$
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Apart from the absolute height of the individual columns, the 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+relative
+\end_layout
+
+\end_inset
+
+ relationship 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+among
+\end_layout
+
+\end_inset
+
+ the columns are studied:
 \end_layout
 
 \begin_layout Definition
@@ -1835,19 +1969,15 @@ Elevation of a column
 \begin_layout Standard
 The elevation is defined as the difference in height between two adjacent
  columns.
- Implicitly, given the standard field of 
-\begin_inset Formula $10$
-\end_inset
+\end_layout
 
- columns, there are 
-\begin_inset Formula $9$
-\end_inset
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
- such elevation values:
-\begin_inset Formula 
-\[
-M_{E}\left(c\right)\in\texttt{range(21)}\triangleq\left[0;20\right]
-\]
+\begin_layout Plain Layout
+extreme cases
+\end_layout
 
 \end_inset
 
@@ -1861,9 +1991,18 @@ Shetris
 
 \end_inset
 
- always calculates the the elevation by subtracting the height of the right-hand
--side from that of the left-hand-side.
- In other words, a standard field of 
+ calculates the elevation by subtracting the height of the right-hand-side
+ column from that of the left-hand-side one:
+\begin_inset Formula 
+\[
+\begin{alignedat}{1}x^{E}\left(c_{i},c_{i+1}\right)\; & \coloneqq x^{H}\left(c_{i}\right)-x^{H}\left(c_{i+1}\right)\\
+ & \in\texttt{range(21)}\triangleq\left[0;20\right]
+\end{alignedat}
+\]
+
+\end_inset
+
+In other words, a standard field of 
 \begin_inset Formula $10$
 \end_inset
 
@@ -1883,28 +2022,54 @@ Shetris
 \end_layout
 
 \begin_layout Standard
-Similar to the height-measure 
-\begin_inset Formula $M_{H}$
+Similar to the observation on the height 
+\begin_inset Formula $x^{H}$
 \end_inset
 
-, the elevation-measure could be extended 
+, the elevation-observation 
+\begin_inset Formula $x^{E}$
+\end_inset
+
+ could be extended to the entire field:
 \end_layout
 
 \begin_layout Definition
-Extension to a field
+Obtaining 
+\begin_inset Formula $x^{E}$
+\end_inset
+
+ from the field-state 
+\begin_inset Formula $y^{F}$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-The elevation of a field is naturally defined as the elevation of every
- column of the field:
+The 
+\begin_inset Quotes xld
+\end_inset
+
+full
+\begin_inset Quotes xrd
+\end_inset
+
+ elevation-observation 
+\begin_inset Formula $x^{E}$
+\end_inset
+
+ of a field is naturally defined as the elevation of every column of the
+ field:
 \begin_inset Formula 
 \[
-M_{E}\left(f\right)\coloneqq\left[\begin{alignedat}{1}M_{E}\left(c_{0}\right)\\
+\begin{alignedat}{1}x^{E}\left(y^{F}\right)\; & \coloneqq\left[\begin{alignedat}{1}x^{E}\left(c_{0},c_{1}\right)\\
 \vdots\\
-M_{E}\left(c_{9}\right)
+x^{E}\left(c_{8},c_{9}\right)
 \end{alignedat}
-\right]\in\left[\texttt{range}\left(21\right)\right]^{9}
+\right]\\
+ & \in\left[\texttt{range}\left(21\right)\right]^{9}
+\end{alignedat}
 \]
 
 \end_inset
@@ -1912,48 +2077,36 @@ M_{E}\left(c_{9}\right)
 
 \end_layout
 
-\end_deeper
 \begin_layout Standard
-\begin_inset Separator plain
+The 
+\begin_inset Quotes xld
 \end_inset
 
+compact
+\begin_inset Quotes xrd
+\end_inset
 
-\end_layout
+ alternative 
+\begin_inset Formula $x^{E,C}$
+\end_inset
 
-\begin_layout Example
-Demonstration
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Add illustration
-\end_layout
+ is constructed as the summation of the elevation of every column, analogous
+ to the definition of the compact height-observation in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Indexing-convention-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-
-\size scriptsize
+:
 \begin_inset Formula 
 \[
-\begin{bmatrix} & \fullmoon & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  & \fullmoon &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
- &  &  &  & \cdots &  & \fullmoon & \fullmoon & \fullmoon & \fullmoon\\
-\blacksquare & \fullmoon & \fullmoon & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
-\blacksquare & \fullmoon & \blacksquare & \fullmoon & \fullmoon & \fullmoon &  & \blacksquare\\
-\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare &  & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \fullmoon & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
-\blacksquare & \blacksquare & \blacksquare & \blacksquare & \fullmoon & \blacksquare & \blacksquare & \blacksquare &  & \fullmoon\\
-20 & 19 & 18 &  &  &  & 3 & 2 & 1 & 0
-\end{bmatrix}
+\begin{alignedat}{1}x^{E,C}\left(y^{F}\right)\; & \coloneqq\mathop{\sum_{i\in\left[0;8\right]}x^{E}\left(c_{i},c_{i+1}\right)}\\
+ & \in\texttt{range}\left(181\right)\triangleq\left[0;180\right]
+\end{alignedat}
 \]
 
 \end_inset
@@ -1987,37 +2140,37 @@ holes
 \end_layout
 
 \begin_layout Definition
-Holes of a column
+Holes of a column 
+\begin_inset Formula $x^{N}\left(c\right)$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-The Holes of a column 
+\begin_layout Standard
+Given the definition of the holes of a column 
 \begin_inset Formula $c$
 \end_inset
 
- is defined the 
-\begin_inset Formula $p_{1}$
+ as every unoccupied block lower than the highest occupied block, the hole-obser
+vation 
+\begin_inset Formula $x^{N}\left(c\right)$
 \end_inset
 
- or vertical coordinate of all unoccupied blocks lower than the highest
- occupied block:
+ is naturally defined as the number of such holes.
+\end_layout
+
+\begin_layout Standard
+For the standard-field, the value range is given as follows:
 \begin_inset Formula 
 \[
-M_{H}\left(c\right)\in\texttt{range(20)}\triangleq\left[0;19\right]
+x^{N}\left(c\right)\in\texttt{range(20)}\triangleq\left[0;19\right]
 \]
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Itemize
-The Number-of-holes of a column 
-\begin_inset Formula $c$
-\end_inset
-
- is defined as the number of holes of the column
 \end_layout
 
 \end_deeper
@@ -2028,8 +2181,41 @@ The Number-of-holes of a column
 
 \end_layout
 
+\begin_layout Standard
+The extension to the field 
+\begin_inset Formula $x^{N}\left(y^{F}\right)$
+\end_inset
+
+ follows similarly to previous procedures.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Greyedout
+status open
+
 \begin_layout Definition
-Number-of-holes of a field
+Calculating the hole-observation from the field 
+\begin_inset Formula $y^{F}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+BOOKMARK: FINISH THIS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Formula 
 \[
 M_{N}\left(c\right)\in\texttt{range(20)}\triangleq\left[0;19\right]
@@ -2040,37 +2226,28 @@ M_{N}\left(c\right)\in\texttt{range(20)}\triangleq\left[0;19\right]
 
 \end_layout
 
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Two levels of abstraction
-\end_layout
-
-\begin_layout Standard
-Summing up the three field-based measures enlisted above, one concludes
- the following two different levels of details when measuring the field:
- 
-\end_layout
-
-\begin_layout Description
-column-level the three measures are applied level of accuracy could be on
- the column level, which produces more vectors, each of a narrower range
-\end_layout
-
-\begin_layout Description
-field-level the measures are applied to the entire field by summing over
- results of every column, producing less vectors, each of a wider range
-\end_layout
-
-\begin_layout Standard
-The trade-off between number of vectors and range of vectors to track is
- illustrated as follows: the column-level, 
-\begin_inset Quotes xld
-\end_inset
-
-full
-\begin_inset Quotes xrd
-\end_inset
-
- variant is depicted in Table 
 \end_layout
 
 \begin_layout Standard
@@ -2149,7 +2326,16 @@ discrete-range
 \begin_inset Text
 
 \begin_layout Plain Layout
-gym-translation
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+-translation
 \end_layout
 
 \end_inset
@@ -2161,7 +2347,7 @@ gym-translation
 
 \begin_layout Plain Layout
 Height 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{H}$
 \end_inset
 
 
@@ -2239,7 +2425,7 @@ Height
 
 \begin_layout Plain Layout
 Elevation 
-\begin_inset Formula $M_{E}$
+\begin_inset Formula $x^{E}$
 \end_inset
 
 
@@ -2317,7 +2503,7 @@ Elevation
 
 \begin_layout Plain Layout
 Holes 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{N}$
 \end_inset
 
 
@@ -2459,7 +2645,7 @@ Holes
 \begin_inset Text
 
 \begin_layout Plain Layout
-All
+Full Space
 \end_layout
 
 \end_inset
@@ -2536,6 +2722,69 @@ gym.MultiDiscrete([21...21 | 21...21 | 20...20])
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:full-field-based-obs"
+
+\end_inset
+
+Full field-based Observations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Summing up the three field-based measures enlisted above, one concludes
+ the following two different levels of details when observing the field,
+ inducing the trade-off between the number and the range of vectors to track
+ in the observation:
+\end_layout
+
+\begin_layout Definition
+Two modes of field-based observations
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Two-modes-of-field-obs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Description
+\begin_inset Quotes xld
+\end_inset
+
+compact
+\begin_inset Quotes xrd
+\end_inset
+
+ the three measures of height, elevation and hole are applied to the column
+ level and reported as simple stacking.
+ This produces more vectors, each of a narrower range, as seen in Table
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:full-field-based-obs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Description
 \begin_inset Quotes xld
 \end_inset
 
@@ -2543,7 +2792,37 @@ full
 \begin_inset Quotes xrd
 \end_inset
 
-, column-level measures
+ the results of the same measures are summed over to produce one scalar
+ each, leading to less vectors, each of a wider range.
+ This is demonstrated in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:compact-field-based-obs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The juxtaposition of the two modes of observing the field is further explored
+ in later sections.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF
 \end_layout
 
 \end_inset
@@ -2551,9 +2830,7 @@ full
 
 \end_layout
 
-\end_inset
-
-As well as
+\begin_layout Standard
 \begin_inset Float table
 wide false
 sideways false
@@ -2629,7 +2906,16 @@ discrete-range
 \begin_inset Text
 
 \begin_layout Plain Layout
-gym-translation
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+-translation
 \end_layout
 
 \end_inset
@@ -2641,7 +2927,7 @@ gym-translation
 
 \begin_layout Plain Layout
 Height 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{H}$
 \end_inset
 
 
@@ -2725,7 +3011,7 @@ range(201)
 
 \begin_layout Plain Layout
 Elevation 
-\begin_inset Formula $M_{E}$
+\begin_inset Formula $x^{E}$
 \end_inset
 
 
@@ -2809,7 +3095,7 @@ range(181)
 
 \begin_layout Plain Layout
 Holes 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{N}$
 \end_inset
 
 
@@ -2957,7 +3243,7 @@ range(191)
 \begin_inset Text
 
 \begin_layout Plain Layout
-All
+Full Space
 \end_layout
 
 \end_inset
@@ -3037,7 +3323,13 @@ MultiDiscrete([201, 181, 191])
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-field-level measures
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:compact-field-based-obs"
+
+\end_inset
+
+Compact field-based Observations
 \end_layout
 
 \end_inset
@@ -3054,36 +3346,38 @@ field-level measures
 Beyond the field
 \end_layout
 
+\begin_layout Standard
+Several other observation components are conceivable beyond the three field-base
+d ones described previously.
+ Two of them are enlisted below:
+\end_layout
+
 \begin_layout Subsubsection
 Line-Clears
 \end_layout
 
-\begin_layout Standard
-As the final objective, the line-clear is defined
-\end_layout
-
 \begin_layout Definition
-Line-clears 
-\begin_inset Formula $M_{LC}$
+Observation of line-clears 
+\begin_inset Formula $x^{\text{LC}}$
 \end_inset
 
 
 \end_layout
 
 \begin_deeper
-\begin_layout Enumerate
-The line-clears are the number of lines cleared for every piece after the
- 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-Field
-\end_layout
+\begin_layout Standard
+Similar to the formulation of Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Reward-line-clear"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- processes its freezing.
+, the observation of the line-clears is defined as the number of fully occupied
+ lines subjected to clearing.
  The number of line-clears after one move is always within the range of
  
 \begin_inset Formula $0$
@@ -3094,31 +3388,6 @@ Field
 \end_inset
 
 , including both boundaries.
-\end_layout
-
-\begin_layout Enumerate
-Despite the fact that every line-clear apparently produces award, the number
- of lines cleared at once leads to different calculations.
- In particular, the 
-\begin_inset Quotes xld
-\end_inset
-
-per-line
-\begin_inset Quotes xrd
-\end_inset
-
- reward increases with higher number of lines cleared.
- This is explained in later sections on reward engineering.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Add reference
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -3203,7 +3472,7 @@ gym-translation
 
 \begin_layout Plain Layout
 Lines-cleared 
-\begin_inset Formula $M_{C}$
+\begin_inset Formula $x^{\text{LC}}$
 \end_inset
 
 
@@ -3305,8 +3574,8 @@ Finally, the piece-id also constitutes a viable candidate for observation:
 \end_layout
 
 \begin_layout Definition
-Piece-id 
-\begin_inset Formula $x_{\texttt{pid}}$
+Observation of piece-id 
+\begin_inset Formula $x^{\texttt{pid}}$
 \end_inset
 
 
@@ -3401,6 +3670,10 @@ status open
 pid
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset Formula $x^{\texttt{pid}}$
 \end_inset
 
 
@@ -3509,10 +3782,32 @@ literal "false"
 \end_inset
 
  in the observation completely.
+ The impact of the inclusion of this observation-component is further elaborated
+ upon in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+REF: self DQN VS SB3
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
 Summary of the environment
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CHECK
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -3521,6 +3816,13 @@ Four types of observations
 
 \begin_layout Definition
 The four modes of training
+\begin_inset CommandInset label
+LatexCommand label
+name "def:The-four-modes"
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -3529,9 +3831,45 @@ With the consideration of varying components of the observation, in particular:
 \end_layout
 
 \begin_layout Itemize
-each of the three components of the field (the height, the elevation and
- the holes) could either be represented as vectors or added to form one
- sum;
+the two possible modes (
+\begin_inset Quotes xld
+\end_inset
+
+compact
+\begin_inset Quotes xrd
+\end_inset
+
+ and 
+\begin_inset Quotes xld
+\end_inset
+
+full
+\begin_inset Quotes xrd
+\end_inset
+
+) of forming the field-based observations: the height 
+\begin_inset Formula $x^{H}$
+\end_inset
+
+, the elevation 
+\begin_inset Formula $x^{E}$
+\end_inset
+
+ and the number of holes 
+\begin_inset Formula $x^{N}$
+\end_inset
+
+ as enlisted in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Two-modes-of-field-obs"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+;
 \end_layout
 
 \begin_layout Itemize
@@ -3545,30 +3883,25 @@ pid
 
 \end_inset
 
+ 
+\begin_inset Formula $x^{\texttt{pid}}$
+\end_inset
+
  could be included or discarded in the observation;
 \end_layout
 
 \begin_layout Itemize
-the number of line-clears is always included.
+the number of line-clears 
+\begin_inset Formula $x^{\text{LC}}$
+\end_inset
+
+ is always included without variation.
 \end_layout
 
 \begin_layout Standard
 Thus, the impact of the various formation of the observation must be investigate
-d, specifically, the variations exist in whether to use the compact, summed
- observation of the field, as well as whether to use include the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-.
- These two binary decisions result in a total of four possible configurations
- of observation.
- The internal representation during training is captured in Table 
+d.
+ Specifically, the four variants as captured in Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Encoding-of-Variations-of-training-modes"
@@ -3578,7 +3911,7 @@ noprefix "false"
 
 \end_inset
 
-.
+ are to be studied.
 \begin_inset Float table
 wide false
 sideways false
@@ -3635,7 +3968,7 @@ pid
 
 \begin_layout Plain Layout
 rel.
- save-location
+ save-load location
 \end_layout
 
 \end_inset
@@ -3677,7 +4010,7 @@ Included
 status open
 
 \begin_layout Plain Layout
-./shetris
+./shetris/
 \end_layout
 
 \end_inset
@@ -3693,11 +4026,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variation-
-\begin_inset Formula $01$
-\end_inset
-
-
+Variation-1
 \end_layout
 
 \end_inset
@@ -3728,7 +4057,7 @@ Omitted
 status open
 
 \begin_layout Plain Layout
-./shetris01
+./shetris01/
 \end_layout
 
 \end_inset
@@ -3744,11 +4073,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variation-
-\begin_inset Formula $02$
-\end_inset
-
-
+Variation-2
 \end_layout
 
 \end_inset
@@ -3779,7 +4104,7 @@ Included
 status open
 
 \begin_layout Plain Layout
-./shetris02
+./shetris02/
 \end_layout
 
 \end_inset
@@ -3795,11 +4120,7 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variation-
-\begin_inset Formula $03$
-\end_inset
-
-
+Variation-3
 \end_layout
 
 \end_inset
@@ -3830,7 +4151,7 @@ Omitted
 status open
 
 \begin_layout Plain Layout
-./shetris03
+./shetris03/
 \end_layout
 
 \end_inset
@@ -3876,39 +4197,40 @@ Encoding of Variations of Training-Modes
 
 \end_layout
 
-\begin_layout Subsubsection
-Training type 
-\begin_inset Formula $1$
-\end_inset
-
-: full observation
-\end_layout
-
 \begin_layout Standard
-\begin_inset Note Note
+As an example, the 
+\begin_inset Flex Code
 status open
 
-\begin_layout Enumerate
-Add all observation types
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+-space specification of Variation-2 is provided:
+\end_layout
+
+\begin_layout Example
+Specification of Variation-2 in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
 \end_layout
 
 \end_inset
 
 
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-The first type of observation first requires the values of the field-metrics
- height, elevation and hole of every column; afterwards, the number of lines-cle
-ared as well as the piece-id.
 \end_layout
 
-\begin_layout Plain Layout
+\begin_deeper
+\begin_layout Standard
 \begin_inset Tabular
 <lyxtabular version="3" rows="8" columns="7">
 <features booktabs="true" islongtable="true" longtabularalignment="center">
-<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3916,7 +4238,7 @@ ared as well as the piece-id.
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3981,12 +4303,12 @@ gym-translation
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Height 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{H}$
 \end_inset
 
 
@@ -4059,12 +4381,12 @@ Height
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Elevation 
-\begin_inset Formula $M_{E}$
+\begin_inset Formula $x^{E}$
 \end_inset
 
 
@@ -4137,12 +4459,12 @@ Elevation
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Holes 
-\begin_inset Formula $M_{H}$
+\begin_inset Formula $x^{N}$
 \end_inset
 
 
@@ -4215,12 +4537,12 @@ Holes
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Lines-cleared 
-\begin_inset Formula $M_{C}$
+\begin_inset Formula $x^{\text{LC}}$
 \end_inset
 
 
@@ -4299,7 +4621,7 @@ range(5)
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4310,6 +4632,10 @@ status open
 pid
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset Formula $x^{\texttt{pid}}$
 \end_inset
 
 
@@ -4388,7 +4714,7 @@ range(7)
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+<cell alignment="left" valignment="top" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4453,7 +4779,7 @@ range(7)
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -4479,7 +4805,7 @@ All
 status open
 
 \begin_layout Plain Layout
-MultiDiscrete([21, 21..., 21, 20, 20..., 20, 5, 7])
+MultiDiscrete([21...21 | 21...21 | 20...20 | 5, 7])
 \end_layout
 
 \end_inset
@@ -4531,6 +4857,28 @@ MultiDiscrete([21, 21..., 21, 20, 20..., 20, 5, 7])
 \end_inset
 
 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Enumerate
+Add all observation types
+\end_layout
+
+\begin_layout Plain Layout
+The first type of observation first requires the values of the field-metrics
+ height, elevation and hole of every column; afterwards, the number of lines-cle
+ared as well as the piece-id.
 \end_layout
 
 \end_inset
@@ -4602,7 +4950,7 @@ sb3
 \end_layout
 
 \begin_layout Subsection
-Algorithms
+The three Algorithms
 \end_layout
 
 \begin_layout Standard
@@ -4627,7 +4975,7 @@ SB3
 \end_inset
 
 -library are applicable for training.
- In particular, as both the action and the observation-space are of the
+ In particular, since both the action and the observation-space are of the
  
 \begin_inset Flex Code
 status open
@@ -4638,54 +4986,41 @@ MultiDiscrete
 
 \end_inset
 
- type of gym
-\begin_inset Note Note
+ type of 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-C_REF
+gym
 \end_layout
 
 \end_inset
 
-, the following two algorithms are viable:
-\end_layout
-
-\begin_layout Itemize
-the A2C 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "A2C"
-literal "false"
+, as shown in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Itemize
-the improved PPO 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PPO"
-literal "false"
+ and Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-four-modes"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
+, the following two algorithms are viable by default:
 \end_layout
 
-\begin_layout Standard
-In addition, for the sake comparative completeness as shown in later sections,
- extra adaptations are made to allow usage of the DQN algorithm 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "DQN-original,dqn-nature"
-literal "false"
-
-\end_inset
-
-of 
+\begin_layout Definition
+Directly applicable algorithms of 
 \begin_inset Flex Code
 status open
 
@@ -4695,8 +5030,393 @@ SB3
 
 \end_inset
 
-.
+ for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+the Asynchronous-Method 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "A2C"
+literal "false"
+
+\end_inset
+
+, also known as 
+\begin_inset Quotes xld
+\end_inset
+
+A2C
+\begin_inset Quotes xrd
+\end_inset
+
+ and implemented by the class:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+stable_baselines3.a2c.A2C
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the Proximal-Policy-Optimization algorithm, otherwise referred to as 
+\begin_inset Quotes xld
+\end_inset
+
+PPO
+\begin_inset Quotes xrd
+\end_inset
+
+, as originally introduced in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PPO"
+literal "false"
+
+\end_inset
+
+ and realized under:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+stable_baselines3.ppo.PPO
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In addition, for the sake comparative completeness as shown in later sections,
+ extra adaptations are made to allow usage of the Deep-Q-Network (DQN) algorithm
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original,dqn-nature"
+literal "false"
+
+\end_inset
+
+ of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Solution
+Adaptation of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+DQN
+\end_layout
+
+\end_inset
+
+ by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+As only scalar-valued actions as acceptable for 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+'s implementation of DQN, the two-member, vector-input action 
+\begin_inset Formula $a$
+\end_inset
+
+ of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ as seen in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+a\coloneqq\left(a^{\texttt{rot}},a^{\texttt{pos1}}\right)
+\]
+
+\end_inset
+
+ must be inter-convertible with a 
+\begin_inset Quotes xld
+\end_inset
+
+flattened
+\begin_inset Quotes xrd
+\end_inset
+
+, scalar-value alternative action produced by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+DQN
+\end_layout
+
+\end_inset
+
+ algorithm.
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+, this is achieved with the following method within the class 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+ itself:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Python"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# src/rl/shetris/env/shenv.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class ShetrisEnv:
+\end_layout
+
+\begin_layout Plain Layout
+
+   ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   def _action_int_to_np(self, action: int) -> np.ndarray:
+\end_layout
+
+\begin_layout Plain Layout
+
+        width = self.engine.field.size[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+        return np.array((action // width, action % width))
+\end_layout
+
+\begin_layout Plain Layout
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reconstruction of vector-action from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3-DQN
+\end_layout
+
+\end_inset
+
+'s scalar representation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To summarize, training with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ is performed as follows:
+\end_layout
+
+\begin_layout Definition
+Training with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Training-with-sb3"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The following three algorithms as implemented by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ are used for training: PPO, A2C and DQN.
+\end_layout
+
+\begin_layout Itemize
+For each of the three algorithms, all four observation modes of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-four-modes"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ are further used.
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Subsection
 General setups
@@ -4717,7 +5437,7 @@ Shetris
 \end_layout
 
 \begin_deeper
-\begin_layout Standard
+\begin_layout Plain Layout
 In Shetris, the 
 \begin_inset Flex Code
 status open
@@ -4867,7 +5587,7 @@ noprefix "false"
 , allows quick selection of the algorithm of choice:
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset listings
 inline false
 status open
@@ -4917,6 +5637,27 @@ class ShetrisInfo(InfoProvider):
 \end_layout
 
 \end_deeper
+\begin_layout Plain Layout
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In other words, a total of 
+\begin_inset Formula $12$
+\end_inset
+
+ training modes are deployed.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -4928,12 +5669,34 @@ class ShetrisInfo(InfoProvider):
 Deep Q-Network
 \end_layout
 
-\begin_layout Subsection
-Conceptual overview
+\begin_layout Standard
+The algorithm Deep-Q-Network (DQN), as one of the three algorithms to deploy
+ by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
 \end_layout
 
-\begin_layout Standard
-Deep Q-Learning is deployed to train the agent for 
+\end_inset
+
+ seen in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Training-with-sb3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, is programmed separately to allow more granular control and finer tuning.
+ This self-implemented DQN is then deployed to train the agents 
+\begin_inset Formula $\mathcal{A}^{\text{DQN}}$
+\end_inset
+
+ for the 
 \begin_inset Flex Code
 status open
 
@@ -4943,8 +5706,28 @@ ShetrisEnv
 
 \end_inset
 
-.
- A theoretical summary to the technique is provided below.
+ environment under the same four observation modes for direct comparison
+ with the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+'s training results.
+ This section documents the essential theoretical and practical aspects
+ during the implementation of DQN.
+\end_layout
+
+\begin_layout Subsection
+Conceptual overview
+\end_layout
+
+\begin_layout Standard
+A theoretical summary to the technique is provided below.
  The interested reader is referred to publications such as 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4960,6 +5743,10 @@ literal "false"
 Decision Policy
 \end_layout
 
+\begin_layout Subsubsection
+Q-Values
+\end_layout
+
 \begin_layout Standard
 The underlying mathematical formulation of Q-Learning targets an optimization
  problem much similar to that of the cost-to-go minimization from classical
@@ -4972,37 +5759,7 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Based on the introduction to the evolution-model in section 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-C_REF
-\end_layout
-
-\end_inset
-
-, some further theoretical quantities are readily definable.
- The decision-making of the agent is governed by policy 
-\begin_inset Formula $\pi$
-\end_inset
-
-: 
-\begin_inset Formula 
-\[
-x_{\star}\overset{\pi}{\longrightarrow}a_{\star}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Q-Values
+ This concept is formalized in this section.
 \end_layout
 
 \begin_layout Definition
@@ -5077,29 +5834,52 @@ R_{t_{k}:t_{T}}\coloneqq\mathop{\sum_{t\in\left[t_{k};t_{T}\right]}\gamma^{t-t_{
 \end_layout
 
 \begin_layout Definition
-Optimal 
-\begin_inset Formula $Q$
-\end_inset
-
--Values
+Q-Values
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
-With the 
+Given the decision-making policy 
+\begin_inset Formula $\pi$
+\end_inset
+
+ of the agent 
+\begin_inset Formula $'\mathcal{A}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+x_{\star}\overset{\pi}{\longrightarrow}a_{\star}
+\]
+
+\end_inset
+
+the 
 \begin_inset Formula $Q$
 \end_inset
 
--value defined as the expected reward-to-go of performing the immediate
- action 
-\begin_inset Formula $a_{t}$
+-value is then defined in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Q-learning-original,DQN-original,dqn-nature"
+literal "false"
+
+\end_inset
+
+ as the expected reward-to-go at time 
+\begin_inset Formula $t_{k}$
+\end_inset
+
+ of performing the immediate action 
+\begin_inset Formula $a_{t_{k}}$
 \end_inset
 
  given the current observation 
-\begin_inset Formula $x_{t}$
+\begin_inset Formula $x_{t_{k}}$
 \end_inset
 
- and followed by the deployment of some policy 
+, followed by the deployment of the policy 
 \begin_inset Formula $\pi$
 \end_inset
 
@@ -5107,19 +5887,32 @@ With the
 \begin_inset Formula $a_{t_{k+1}:t_{T}}$
 \end_inset
 
-
+:
 \begin_inset Formula 
 \[
-Q_{t_{k}:t_{T}}\coloneqq\mathbb{E}\left[R_{t_{k}:t_{T}}|x_{t},a_{t},\pi\right]
+Q_{t_{k}:t_{T}}\coloneqq\mathbb{E}\left[R_{t_{k}:t_{T}}|x_{t_{k}},a_{t_{k}},\pi\right]
 \]
 
 \end_inset
 
-The optimal 
-\begin_inset Formula $Q$
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
--Value 
+
+\end_layout
+
+\begin_layout Definition
+Optimal Q-Values
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The optimal Q-Value 
 \begin_inset Formula $Q^{*}$
 \end_inset
 
@@ -5153,38 +5946,6 @@ literal "false"
 \end_inset
 
 .
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Connection with classical control
-\end_layout
-
-\begin_deeper
-\begin_layout Standard
-The informed reader might perceive the striking similarity to the 
-\begin_inset Quotes xld
-\end_inset
-
-cost-to-go
-\begin_inset Quotes xrd
-\end_inset
-
- 
-\begin_inset Formula $J_{k:T}$
-\end_inset
-
- of classical control.
- Indeed, with the flipped optimization and newly coined terminologies, connectio
-ns to established setups and theorems in control-theory can be readily establish
-ed.
 \end_layout
 
 \end_deeper
@@ -5355,8 +6116,8 @@ literal "false"
 
 \end_inset
 
-, requires writing at both ends: insertion at the end and deletion at the
- beginning.
+, requires modifications at both ends: insertion at the end and deletion
+ at the beginning.
  The excellent choice for such operations is provided by 
 \begin_inset Flex Code
 status open
@@ -5532,7 +6293,7 @@ A network with
 \begin_inset Formula $1$
 \end_inset
 
- for returning the q-value.
+ for returning the Q-value.
 \end_layout
 
 \begin_layout Standard
@@ -5694,13 +6455,13 @@ SB3
 \end_inset
 
  deploys Huber's-Loss within its implementation of DQN instead.
- This difference is further examined later
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-REF
-\end_layout
+ This difference is further explored in Examination 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-four-modes"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -5791,13 +6552,13 @@ replay-memory: total step-capacity set to
 \begin_inset Formula $150$
 \end_inset
 
- episodes based on empirical evidence as described later
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-REF
-\end_layout
+ episodes based on empirical evidence as described later in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Three-Thresholds"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
@@ -5809,23 +6570,7 @@ REF
 status open
 
 \begin_layout Plain Layout
-Note: the discount-factor is implicitly taken to be the value as agreed
- upon for the default value under general consensus 
-\begin_inset Formula $\gamma=0.99$
-\end_inset
 
-, instead of further tuning.
- The justification of this is found later in 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Cross-Ref to P5!
-\end_layout
-
-\end_inset
-
-.
 \end_layout
 
 \end_inset
@@ -5841,52 +6586,68 @@ Cross-Ref to P5!
 
 \end_layout
 
+\begin_layout Remark
+Tuning of the discount-factor 
+\begin_inset Formula $\gamma$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The value of 
+\begin_inset Formula $\gamma=0.99$
+\end_inset
+
+ as agreed upon under general consensus in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "what-matters-in-rl,sb3,uvipen"
+literal "false"
+
+\end_inset
+
+ is directly used without further modifications.
+ Later Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Future-work"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ elaborates on its potential tuning.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection
 Environment Adaptations
 \end_layout
 
+\begin_layout Definition
+Specialized pairing of action-observation
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Specialized-pairing-of-action-obs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
-The necessary adaptations for utilizing this network for the now available
- 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-gym
-\end_layout
-
-\end_inset
-
- environment are enlisted below:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Enumerate
-The observation, which should be drawn from the entire history of state
- 
-\begin_inset Formula $y$
-\end_inset
-
- and action 
-\begin_inset Formula $a$
-\end_inset
-
-, is, as explained before, only dependent only the current state 
-\begin_inset Formula $y$
-\end_inset
-
-.
- In particular, the state-observation, the number of lines cleared and the
- piece-id, are all only dependent on one state snapshot, the state after
- applying the action.
-\end_layout
-
-\begin_layout Enumerate
-All pairs of (action, observation)-pairs must be created, in particular,
- given the specific movement setup of the 
+To fully adapt the DQN-algorithm to the environment-property of 
 \begin_inset Flex Code
 status open
 
@@ -5896,8 +6657,45 @@ ShetrisEnv
 
 \end_inset
 
-, the rotational configurations of every piece can be reduced: in particular,
- the 
+, the generation of action-observation pairs is specialized.
+\end_layout
+
+\begin_layout Standard
+In particular, given the current action-space and evolution-mechanism as
+ seen in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Action-Space-of-Shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Evolution-of-shetris"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, both the rotational (
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+) and the horizontal (
+\begin_inset Formula $A^{\texttt{pos1}}$
+\end_inset
+
+) component of the action-space could generally be further reduced: as an
+ example, for the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
 \begin_inset Quotes qld
 \end_inset
 
@@ -5905,43 +6703,177 @@ O
 \begin_inset Quotes qrd
 \end_inset
 
--piece has 
+
+\end_layout
+
+\end_inset
+
+-piece, the rotational action-space 
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+ could be set to 
 \begin_inset Formula $1$
 \end_inset
 
- rotational-config, then 
-\begin_inset Note Note
+ instead of the generic default value of 
+\begin_inset Formula $4$
+\end_inset
+
+ to accommodate for other pieces such as the 
+\begin_inset Flex Code
 status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+T
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+-piece, effectively shrinking the size of the action-space of 
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+ to 
+\begin_inset Formula $\nicefrac{1}{4}$
+\end_inset
+
+, drastically eliminating the redundant 
+\begin_inset Quotes xld
+\end_inset
+
+noise
+\begin_inset Quotes xrd
+\end_inset
+
+ in the action-space during the training-process.
+\end_layout
+
+\begin_layout Standard
+In the self-implemented DQN, similar specialization for the specific piece
+ and rotational configuration is performed for both 
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+ and 
+\begin_inset Formula $A^{\texttt{pos1}}$
+\end_inset
+
+ for the exact tailoring of the action-space to the current piece.
+ The reader is encouraged to inspect the exact implementation in the source
+ code.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Increasing size of 
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+ with increasing 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+The reader might note that the rotational action-space 
+\begin_inset Formula $A^{\texttt{rot}}$
+\end_inset
+
+ monotonously increases when inspecting the seven pieces from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+-value of 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $6$
+\end_inset
+
+ as enlisted in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:The-identity-of-a-piece"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The is, in fact, not a coincidence, as the number of rotational variations
+ is one of the initial sorting criteria when the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+s are defined in 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ to begin with.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Plain Layout
 comes pid 1, 2, 3 with 2 configs and the last three of 4 configs.
 \end_layout
 
-\end_inset
-
- Note that this monotonously increasing amount of rotational configurations
- with respect to the 
-\begin_inset Flex Code
-status open
-
 \begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
- is not a coincidence: in fact, this is the sorting criteria when the 
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-pid
-\end_layout
-
-\end_inset
-
-s are sorted to begin with.
- Thus, much 
+Thus, much 
 \begin_inset Quotes xld
 \end_inset
 
@@ -5954,11 +6886,7 @@ wasteful
 \begin_inset Formula $4$
 \end_inset
 
-, effectively shrinking the action-space to 
-\begin_inset Formula $\nicefrac{1}{4}$
-\end_inset
-
-.
+, .
  The reporter in the module 
 \begin_inset Flex Code
 status open
@@ -6044,6 +6972,41 @@ _Helper
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+The necessary adaptations for utilizing this network for the now available
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ environment are enlisted below.
+\end_layout
+
+\begin_layout Enumerate
+The observation, which should be drawn from the entire history of state
+ 
+\begin_inset Formula $y$
+\end_inset
+
+ and action 
+\begin_inset Formula $a$
+\end_inset
+
+, is, as explained before, only dependent only the current state 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ In particular, the state-observation, the number of lines cleared and the
+ piece-id, are all only dependent on one state snapshot, the state after
+ applying the action.
 \end_layout
 
 \end_inset
@@ -6167,6 +7130,15 @@ class Reporter:
 \begin_layout Plain Layout
 
         ...
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Setup for using the self-implemented DQN
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -6180,7 +7152,7 @@ Hard-coded Evolution logic
 
 \begin_layout Standard
 To conclude this chapter on the investigation of various agents, this section
- provides an alternative solution requiring no training.
+ provides an alternative solution that requires no training.
  Originally studied and published in 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -6195,10 +7167,6 @@ literal "false"
 
  that maximizes a hard-coded reward-function at every step.
  The specifics are given below:
-\end_layout
-
-\begin_layout Subsection
-Agent specification
 \end_layout
 
 \begin_layout Definition
@@ -6241,16 +7209,15 @@ where the observation components are defined as previously.
 \end_layout
 
 \begin_layout Standard
-Thus follows the agent 
-\begin_inset Formula $\mathcal{A}$
-\end_inset
-
-:
+Thus follows the agent-definition:
 \end_layout
 
 \begin_layout Definition
-Agent 
-\begin_inset Formula $\mathcal{A}$
+Reference-Agent with Hard-coded logic
+\begin_inset CommandInset label
+LatexCommand label
+name "def:Reference-Agent-with-Hard-coded-logic"
+
 \end_inset
 
 
@@ -6278,7 +7245,17 @@ At every step, the Agent applies the optimal action
 \end_layout
 
 \begin_layout Remark
-Adaptation details
+Adaptation details for usage with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+ShetrisEnv
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -6349,9 +7326,9 @@ numpy.ndarray
 
 \end_inset
 
-
-\begin_inset Note Greyedout
-status open
+.
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Plain Layout
 in particular, the observation-factory is thus limited to:
@@ -6416,16 +7393,8 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
-Quick Analysis
-\end_layout
-
 \begin_layout Standard
-Some initial statements can be made regarding the agent as described above:
-\end_layout
-
-\begin_layout Enumerate
-the hard-coded nature of the reward-to-action process eliminates the process
+The hard-coded nature of the reward-to-action process eliminates the process
  of training entirely, rendering this agent suitable as a 
 \begin_inset Quotes xld
 \end_inset
@@ -6434,22 +7403,22 @@ real-time
 \begin_inset Quotes xrd
 \end_inset
 
- comparative criteria for evaluating trained agents as described previously
-\end_layout
+ comparative criteria for evaluating all trained agents as described previously,
+ as demonstrated later in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Hard-coded-Evolution-Algorithm"
+plural "false"
+caps "false"
+noprefix "false"
 
-\begin_layout Enumerate
-On the other hand, 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Separator plain
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
+\begin_inset Note Note
 status collapsed
 
 \begin_layout Section
@@ -6980,13 +7949,6 @@ Though
 \end_layout
 
 \end_deeper
-\begin_layout Plain Layout
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
 \begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
