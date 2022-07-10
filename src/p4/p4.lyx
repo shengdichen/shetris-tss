@@ -720,7 +720,7 @@ noprefix "false"
 \texttt{pid}\text{-Bag}\left(\text{non-random}\right)\in\left\{ \begin{alignedat}{1} & \texttt{"O"}\\
  & \texttt{"I"}\\
  & \texttt{\{"O", "I"\}}\\
- & \texttt{\{"O", "I", "T\}}\\
+ & \texttt{\{"O", "I", "T"\}}\\
  & 7\text{-bag}
 \end{alignedat}
 \right.
@@ -733,7 +733,7 @@ And for generators with randomness, i.e., with shuffling, the following bags
 \begin_inset Formula 
 \[
 \texttt{pid}\text{-Bag}\left(\text{random}\right)\in\left\{ \begin{alignedat}{1} & \texttt{\{"O", "I"\}}\\
- & \texttt{\{"O", "I", "T\}}\\
+ & \texttt{\{"O", "I", "T"\}}\\
  & 7\text{-bag}
 \end{alignedat}
 \right.
