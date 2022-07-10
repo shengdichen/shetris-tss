@@ -117,14 +117,434 @@ Synopsis
 \end_layout
 
 \begin_layout Standard
-The administrative details of this thesis can be retrieved under the course-cata
-logue under the aforementioned registration number.
- The total execution time is estimated at approximately 
-\begin_inset Formula $3$
+This thesis-project explores the possibility of the deployment of methods
+ of Reinforcement-Learning (RL) to the game-play of Tetris.
+ An amalgamation of the name of its author and the underlying game to solve
+ leads to its internal code-name of 
+\begin_inset Quotes xld
 \end_inset
 
- months of full-time work, including the drafting of the thesis and the
- composing of the source-code.
+Shetris
+\begin_inset Quotes xrd
+\end_inset
+
+, as shown in the header.
+\end_layout
+
+\begin_layout Standard
+The purpose of applying techniques from RL to the specific game-play of
+ Tetris tangents upon two very specific domains, both boasting of a broad
+ range of established researches.
+ Notable examples are enumerated below.
+\end_layout
+
+\begin_layout Subsection
+Related Researches
+\end_layout
+
+\begin_layout Subsubsection
+On the game of Tetris
+\end_layout
+
+\begin_layout Standard
+Analysis of the game-play and rule-sets performed solely on the Tetris game
+ are generally published by experts of the game, such as the individually
+ maintained 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "koryan"
+literal "false"
+
+\end_inset
+
+, as well as the community wiki 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tetris-wiki"
+literal "false"
+
+\end_inset
+
+, whose relevance is further discussed in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Source-of-Information"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Purely theoretical researches such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "demaine-n-mino,demaine-np"
+literal "false"
+
+\end_inset
+
+ have demonstrated the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+NP
+\end_layout
+
+\end_inset
+
+-completeness of optimally solving 
+\begin_inset Quotes xld
+\end_inset
+
+the Tetris-problem
+\begin_inset Quotes xrd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+On the other hand, algorithms from the field of RL have been observed to
+ perform reasonably well in learning the strategy for playing Tetris, as
+ demonstrated in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "hk,reduced-tetris,stanford,tetris-best-ai,tetris-nuno,tetris-rl-survey,uvipen"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+On Reinforcement-Learning RL
+\end_layout
+
+\begin_layout Standard
+Reinforcement-Learning finds root in established literature from classical
+ control-theory, with reference-literature 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bertsekas_1995,bellman_1957"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The original idea of Q-Learning in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Q-learning-original"
+literal "false"
+
+\end_inset
+
+ has recently been augmented with techniques of deep-learning, giving rise
+ to the method of Deep Q-Networks (DQN) as originally published in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-original"
+literal "false"
+
+\end_inset
+
+.
+ The landmark publication 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dqn-nature"
+literal "false"
+
+\end_inset
+
+ shows the potency of this fusion on the collection of Atari-games, achieving
+ super-human performance on multiple occasions.
+\end_layout
+
+\begin_layout Standard
+The DQN has been notably implemented by the original publisher 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-deepmind-implementation"
+literal "false"
+
+\end_inset
+
+ and further tuned by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-deepmind-tweaked"
+literal "false"
+
+\end_inset
+
+ and utilized by projects such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DQN-deepmind-tweaked,uvipen,tetris-nuno"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+General libraries such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sb3"
+literal "false"
+
+\end_inset
+
+ provide reference implementations of exemplary methods of RL beyond DQN,
+ such as those proposed in the researches of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "PPO,A2C"
+literal "false"
+
+\end_inset
+
+.
+ The relevance of these algorithms to 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+ is discussed in later Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:Training-with-sb3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Current Deficiencies
+\end_layout
+
+\begin_layout Plain Layout
+Justifications of Decisions
+\end_layout
+
+\begin_layout Plain Layout
+The cursory mentioning above of the implementation of a separate Tetris-game
+ is 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+de facto
+\end_layout
+
+\end_inset
+
+ the result of much analysis.
+\end_layout
+
+\begin_layout Subsection
+The unpleasantness
+\end_layout
+
+\begin_layout Plain Layout
+But they all suffer from one or more critical drawbacks:
+\end_layout
+
+\begin_layout Enumerate
+One is made with raw NES, raw field: very long training: at the beginning,
+ random jittering all the time
+\end_layout
+
+\begin_layout Enumerate
+raw movement 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+paper in HK: does this count?
+\end_layout
+
+\end_inset
+
+, namely the GitHub repo (very easy to get started)
+\end_layout
+
+\begin_layout Enumerate
+raw data-source (scanning the whole field)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+do we have a paper?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+But probably the biggest drawback of using existing tetris implementations
+ is the lack of:
+\end_layout
+
+\begin_layout Enumerate
+training
+\end_layout
+
+\begin_layout Enumerate
+testing
+\end_layout
+
+\begin_layout Enumerate
+viewing
+\end_layout
+
+\begin_layout Plain Layout
+possibilities.
+ It is thus necessary to implement our own Tetris game for truly granular
+ control.
+\end_layout
+
+\begin_layout Enumerate
+Few existing solutions of Tetris with Reinforcement-Learning follow a standardiz
+ed frame-work for describing the game.
+ Indeed, though both 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "uvipen,tetris-nuno"
+literal "false"
+
+\end_inset
+
+ achieve respectable results for agent-training, the environment itself
+ is designed as the heart wishes by the author.
+\end_layout
+
+\begin_layout Enumerate
+Insufficient modularity: the game-logic and the environment's observation
+ or action should be isolated : this allows modification of the training
+ process by varying observation, action and reward, which can be thought
+ of as the tuning of hyper-parameters on a more untraditional, more elevated
+ level than that of the learning-algorithm.
+\end_layout
+
+\begin_layout Enumerate
+Non-extendability and modifiability of the engine itself: the generator,
+ for example, as seen in later chapters, critically influences the entire
+ train-test pipeline.
+ Building upon the previous argument, components within the game-logic must
+ themselves also be segregated into separate modules.
+\end_layout
+
+\begin_layout Enumerate
+The few 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ compliant environments leave much to be desired as well.
+ Apart from the same argument of inadequate management of source code, examples
+ such as 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+the NES environment: put in the link
+\end_layout
+
+\end_inset
+
+ directly use the ROM of the game on the NES platform.
+ While this would make for spectacular results, the difficulty of extracting
+ information from the said ROM is almost insurmountable
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+ROM-hack website for NES
+\end_layout
+
+\end_inset
+
+: it seems almost impossible to extract the amount of required data for
+ conducting training under real-life resource bounds.
+ The failure to successfully train models on raw data with minimal ROM-hacking
+ is well documented in 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+HK paper
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+The enumeration above is not exhaustive: some are based purely on tried
+ and true principles from traditional software engineering; others on real-life
+ constraints on resource and time of computing.
+\end_layout
+
+\begin_layout Plain Layout
+The immediate
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In fact, the actual time taken for this decision is far from being 
+\begin_inset Quotes xld
+\end_inset
+
+immediate
+\begin_inset Quotes xrd
+\end_inset
+
+.
+ See Chapter V for details.
+\end_layout
+
+\end_inset
+
+ realization was the necessity to implement the project from
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -140,62 +560,9 @@ Programming
 \end_layout
 
 \begin_layout Standard
-The main source-code package can be decomposed into two separate sub-packages.
- The first package implements a full-fledged Tetris-game, designed with
- modularity and extendability.
- The second package performs analysis, training and testing on the said
- Tetris-game.
-\end_layout
-
-\begin_layout Standard
-Both the game source-code library is structured with
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-shetris/
-\end_layout
-
-\begin_layout Plain Layout
-
-|-- game/
-\end_layout
-
-\begin_layout Plain Layout
-
-|-- src/
-\end_layout
-
-\begin_layout Plain Layout
-
-|   |-- ...
-\end_layout
-
-\begin_layout Plain Layout
-
-|   |-- ...
-\end_layout
-
-\begin_layout Plain Layout
-
-|   |-- ...
-\end_layout
-
-\begin_layout Plain Layout
-
-|-- train/
-\end_layout
-
-\begin_layout Plain Layout
-
-|-- tss/
-\end_layout
-
-\end_inset
-
-with
+The main source-code package is further decomposed into two separate sub-package
+s: the first implements the logic of the Tetris-game, and the second performs
+ analysis, training and testing.
 \end_layout
 
 \begin_layout Subsubsection
@@ -203,11 +570,17 @@ General usages
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
+The programming is performed with the 
+\begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-The programming is performed with the Python language.
+Python
+\end_layout
+
+\end_inset
+
+ language.
  Despite the dynamic-typing nature of the language, the source-code utilizes
  extensive type-hinting.
  Python versions no earlier than 
@@ -225,9 +598,29 @@ Python 3.9
 status collapsed
 
 \begin_layout Plain Layout
+Version requirement of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+'s 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+typing
+\end_layout
+
+\end_inset
+
+-Module: 
 \begin_inset CommandInset href
 LatexCommand href
-name "Python's Typing Module, version requirement"
 target "https://docs.python.org/3/library/typing.html#module-contents"
 literal "false"
 
@@ -241,9 +634,36 @@ literal "false"
 .
 \end_layout
 
+\begin_layout Standard
+The source-code is consistently processed by the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+black
+\end_layout
+
 \end_inset
 
+-formatter 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "black"
+literal "false"
 
+\end_inset
+
+ and thus implicitly conforms to the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+PEP8
+\end_layout
+
+\end_inset
+
+ standard.
 \end_layout
 
 \begin_layout Subsubsection
@@ -251,11 +671,7 @@ Required packages
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-The framework for the problem-environment conform to the framework of 
+The framework for the agent-interactive environment is provided by the 
 \begin_inset Flex Code
 status open
 
@@ -265,7 +681,7 @@ gym
 
 \end_inset
 
- developed by OpenAI
+-package developed by OpenAI
 \begin_inset CommandInset citation
 LatexCommand cite
 key "gym"
@@ -276,29 +692,17 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Plain Layout
-The reference reinforcement-learning algorithms, for example, the Deep-Q-Network
- (
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-DQN
-\end_layout
+\begin_layout Standard
+The reference implementation of algorithms of RL, for example, the Deep-Q-Networ
+k (DQN) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "dqn-nature,DQN-original"
+literal "false"
 
 \end_inset
 
-) and the Proximal-Policy-Optimization (
-\begin_inset Flex Code
-status open
-
-\begin_layout Plain Layout
-PPO
-\end_layout
-
-\end_inset
-
-) algorithm 
+ and the Proximal-Policy-Optimization (PPO) algorithm 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "PPO"
@@ -306,27 +710,70 @@ literal "false"
 
 \end_inset
 
-, are provided by stable-baselines 3
+, are provided by stable-baselines3
 \begin_inset CommandInset citation
 LatexCommand cite
-key "stable-baselines"
+key "sb3"
 literal "false"
 
 \end_inset
 
-.
+, referred to as 
+\begin_inset Quotes xld
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
 \end_layout
 
 \end_inset
 
 
+\begin_inset Quotes xrd
+\end_inset
+
+ in this thesis.
+\end_layout
+
+\begin_layout Standard
+Note that both 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+SB3
+\end_layout
+
+\end_inset
+
+ enforce project-wide type-hinting of source-code in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+ as well.
 \end_layout
 
 \begin_layout Subsection
-Miscellaneous
-\end_layout
-
-\begin_layout Subsubsection
 Formatting and Typesetting
 \end_layout
 
@@ -356,75 +803,119 @@ Source-Code-Pro
 .
 \end_layout
 
+\begin_layout Subsection
+Tracking
+\end_layout
+
 \begin_layout Standard
-The source-code is consistently processed by the 
+The source-code of the 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Shetris
+\end_layout
+
+\end_inset
+
+-Project is distributed under the following repositories:
+\end_layout
+
+\begin_layout Itemize
+The modules for the formulation of various agents, as well as those for
+ training and testing are published under the repository: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Link to GitHub"
+target "https://github.com/shengdichen/shetris-train"
+literal "false"
+
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+All other aspects of the Tetris-game, including the 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-black
+engine
 \end_layout
 
 \end_inset
 
-
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Flex URL
-status open
-
-\begin_layout Plain Layout
-
-https://github.com/psf/black
-\end_layout
+ as described in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Essential-Implementations"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-
-\end_layout
+, are found at: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Link to GitHub"
+target "https://github.com/shengdichen/shetris-game"
+literal "false"
 
 \end_inset
 
--formatter and thus implicitly conforms to the 
+;
+\end_layout
+
+\begin_layout Itemize
+This thesis-document itself is accessible under: 
+\begin_inset CommandInset href
+LatexCommand href
+name "Link to GitHub"
+target "https://github.com/shengdichen/shetris-tss"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Both source-code repositories deploy the 
+\begin_inset Quotes xld
+\end_inset
+
+GNU Affero General Public License v3.0
+\begin_inset Quotes xrd
+\end_inset
+
+ license, else known as 
 \begin_inset Flex Code
 status open
 
 \begin_layout Plain Layout
-PEP8
+GNU AGPLv3
 \end_layout
 
 \end_inset
 
- standard.
+.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
 
 \begin_layout Subsubsection
 Tracking and Control
 \end_layout
 
-\begin_layout Standard
-This Project is internally code-named 
-\begin_inset Quotes xld
-\end_inset
-
-Shetris
-\begin_inset Quotes xrd
-\end_inset
-
-, an amalgamation of the name of its author and the underlying game to solve.
-\end_layout
-
-\begin_layout Standard
+\begin_layout Plain Layout
 This particular thesis documents the conception, the implementation and
  the results achieved in The entire project consists of two fundamental
  parts: t
 \end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
 
 \begin_layout Plain Layout
 The Shetris-Project is under extensive version control by 
@@ -485,275 +976,6 @@ status open
 \end_inset
 
 
-\end_layout
-
-\begin_layout Section
-Related Researches
-\end_layout
-
-\begin_layout Standard
-The purpose of applying techniques from Reinforcement-Learning to the specific
- game of Tetris tangents upon two very specific domains, both boasting of
- a broad range of established researches.
- Notable examples are enumerated below.
-\end_layout
-
-\begin_layout Subsection
-On the game of Tetris
-\end_layout
-
-\begin_layout Standard
-The immensely popular game of Tetris, with its original publishing dating
- back decades, has since witnessed a wide range of variations on implementations
- and adaptations.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-Currently available on over <??> electronic platforms in over <~100> variations,
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-well studied by experts.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Korygan, tetris-wiki
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A separate wiki has been introduced, this is referenced on a massive scale
- for implementing the Tetris game.
-\end_layout
-
-\begin_layout Subsection
-Theoretical results
-\end_layout
-
-\begin_layout Standard
-Purely theoretical researches have demonstrated the difficulty of optimally
- solving 
-\begin_inset Quotes xld
-\end_inset
-
-the Tetris-problem
-\begin_inset Quotes xrd
-\end_inset
-
- with 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "demaine_np,demaine_n_mino"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-https://erikdemaine.org/papers/Tetris_TR2002/; https://arxiv.org/abs/cs/0210020
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
-Results with Reinforcement-Learning
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-Reinforcement-Learning has been shown to achieve human level-performance
- in classical gaming environments
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Nature paper
-\end_layout
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-Concerning this thesis, recent algorithmic breakthroughs for DQN, PPO
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PPO"
-literal "false"
-
-\end_inset
-
- and 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Algorithms of RL
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-Concerning this thesis, recent algorithmic breakthroughs for DQN, PPO
-\begin_inset CommandInset citation
-LatexCommand cite
-key "PPO"
-literal "false"
-
-\end_inset
-
- and
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Reinforcement-Learning on Tetris
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Greyedout
-status open
-
-\begin_layout Plain Layout
-Specific to the game of Tetris, the repository of 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-https://github.com/uvipen/Tetris-deep-Q-learning-pytorch/blob/master/src/tetris.py
-\end_layout
-
-\end_inset
-
- already exhibits respectable results for Tetris.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Several attempts have been made to study and optimize the Tetris game.
- Several notation establishments previously include one paper using dynamic
- programming 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-dynamic prog paper
-\end_layout
-
-\end_inset
-
- and one theoretical analysis.
- But they all suffer from one or more critical drawbacks:
-\end_layout
-
-\begin_layout Enumerate
-One is made with raw NES, raw field: very long training: at the beginning,
- random jittering all the time
-\end_layout
-
-\begin_layout Enumerate
-raw movement 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-paper in HK: does this count?
-\end_layout
-
-\end_inset
-
-, namely the GitHub repo (very easy to get started)
-\end_layout
-
-\begin_layout Enumerate
-raw data-source (scanning the whole field)
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-do we have a paper?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-But probably the biggest drawback of using existing tetris implementations
- is the lack of:
-\end_layout
-
-\begin_layout Enumerate
-training
-\end_layout
-
-\begin_layout Enumerate
-testing
-\end_layout
-
-\begin_layout Enumerate
-viewing
-\end_layout
-
-\begin_layout Standard
-possibilities.
- It is thus necessary to implement our own Tetris game for truly granular
- control.
-\end_layout
-
-\begin_layout Section
-Justifications of Decisions
-\end_layout
-
-\begin_layout Subsection
-The unpleasantness
-\end_layout
-
-\begin_layout Enumerate
-f
 \end_layout
 
 \end_body
