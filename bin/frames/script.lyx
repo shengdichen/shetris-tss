@@ -1,0 +1,2612 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass amsart
+\use_default_options true
+\begin_removed_modules
+theorems-ams
+\end_removed_modules
+\begin_modules
+eqs-within-sections
+figs-within-sections
+theorems-ams-chap-bytype
+theorems-ams-extended-chap-bytype
+tabs-within-sections
+customHeadersFooters
+logicalmkup
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "Constantia"
+\font_sans "default" "Avenir Next LT Pro"
+\font_typewriter "default" "Source Code Pro"
+\font_math "auto" "default"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype true
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing single
+\use_hyperref false
+\papersize letterpaper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.75in
+\topmargin 0.75in
+\rightmargin 0.75in
+\bottommargin 1in
+\headsep 0.3in
+\footskip 0.3in
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side right
+\quotes_style danish
+\dynamic_quotes 1
+\papercolumns 1
+\papersides 2
+\paperpagestyle fancy
+\listings_params "basicstyle={\ttfamily\normalsize},commentstyle={\sffamily},columns=fullflexible,numbers=left,numberstyle={\ttfamily\scriptsize},stepnumber=1,numberblanklines=false,firstline=1,numbersep=9pt,frame=tlb,framexleftmargin=3pt,framextopmargin=2pt,framexbottommargin=1pt,aboveskip={\medskipamount},belowskip={\medskipamount},captionpos=b,floatplacement=tbp,tabsize=4,resetmargins=false,breaklines=true,breakatwhitespace=false,breakautoindent=true,breakindent=0pt,prebreak={...},postbreak={...},extendedchars=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Transcript - B.Sc.
+ Presentation
+\end_layout
+
+\begin_layout Date
+2022-08-09
+\end_layout
+
+\begin_layout Author
+Shengdi Chen
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Synopsis
+\end_layout
+
+\begin_layout Enumerate
+[NEW SLIDE] Welcome: Presentation: B.Sc.
+ Thesis
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Three papers: on screen
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Details of authorship in appendix of report
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Setup of this talk
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $3$
+\end_inset
+
+ copies of Thesis: refer for details
+\end_layout
+
+\begin_layout Enumerate
+on slides: truncation; simplification on screen
+\end_layout
+
+\begin_layout Enumerate
+refer report for details
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Structure of report and talk
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Formulation of the game
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+MDP, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $3$
+\end_inset
+
+ types of agents
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+training
+\end_layout
+
+\begin_layout Enumerate
+testing framework; results
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Throw-backs
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Three classic implementations
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+NES, Gameboy
+\end_layout
+
+\begin_layout Enumerate
+1989-1998
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+diff.
+ interfaces, but Commonality for abstraction
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+large rectangular field
+\end_layout
+
+\begin_layout Enumerate
+falling pieces of different shapes
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+First step
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+math.
+ representation of field and piece
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Setup
+\end_layout
+
+\begin_layout Subsection
+Representation
+\end_layout
+
+\begin_layout Subsubsection
+Field
+\end_layout
+
+\begin_layout Solution
+Begin with the field
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+LEFT:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+segment of the field
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+RIGHT: equivalent representation
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+bunch of 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $1$
+\end_inset
+
+; glorified 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+2D
+\end_layout
+
+\end_inset
+
+ matrix of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+bool
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+2D
+\end_layout
+
+\end_inset
+
+ matrix: natural extension: the coordinates
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+LEFT: indexes of the field
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+convention of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+ and other libraries
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+first index: downwards
+\end_layout
+
+\begin_layout Enumerate
+second index: rightwards
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+RIGHT: standard shape
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Piece
+\end_layout
+
+\begin_layout Solution
+Now the pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+UPPER: all the 
+\begin_inset Formula $7$
+\end_inset
+
+ pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+each with 
+\begin_inset Formula $4$
+\end_inset
+
+ blocks
+\end_layout
+
+\begin_layout Enumerate
+LOWER: internal representation
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+variable: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+; range of 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $6$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Pieces can be rotated
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+UPPER: rotation-pattern of 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+T
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, the bar
+\end_layout
+
+\begin_layout Enumerate
+NOTE: 
+\begin_inset Formula $4$
+\end_inset
+
+ rotation values
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+clockwise and CCW sense
+\end_layout
+
+\begin_layout Enumerate
+same direction 
+\begin_inset Formula $4$
+\end_inset
+
+ times, resets
+\end_layout
+
+\begin_layout Enumerate
+math.
+ convention: CCW is positive rotation
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Apply the coordinates to the pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PREVIOUSLY: every piece in 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ box
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+this box is the 
+\begin_inset Formula $\texttt{[R-COORD]}$
+\end_inset
+
+-matrix
+\end_layout
+
+\begin_layout Enumerate
+every entry: relative to RED 
+\begin_inset Formula $\star$
+\end_inset
+
+: upper-left
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+WHY: 
+\begin_inset Formula $\star$
+\end_inset
+
+ in upper-left?
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+indexing convention: all positive
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Some color-coded examples
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Order: conforming to index
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+go down; then left
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Ready for absolute
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Add 
+\begin_inset Formula $\texttt{pos}\left(\star\right)$
+\end_inset
+
+ to 
+\begin_inset Formula $\texttt{R-COORD}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+member-wise (math); trivial (with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+numpy
+\end_layout
+
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+low transport content
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\texttt{R-COORD}$
+\end_inset
+
+: constant for every piece!
+\end_layout
+
+\begin_layout Enumerate
+only need 
+\begin_inset Formula $\texttt{pos}\left(\star\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Reconstruct 
+\begin_inset Formula $\texttt{ABS-COORD}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Full piece specified with 
+\begin_inset Formula $3$
+\end_inset
+
+ info
+\end_layout
+
+\begin_layout Subsection
+MDP
+\end_layout
+
+\begin_layout Solution
+Ready for Formal Formulation of dynamic system: MDP
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Quick walk-through
+\end_layout
+
+\begin_layout Enumerate
+Process: one time-step 
+\begin_inset Formula $\star$
+\end_inset
+
+ 
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+ to next 
+\begin_inset Formula $\star+1$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+state 
+\begin_inset Formula $y$
+\end_inset
+
+; apply 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+evolve with 
+\begin_inset Formula $f$
+\end_inset
+
+; finally rewarded 
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Formulate Tetris as MDP
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $y\coloneqq\text{Field }+\text{ Piece}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+big 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+bool
+\end_layout
+
+\end_inset
+
+-matrix; 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+ and coordinates
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Action: applied every new piece
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PREVIOUSLY: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+rot
+\end_layout
+
+\end_inset
+
+: max.
+ 
+\begin_inset Formula $4$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+GREEN 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pos1
+\end_layout
+
+\end_inset
+
+: horizontal: field-width
+\end_layout
+
+\begin_layout Enumerate
+GREY: No vertical: just fall
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Formulate Tetris as MDP
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $f$
+\end_inset
+
+: as we know it
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+generate; fall; clear-lines
+\end_layout
+
+\begin_layout Enumerate
+GREY: intermediate piece
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Finally: 
+\begin_inset Formula $r$
+\end_inset
+
+: two-part structure
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+game-over: 
+\begin_inset Formula $-2$
+\end_inset
+
+ random, just negative
+\end_layout
+
+\begin_layout Enumerate
+#clears: RIGHT: big-formula
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\wasypropto$
+\end_inset
+
+ to 
+\begin_inset Formula $k$
+\end_inset
+
+-func [LEFT]
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\uparrow$
+\end_inset
+
+#clears 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $\uparrow$
+\end_inset
+
+ score per-line
+\end_layout
+
+\begin_layout Enumerate
+Tetris-Guideline
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+-adaptation
+\end_layout
+
+\begin_layout Solution
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+: Agent-framework; 2016
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+[LEFT]: [RED] extra observation 
+\begin_inset Formula $x$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Agent:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+LOWER: has access
+\end_layout
+
+\begin_layout Enumerate
+UPPER: hidden internals
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Field-based Obs
+\end_layout
+
+\begin_layout Solution
+Driven by Q.: how to tell
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Good VS Bad: 
+\begin_inset Formula $3$
+\end_inset
+
+ things
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Abs-height
+\end_layout
+
+\begin_layout Enumerate
+relative-height
+\end_layout
+
+\begin_layout Enumerate
+DEMO: hole
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Math.
+ ranges; in 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+python
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+elevation: 
+\begin_inset Formula $9$
+\end_inset
+
+ values: every 
+\begin_inset Formula $2$
+\end_inset
+
+ neighbors 
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $1$
+\end_inset
+
+ value
+\end_layout
+
+\begin_layout Enumerate
+Total: 
+\begin_inset Formula $29$
+\end_inset
+
+ values to track
+\end_layout
+
+\begin_layout Enumerate
+every column
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Too many? Sum over all
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+[RED] upper-script 
+\begin_inset Formula $C$
+\end_inset
+
+: Compact-mode: 
+\begin_inset Formula $3$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Two more observations
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+#clears; old-friend
+\end_layout
+
+\begin_layout Enumerate
+Some other research: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+How to pick the correct combination?
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Que: full VS compact field?
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $4$
+\end_inset
+
+ modes
+\end_layout
+
+\begin_layout Enumerate
+NOTE: Size of OBS-space
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+[GREEN] least 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ smallest; [RED] biggest
+\end_layout
+
+\begin_layout Enumerate
+BACK-LATER
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Agents
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Agent specified by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+gym
+\end_layout
+
+\end_inset
+
+; NOW: train
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Established library: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Space-struct of 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Tetris
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $3$
+\end_inset
+
+ algs
+\end_layout
+
+\begin_layout Enumerate
+Except: DQN
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Action-Sp.
+ is 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+1D
+\end_layout
+
+\end_inset
+
+-discrete
+\end_layout
+
+\begin_layout Enumerate
+re-inflate
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Tuned-DQN
+\end_layout
+
+\begin_layout Solution
+DQN: Also: Self-implemented
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+First: Q-Learning
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+[GREEN] Return 
+\begin_inset Formula $\coloneqq$
+\end_inset
+
+ sum of discounted reward
+\end_layout
+
+\begin_layout Enumerate
+[BLUE] Q-Value 
+\begin_inset Formula $\coloneqq\mathbb{E}$
+\end_inset
+
+ of Return
+\end_layout
+
+\begin_layout Enumerate
+Policy 
+\begin_inset Formula $\coloneqq$
+\end_inset
+
+ max'ze Q-Value
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+1992; breakthrough: 
+\begin_inset Formula $2013$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Exact Q-value: non-convex; complicated
+\end_layout
+
+\begin_layout Enumerate
+Neural-Net
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+NOTE: size of 
+\begin_inset Formula $1^{\text{st}}$
+\end_inset
+
+-Layer
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Min.
+ VS Max.
+ Obs-modes
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Also: Action-Space
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+PREVIOUSLY: general Act-space
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+accommodate: for every-piece 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ worst-case
+\end_layout
+
+\begin_layout Enumerate
+SUBTITLE: invariant
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Tune! 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Taylor for piece, e.g., ROT
+\end_layout
+
+\begin_layout Enumerate
+HALF; Quarter
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Result
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+piece-dependent; SMALLER
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results
+\end_layout
+
+\begin_layout Subsection
+Setup
+\end_layout
+
+\begin_layout Definition
+Before the results: Setup the Env
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Reproduce 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Python
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pipenv
+\end_layout
+
+\end_inset
+
+: package management
+\end_layout
+
+\begin_layout Enumerate
+constraint: Every Alg.
+ + OBS
+\end_layout
+
+\begin_layout Enumerate
+gauge the perf.:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+invite: mental exercise
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results
+\end_layout
+
+\begin_layout Solution
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+: General, Raw Act-sp
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $12$
+\end_inset
+
+ Agents: 
+\begin_inset Formula $3$
+\end_inset
+
+ Algs + 
+\begin_inset Formula $4$
+\end_inset
+
+ modes
+\end_layout
+
+\begin_layout Enumerate
+Generally: 
+\begin_inset Formula $\texttt{\textasciitilde}50$
+\end_inset
+
+; BEST in red
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+recall our threshold
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+[SUBTITLE] when BEST?
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+HORIZ: PPO performs best (ADV-func)
+\end_layout
+
+\begin_layout Enumerate
+VERT: MAX obs
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+All lost? Look @ Tuned-DQN
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Tailored Action-Sp
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Much better! VS 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+BEST: 
+\begin_inset Formula $6$
+\end_inset
+
+ times the threshold
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The big Q: Which Mode of OBS?
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+DQN: tuned Action-space: Observes LEAST 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ great results
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+: general, raw ACT: Observes MOST 
+\begin_inset Formula $\Longleftrightarrow$
+\end_inset
+
+ much worse
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Graphs logged by 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+TensorBoard
+\end_layout
+
+\end_inset
+
+: BEST-variant
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Finally, Real-time testing
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+go back to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+pid
+\end_layout
+
+\end_inset
+
+: underlying generator
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+every consecutive 
+\begin_inset Formula $7$
+\end_inset
+
+ 
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+ a 
+\begin_inset Quotes xld
+\end_inset
+
+bag
+\begin_inset Quotes xrd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+within a bag 
+\begin_inset Formula $\Longrightarrow$
+\end_inset
+
+ permutation
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+[UNIQUE] Disregarding the Guidelines:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Bag-content & Randomness
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\texttt{\{"O", "I", "T"\}}$
+\end_inset
+
+ Symmetric-pieces: EASY
+\end_layout
+
+\begin_layout Enumerate
+full-bag: [RANDOM] STANDARD
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Non-RANDOM: (easy-reproducible + Non-trivial)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Result: Coloring: stock-market
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Non-Random: failing at 
+\begin_inset Formula $\texttt{"O"}$
+\end_inset
+
+ (not covered in training)
+\end_layout
+
+\begin_layout Enumerate
+Random: Full-7 (real test) Double the threshold 
+\end_layout
+
+\begin_layout Enumerate
+TITLE: successful (MOST TIME)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Closer
+\end_layout
+
+\begin_layout Definition
+Closing section
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $12$
+\end_inset
+
+ weeks; 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+14GB
+\end_layout
+
+\end_inset
+
+ data and 
+\begin_inset Formula $300$
+\end_inset
+
+ hours on 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Euler
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Trained: 
+\begin_inset Formula $16$
+\end_inset
+
+ agents
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $4$
+\end_inset
+
+ obs-modes
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $4$
+\end_inset
+
+ algorithms
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Insights gained
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+LEFT: SELF-DQN: generally great performance
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+tuned Act-space 
+\begin_inset Formula $+$
+\end_inset
+
+ min.
+ Obs-space
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+during training: 
+\begin_inset Formula $6\times$
+\end_inset
+
+ benchmark
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+RIGHT: RAW 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+sb3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+raw Act-space 
+\begin_inset Formula $+$
+\end_inset
+
+ max.
+ Obs
+\end_layout
+
+\begin_layout Enumerate
+insufficient perf
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Summary:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+With tuned act-space: (we observe less + achieve more)
+\end_layout
+
+\begin_layout Enumerate
+Without tuning: (OBS more + achieve less)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Into the Future
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Modify internals of Engine
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+current in control theory
+\end_layout
+
+\begin_layout Enumerate
+previewing algorithms, dynamic regret-structure
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Testing process
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+standard test-sequence
+\end_layout
+
+\begin_layout Enumerate
+machine-against machine
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+The algorithms themselvs
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+implement PPO, A2C
+\end_layout
+
+\begin_layout Enumerate
+Ray/Rlib; Tianshou
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Self-promotion:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if opening available
+\end_layout
+
+\begin_layout Enumerate
+love to do semester-thesis
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Solution
+Wrap up
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Bachelor-Thesis; ISE
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+supervisor; advisors
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Math.
+ modeling; MPD
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+concept of obs
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+General Act-Sp.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+easy; invariant
+\end_layout
+
+\begin_layout Enumerate
+lackluster perf.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Tuned Act-Sp.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+needs less information
+\end_layout
+
+\begin_layout Enumerate
+great perf.
+\end_layout
+
+\begin_layout Enumerate
+opening for future
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Final words
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Thanks
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Prof.
+ Buhmann:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Accepting the initial sketch; Locate in ISE
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Advisors
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Organize; Admin
+\end_layout
+
+\begin_layout Enumerate
+Talks; Inputs
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+I myself
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+deepen in ML (RL in particular)
+\end_layout
+
+\begin_layout Enumerate
+coding; reward/observation engineering
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+Tetris
+\end_layout
+
+\end_inset
+
+ itself
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+DEMO
+\end_layout
+
+\begin_layout Definition
+DEMO-generals
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Free-play
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// 1.
+ free-play: pycharm.game
+\end_layout
+
+\begin_layout Plain Layout
+
+$ tk.py
+\end_layout
+
+\begin_layout Plain Layout
+
+[PRESS] e
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// 2.
+ changing bag: pycharm.engine.py -> _get_generator()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+shetris   -> True  True      5
+\end_layout
+
+\begin_layout Plain Layout
+
+shetris01 -> True  False     4
+\end_layout
+
+\begin_layout Plain Layout
+
+02        -> False True      31
+\end_layout
+
+\begin_layout Plain Layout
+
+03        -> False False     30
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Procedure:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+free-play (prove engine works)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Non-Random, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+; 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+{
+\begin_inset Quotes qld
+\end_inset
+
+O
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+T
+\begin_inset Quotes qrd
+\end_inset
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+DQN (go to the slide 
+\begin_inset Formula $63$
+\end_inset
+
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Non-Random, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ (no animation, but is real; works; loops! 
+\begin_inset Formula $\Rightarrow\infty$
+\end_inset
+
+ 
+\begin_inset Formula $n_{P}$
+\end_inset
+
+-value!)
+\end_layout
+
+\begin_layout Enumerate
+Non-Random, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+{
+\begin_inset Quotes qld
+\end_inset
+
+O
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+T
+\begin_inset Quotes qrd
+\end_inset
+
+}
+\end_layout
+
+\end_inset
+
+ (confirm: value on the slide)
+\end_layout
+
+\begin_layout Enumerate
+Random, 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+{
+\begin_inset Quotes qld
+\end_inset
+
+O
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+I
+\begin_inset Quotes qrd
+\end_inset
+
+, 
+\begin_inset Quotes qld
+\end_inset
+
+T
+\begin_inset Quotes qrd
+\end_inset
+
+}
+\end_layout
+
+\end_inset
+
+ (change to random; hope do not hit the green)
+\end_layout
+
+\begin_layout Enumerate
+Random, 
+\begin_inset Formula $7$
+\end_inset
+
+-bag (the big test)
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Backups
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+DQN
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Run default
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// no GUI: test.py
+\end_layout
+
+\begin_layout Plain Layout
+
+$ test.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// GUI: entry.py -> Entry().def __init__
+\end_layout
+
+\begin_layout Plain Layout
+
+=> self._actor = DQN
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+$ entry.py
+\end_layout
+
+\begin_layout Plain Layout
+
+PRESS [r]
+\end_layout
+
+\begin_layout Plain Layout
+
+HOLD [s]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+variation
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// util.py -> Loader() -> __init__:
+\end_layout
+
+\begin_layout Plain Layout
+
+=> script_path = ...
+ + "/result/shetris<CHANGE>"
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// reporter.py -> Reporter() -> __init__
+\end_layout
+
+\begin_layout Plain Layout
+
+=> self.obs_factory = ObsStandard(
+\end_layout
+
+\begin_layout Plain Layout
+
+        use_compact_field=<CHANGE>,
+\end_layout
+
+\begin_layout Plain Layout
+
+        use_pid=<CHANGE>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// network.py
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self):
+\end_layout
+
+\begin_layout Plain Layout
+
+        super().__init__()
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.conv1 = ...nn.Linear(<CHANGE>, 64),...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Ref
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// 1.
+ no GUI
+\end_layout
+
+\begin_layout Plain Layout
+
+$ genetic.py
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// 2.
+ with GUI: entry.py->Entry.__init__
+\end_layout
+
+\begin_layout Plain Layout
+
+self._actor = self.make_actor_genetic()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Sb3: algorithm (PPO or A2C or DQN)
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+// info.py -> ShetrisInfo.get_algpol
+\end_layout
+
+\begin_layout Plain Layout
+
+=> pick the pair
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// info.py -> ShetrisInfo.get_rel_dirs()
+\end_layout
+
+\begin_layout Plain Layout
+
+pick the pair
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+// shenv.py
+\end_layout
+
+\begin_layout Plain Layout
+
+def __init__():
+\end_layout
+
+\begin_layout Plain Layout
+
+	flatten_action = TRUE (if DQN); False (if PPO or A2C)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
