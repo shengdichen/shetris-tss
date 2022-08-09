@@ -312,7 +312,7 @@ week)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Theoretical formulation; Structuring of project
+Theoretical formulation; Project Structuring
 \end_layout
 
 \end_inset
@@ -455,7 +455,7 @@ gym
 status open
 
 \begin_layout Plain Layout
-sb3
+SB3
 \end_layout
 
 \end_inset
@@ -526,7 +526,7 @@ Otherwise engaged: break from project
 \begin_inset Text
 
 \begin_layout Plain Layout
-Engineer further Observation/Reward pairs
+Engineering of further Observation/Reward pairs
 \end_layout
 
 \end_inset
@@ -590,7 +590,7 @@ Implementation of Evolution-Algorithm; DQN
 \begin_inset Text
 
 \begin_layout Plain Layout
-Collection of results; compose thesis
+Collection of results; Composition of thesis
 \end_layout
 
 \end_inset
